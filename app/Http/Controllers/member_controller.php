@@ -4,9 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Member;
+use App\Models\Panel;
+use App\Models\Executive;
 
 class member_controller extends Controller
 {
+    /**
+     * Display a listing of the members.
+     */
+    public function index(){
+        $members = Member::orderBy('name')->get();
+        return view('admin.members', ['members' => $members]);
+    }
+
+
     public function createform()
     {
         return view('admin.member_create');
@@ -47,6 +58,40 @@ class member_controller extends Controller
         $member->save();
 
         // Redirect or return a response
-        return redirect('/admin/createmember');
+        return redirect('/admin/members')->with('success', 'Member created successfully!');
+    }
+
+    public function panalcreateform()
+    {
+        return view('admin.panel_create');
+    }
+
+    public function panelstore(Request $request)
+    {
+        // Validate the incoming request data
+        $request->validate([
+            'panel_year' => 'required|integer',
+        ]);
+
+        // Create a new panel instance and save it to the database
+        $panel = new Panel();
+        $panel->host_year = $request->input('panel_year');
+        $panel->president_message = "default";
+        $panel->save();
+
+        // Redirect or return a response
+        return redirect('/admin/members')->with('success', 'Panel created successfully!');
+    }
+
+
+    public function makeexecutive($id)
+    {
+        $member = Member::find($id);
+        $panel = Panel::orderBy('host_year', 'desc')->first();
+        if ($member == null) {
+            return redirect('/admin/members')->with('error', 'Member not found!');
+        }
+
+        return view('admin.make_executive', ['member' => $member]);
     }
 }
