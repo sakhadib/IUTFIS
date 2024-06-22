@@ -1,4 +1,4 @@
-@if(session('is_logged_in'))
+@if(session('executive_id') != null)
     @include('layouts.log_header')
 @else
     @include('layouts.header')

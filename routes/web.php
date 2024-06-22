@@ -32,3 +32,9 @@ Route::post('admin/makeexecutive', [member_controller::class, 'storeexecutive'])
 
 
 Route::get('login', [login_controller::class, 'index']);
+Route::post('login', [login_controller::class, 'login']);
+Route::get('logout', [login_controller::class, 'logout']);
+Route::get('selector', [login_controller::class, 'selector']);
+
+Route::get('changepassword', [login_controller::class, 'changePassword']);
+Route::post('changepassword', [login_controller::class, 'storePassword']);

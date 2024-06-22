@@ -13,6 +13,10 @@ class member_controller extends Controller
      * Display a listing of the members.
      */
     public function index(){
+        if(session('admin') == false){
+            return redirect('login')->with('error', 'You are not authorized to view this page');
+        }
+
         $members = Member::orderBy('name')->get();
         return view('admin.members', ['members' => $members]);
     }
@@ -20,6 +24,10 @@ class member_controller extends Controller
 
     public function createform()
     {
+        if(session('admin') == false){
+            return redirect('login')->with('error', 'You are not authorized to view this page');
+        }
+        
         return view('admin.member_create');
     }
 
@@ -28,6 +36,11 @@ class member_controller extends Controller
      */
     public function store(Request $request)
     {
+        if(session('admin') == false){
+            return redirect('login')->with('error', 'You are not authorized to view this page');
+        }
+        
+        
         // Validate the incoming request data
         $request->validate([
             'email' => 'required|email|unique:members,email',
@@ -63,12 +76,21 @@ class member_controller extends Controller
 
     public function panalcreateform()
     {
+        if(session('admin') == false){
+            return redirect('login')->with('error', 'You are not authorized to view this page');
+        }
+        
         return view('admin.panel_create');
     }
 
     public function panelstore(Request $request)
     {
         // Validate the incoming request data
+        
+        if(session('admin') == false){
+            return redirect('login')->with('error', 'You are not authorized to view this page');
+        }
+
         $request->validate([
             'panel_year' => 'required|integer',
         ]);
@@ -86,6 +108,11 @@ class member_controller extends Controller
 
     public function makeexecutive($id)
     {
+        if(session('admin') == false){
+            return redirect('login')->with('error', 'You are not authorized to view this page');
+        }
+        
+        
         $member = Member::find($id);
         $panels = Panel::orderBy('host_year', 'desc')->get();
         if ($member == null) {

@@ -16,6 +16,17 @@
                             <div class="col-md-12">
                                 <form action="/login" method="post" class="df dfc">
                                     @csrf
+                                    @if (session('error'))
+                                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                            {{ session('error') }}
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        </div>
+                                    @elseif (session('success'))
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                            {{ session('success') }}
+                                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                        </div>
+                                    @endif
                                     <div class="form-floating mb-3">
                                         <input name="sid" type="number" class="form-control" id="floatingInput" placeholder="name@example.com">
                                         <label for="floatingInput">Student ID</label>
