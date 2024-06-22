@@ -87,11 +87,61 @@ class member_controller extends Controller
     public function makeexecutive($id)
     {
         $member = Member::find($id);
-        $panel = Panel::orderBy('host_year', 'desc')->first();
+        $panels = Panel::orderBy('host_year', 'desc')->get();
         if ($member == null) {
             return redirect('/admin/members')->with('error', 'Member not found!');
         }
 
-        return view('admin.make_executive', ['member' => $member]);
+        $executive = Executive::where('member_id', $id)->first();
+
+        return view('admin.make_executive', ['member' => $member, 'panels' => $panels]);
+    }
+
+    public function storeexecutive(Request $request)
+    {
+        // echo "<pre>";
+        // print_r($request->all());
+        // echo "</pre>";
+        
+        // die();
+        
+        
+        // Validate the incoming request data
+         $request->validate([
+            'member_id' => 'required',
+            'year' => 'required|integer',
+            'position' => 'required|string',
+            'isreporter' => 'sometimes',
+            'isadmin' => 'sometimes',
+            'panel_id' => 'required',
+        ]);
+
+        $existing_executive = Executive::where('member_id', $request->input('member_id'))
+            ->where('panel_id', $request->input('panel_id'))
+            ->first();
+
+        if ($existing_executive != null) {
+            $existing_executive->position = $request->input('position');
+            $existing_executive->year = $request->input('year');
+            $existing_executive->is_reporter = $request->boolean('isreporter');
+            $existing_executive->is_admin = $request->boolean('isadmin');
+            $existing_executive->save();
+
+            return redirect('/admin/members')->with('success', 'Executive updated successfully!');
+        }
+
+        // Create the executive
+        $executive = new Executive();
+        $executive->member_id = $request->input('member_id');
+        $executive->panel_id = $request->input('panel_id');
+        $executive->position = $request->input('position');
+        $executive->year = $request->input('year'); 
+        $executive->is_reporter = $request->boolean('isreporter');
+        $executive->is_admin = $request->boolean('isadmin');
+        $executive->save();
+
+        // Redirect or respond as necessary
+        return redirect('/admin/members')->with('success', 'Executive created successfully!');
     }
 }
+

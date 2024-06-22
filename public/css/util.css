@@ -149,6 +149,18 @@
 
 
 
+.profile-pic{
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 3px solid #1B75BC;
+    object-fit: cover;
+}
+
+
+
+
+
 
 
 

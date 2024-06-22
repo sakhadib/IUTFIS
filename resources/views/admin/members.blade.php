@@ -40,7 +40,9 @@
                         <tbody>
                             @foreach ($members as $member)
                                 <tr>
-                                    <td>{{ $member->name }}</td>
+                                    <td>
+                                        <img src="/storage/{{$member->photo}}" alt="" class="profile-pic"> &nbsp;
+                                        {{ $member->name }}</td>
                                     <td>{{ $member->department }}</td>
                                     <td>{{ $member->student_id }}</td>
                                     <td>
@@ -60,7 +62,7 @@
                                         ?>
                                     </td>
                                     <td>
-                                        <a href="/admin/makeexecutive/{{ $member->id }}" class="btn btn-sm btn-success">Make Executive</a>
+                                        <a href="/admin/makeexecutive/{{ $member->id }}" class="btn btn-sm btn-success">Make or Edit Executive</a>
                                     </td>
                                 </tr>
                             @endforeach

@@ -1,6 +1,6 @@
 @extends('layouts.main')
 @section('main')
-    <div class="vh-100 cm-bg df aic">
+    <div class="cm-bg df aic">
         <div class="container cm-holder">
             <div class="row">
                 <div class="col-md-10 offset-md-1">
@@ -34,8 +34,8 @@
                         </div>
                         <div class="row">
                             <div class="col-md-4">
-                                <div id="dropzone" class="dropzone" onclick="document.getElementById('fileInput').click();">
-                                    <p style="margin: 0;">Drag and drop profile picture here or click to upload</p>
+                                <div id="dropzone" class="dropzone mb-3" onclick="document.getElementById('fileInput').click();">
+                                    <p style="margin: 0;">click to upload</p>
                                     <input name="profile_pic" type="file" id="fileInput" class="d-none" accept="image/*" onchange="previewImage(event);">
                                     <img id="preview" class="img-fluid mt-3" src="#" alt="Image Preview" style="display: none;">
                                     <button type="button" id="removeButton" class="btn btn-danger mt-3" style="display: none;" onclick="removeImage();">Remove</button>
@@ -121,6 +121,8 @@
             border-radius: 10px;
             padding: 35px;
             box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            margin-top: 10vh;
+            margin-bottom: 10vh;
         }
     </style>
 
@@ -141,7 +143,7 @@
       </style>
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script>
+    {{-- <script>
         $(document).ready(function() {
           var dropzone = $("#dropzone");
           var fileInput = $("#fileInput");
@@ -199,7 +201,7 @@
             reader.readAsDataURL(file);
           }
         });
-      </script>
+      </script> --}}
 
 <script>
     $(document).ready(function() {

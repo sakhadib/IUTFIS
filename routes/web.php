@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\member_controller;
+use App\Http\Controllers\login_controller;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,3 +28,7 @@ Route::get('/admin/panelcreate', [member_controller::class, 'panalcreateform']);
 Route::post('/admin/panelcreate', [member_controller::class, 'panelstore']);
 
 Route::get('admin/makeexecutive/{id}', [member_controller::class, 'makeexecutive']);
+Route::post('admin/makeexecutive', [member_controller::class, 'storeexecutive']);
+
+
+Route::get('login', [login_controller::class, 'index']);
