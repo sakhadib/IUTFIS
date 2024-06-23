@@ -69,7 +69,10 @@
 
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-            <ul class="navbar-nav mb-2 mb-lg-0">
+            <ul class="navbar-nav mb-2 mb-lg-0 df aic">
+              <li class="nav-item">
+                <a class="nav-link" href="/profile"><img src="storage/{{session('member')->photo}}" alt="" class="profile-pic"></a>
+              </li>
               <li class="nav-item">
                 <a class="nav-link" href="/logout">Logout</a>
               </li>
