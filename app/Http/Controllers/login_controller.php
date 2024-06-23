@@ -56,7 +56,7 @@ class login_controller extends Controller
 
         session([
             'member_id' => $member->id,
-            'member' => $member,
+            'member_photo' => $member->photo,
             'executive_id' => $executive->id,
             'admin' => $is_admin,
             'reporter' => $is_reporter

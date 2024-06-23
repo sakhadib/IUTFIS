@@ -85,6 +85,24 @@
                                     </p>
                                 </div>
                             </div>
+                            @if($executive != null)
+                            <div class="row">
+                                <div class="col-md-6 col-4">
+                                    <p class="text-light lead">Last : </p>
+                                </div>
+                                <div class="col-md-6 col-8">
+                                    <p class="text-light lead">
+                                        @if($executive->year == 2)
+                                            in {{ $executive->position }} Team of Panel {{ $executive_panel->host_year }}
+                                        @elseif($executive->year == 1)
+                                            General Member
+                                        @else
+                                            {{ $executive->position }} of Panel {{ $executive_panel->host_year }}
+                                        @endif
+                                    </p>
+                                </div>
+                            </div>
+                            @endif
                         </div>
                                         
                     </div>
@@ -98,13 +116,13 @@
                 
                         <div class="col-md-2 offset-md-1">
                             <div class="form-floating mb-3">
-                                <input name="year" type="number" class="form-control" id="yearInput" placeholder="name@example.com">
+                                <input name="year" type="number" @if($executive != null) value = '{{$executive->year}}' @endif class="form-control" id="yearInput" placeholder="name@example.com">
                                 <label for="yearInput">Year</label>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating mb-3">
-                                <input name="position" type="text" class="form-control" id="positionInput" placeholder="name@example.com">
+                                <input name="position" @if($executive != null) value = '{{$executive->position}}' @endif type="text" class="form-control" id="positionInput" placeholder="name@example.com" oninput="this.value = this.value.toLowerCase()">
                                 <label for="positionInput" id="positionLabel">Position (all small letter)</label>
                             </div>
                         </div>
@@ -122,10 +140,12 @@
                     <div class="row">
                         <div class="col-md-4 offset-md-4 df jcc">
                             <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-                                <input name="isreporter" type="checkbox" class="btn-check" id="btncheck1" autocomplete="off">
-                                <label class="btn btn-lg btn-outline-light" for="btncheck1">Make Reporter</label>
+                                <input @if($executive != null && $executive->is_reporter == true) checked  @endif name="isreporter" type="checkbox" class="btn-check" id="btncheck1" autocomplete="off">
+                                <label class="btn btn-lg btn-outline-light" for="btncheck1">
+                                    Make Reporter
+                                </label>
                 
-                                <input name="isadmin" type="checkbox" class="btn-check" id="btncheck2" autocomplete="off">
+                                <input name="isadmin" @if($executive != null && $executive->is_admin == true) checked  @endif type="checkbox" class="btn-check" id="btncheck2" autocomplete="off">
                                 <label class="btn btn-lg btn-outline-light" for="btncheck2">Make Admin</label>
                             </div>
                         </div>

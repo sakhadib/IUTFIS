@@ -22,7 +22,11 @@ Route::get('/', function () {
 Route::get('admin/createmember', [member_controller::class, 'createform']);
 Route::post('admin/createmember', [member_controller::class, 'store']);
 Route::get('admin/members', [member_controller::class, 'index']);
-Route::get('/admin/member/{id}', [member_controller::class, 'show']);
+
+Route::get('admin/executives', [member_controller::class, 'executives']);
+
+Route::get('admin/reporters', [member_controller::class, 'reporters']);
+Route::get('admin/removereporter/{id}', [member_controller::class, 'removereporter']);
 
 Route::get('/admin/panelcreate', [member_controller::class, 'panalcreateform']);
 Route::post('/admin/panelcreate', [member_controller::class, 'panelstore']);

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Member;
 use App\Models\Panel;
 use App\Models\Executive;
+use App\Models\Editlog;
 
 class member_controller extends Controller
 {
@@ -89,7 +90,7 @@ class member_controller extends Controller
         
         if(session('admin') == false){
             return redirect('login')->with('error', 'You are not authorized to view this page');
-        }
+        } 
 
         $request->validate([
             'panel_year' => 'required|integer',
@@ -119,9 +120,10 @@ class member_controller extends Controller
             return redirect('/admin/members')->with('error', 'Member not found!');
         }
 
-        $executive = Executive::where('member_id', $id)->first();
+        $executive = Executive::where('member_id', $id)->orderBy('created_at', 'desc')->first();
+        $executive_panel = Panel::where('id', $executive->panel_id)->first();
 
-        return view('admin.make_executive', ['member' => $member, 'panels' => $panels]);
+        return view('admin.make_executive', ['member' => $member, 'panels' => $panels, 'executive' => $executive, 'executive_panel' => $executive_panel]);
     }
 
     public function storeexecutive(Request $request)
@@ -154,6 +156,13 @@ class member_controller extends Controller
             $existing_executive->is_admin = $request->boolean('isadmin');
             $existing_executive->save();
 
+            $editlog = new Editlog();
+            $editlog->member_id = session('member_id');
+            $editlog->model = 'executive';
+            $editlog->details = 'Updated executive ' . $existing_executive->id;
+            $editlog->save();
+
+
             return redirect('/admin/members')->with('success', 'Executive updated successfully!');
         }
 
@@ -169,6 +178,79 @@ class member_controller extends Controller
 
         // Redirect or respond as necessary
         return redirect('/admin/members')->with('success', 'Executive created successfully!');
+    }
+
+
+    public function executives(){
+        if(session('admin') == false){
+            return redirect('login')->with('error', 'You are not authorized to view this page');
+        }
+
+        $executives = Executive::orderBy('created_at', 'desc')->get();
+
+        $modified_executives = [];
+
+        foreach ($executives as $executive) {
+            $member = Member::find($executive->member_id);
+            $panel = Panel::find($executive->panel_id);
+
+            $executive->member = $member;
+            $executive->panel = $panel;
+
+            $modified_executives[] = $executive;
+        }
+
+        return view('admin.executives', 
+            ['executives' => $modified_executives]
+        );
+    }
+
+
+    public function reporters(){
+        if(session('admin') == false){
+            return redirect('login')->with('error', 'You are not authorized to view this page');
+        }
+
+        $reporters = Executive::where('is_reporter', true)->orderBy('created_at', 'desc')->get();
+
+        $modified_reporters = [];
+
+        foreach ($reporters as $reporter) {
+            $member = Member::find($reporter->member_id);
+            $panel = Panel::find($reporter->panel_id);
+
+            $reporter->member = $member;
+            $reporter->panel = $panel;
+
+            $modified_reporters[] = $reporter;
+        }
+
+        return view('admin.reporters', 
+            ['reporters' => $modified_reporters]
+        );
+    }
+
+    public function removereporter($id){
+        if(session('admin') == false){
+            return redirect('login')->with('error', 'You are not authorized to view this page');
+        }
+
+        $reporter = Executive::find($id);
+
+        if ($reporter == null) {
+            return redirect('/admin/reporters')->with('error', 'Reporter not found!');
+        }
+
+        $reporter->is_reporter = false;
+        $reporter->save();
+
+        $editlog = new Editlog();
+        $editlog->member_id = session('member_id');
+        $editlog->model = 'executive';
+        $editlog->details = 'Removed reporter ' . $reporter->id;
+        $editlog->save();
+
+        return redirect('/admin/reporters')->with('success', 'Reporter removed successfully!');
     }
 }
 
