@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\member_controller;
 use App\Http\Controllers\login_controller;
+use App\Http\Controllers\post_controller;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +20,18 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+// Reporter routes
+
+Route::get('reporter/createnews', [post_controller::class, 'createNews']);
+Route::post('reporter/createnews', [post_controller::class, 'storeNews']);
+Route::get('reporter/news', [post_controller::class, 'news']);
+Route::get('reporter/editnews/{id}', [post_controller::class, 'editNews']);
+Route::post('reporter/editnews', [post_controller::class, 'updateNews']);
+
+
+// Admin routes
+
 Route::get('admin/createmember', [member_controller::class, 'createform']);
 Route::post('admin/createmember', [member_controller::class, 'store']);
 Route::get('admin/members', [member_controller::class, 'index']);
@@ -28,12 +41,20 @@ Route::get('admin/executives', [member_controller::class, 'executives']);
 Route::get('admin/reporters', [member_controller::class, 'reporters']);
 Route::get('admin/removereporter/{id}', [member_controller::class, 'removereporter']);
 
+Route::get('admin/admins', [member_controller::class, 'admins']);
+Route::get('admin/removeadmin/{id}', [member_controller::class, 'removeadmin']);
+
 Route::get('/admin/panelcreate', [member_controller::class, 'panalcreateform']);
 Route::post('/admin/panelcreate', [member_controller::class, 'panelstore']);
 
 Route::get('admin/makeexecutive/{id}', [member_controller::class, 'makeexecutive']);
 Route::post('admin/makeexecutive', [member_controller::class, 'storeexecutive']);
 
+
+
+
+
+// Common routes
 
 Route::get('login', [login_controller::class, 'index']);
 Route::post('login', [login_controller::class, 'login']);

@@ -1,5 +1,5 @@
 @if(session('executive_id') != null)
-    @include('layouts.log_header')
+    @include('layouts.admin_header')
 @else
     @include('layouts.header')
 @endif

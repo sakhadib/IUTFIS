@@ -252,5 +252,55 @@ class member_controller extends Controller
 
         return redirect('/admin/reporters')->with('success', 'Reporter removed successfully!');
     }
+
+
+
+    public function admins(){
+        if(session('admin') == false){
+            return redirect('login')->with('error', 'You are not authorized to view this page');
+        }
+
+        $admins = Executive::where('is_admin', true)->orderBy('created_at', 'desc')->get();
+
+        $modified_admins = [];
+
+        foreach ($admins as $admin) {
+            $member = Member::find($admin->member_id);
+            $panel = Panel::find($admin->panel_id);
+
+            $admin->member = $member;
+            $admin->panel = $panel;
+
+            $modified_admins[] = $admin;
+        }
+
+        return view('admin.admins', 
+            ['admins' => $modified_admins]
+        );
+    }
+
+
+    public function removeadmin($id){
+        if(session('admin') == false){
+            return redirect('login')->with('error', 'You are not authorized to view this page');
+        }
+
+        $admin = Executive::find($id);
+
+        if ($admin == null) {
+            return redirect('/admin/admins')->with('error', 'Admin not found!');
+        }
+
+        $admin->is_admin = false;
+        $admin->save();
+
+        $editlog = new Editlog();
+        $editlog->member_id = session('member_id');
+        $editlog->model = 'executive';
+        $editlog->details = 'Removed admin ' . $admin->id;
+        $editlog->save();
+
+        return redirect('/admin/admins')->with('success', 'Admin removed successfully!');
+    }
 }
 

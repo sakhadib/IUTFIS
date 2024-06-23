@@ -26,6 +26,17 @@
     {{-- Math --}}
     <script defer type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"> </script>
 
+    {{-- markdown --}}
+
+    <script defer src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script defer src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script defer type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 
 </head>
 <body>
@@ -38,18 +49,45 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="/dashboard">Dashboard</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/allann">Announcements</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/allnewsadmin">News</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/allactivity">Activities</a>
-              </li>
+
+              @if(session('admin') == true)
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Member
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="/admin/members">All Members</a></li>
+                    <li><a class="dropdown-item" href="/admin/createmember">New Member</a></li>
+                  </ul>
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="/admin/executives">Executives</a>
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="/admin/reporters">Reporters</a>
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="/admin/admins">Admins</a>
+                </li>
+
+                <li class="nav-item">
+                  <a class="nav-link" href="/admin/panelcreate">Create-Panel</a>
+                </li>
+
+              @endif
+
+              @if(session('reporter') == true)
+                <li class="nav-item">
+                  <a class="nav-link" href="/reporter/createnews">News</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/reporter/announcements">Announcements</a>
+                </li>
+              @endif
+
               {{-- <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   <i class="uil uil-pen"></i>  Create
@@ -70,12 +108,21 @@
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
             <ul class="navbar-nav mb-2 mb-lg-0 df aic">
-              <li class="nav-item">
-                <a class="nav-link" href="/profile"><img src="/storage/{{session('member_photo')}}" alt="" class="profile-pic"></a>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <img src="/storage/{{session('member_photo')}}" alt="" class="profile-pic">
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="/profile">Profile</a></li>
+                  <li><a class="dropdown-item" href="/logout">Logout</a></li>
+                </ul>
+              </li>
+              {{-- <li class="nav-item">
+                <a class="nav-link" href="/profile"></a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="/logout">Logout</a>
-              </li>
+              </li> --}}
             </ul>
             
           </div>
