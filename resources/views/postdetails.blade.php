@@ -33,7 +33,7 @@
                 <div class="col-md-8">
                     <!-- Use a hidden textarea to store raw markdown content -->
                     <textarea id="markdown-content" style="display: none;">{!! $post->content !!}</textarea>
-                    <div class="lead text-light main-content" style="text-align: justify" id="content">
+                    <div class="lead text-light main-content math" style="text-align: justify" id="content">
                         <!-- This will be filled with converted HTML -->
                     </div>
                 </div>
@@ -108,17 +108,35 @@
         }
     </style>
 
+    <!-- MathJax Configuration -->
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+
+    <!-- Include MathJax -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', (event) => {
             const rawMarkdown = document.getElementById('markdown-content').value.trim();
             const contentElement = document.getElementById('content');
 
-            // Debug: Log raw markdown content
-            console.log(rawMarkdown);
-
             // Parse the raw markdown and set it as the innerHTML of the content element
             contentElement.innerHTML = marked.parse(rawMarkdown);
+
+            // Ensure MathJax processes the content
+            if (window.MathJax) {
+                window.MathJax.typesetPromise();
+            }
         });
     </script>
 
@@ -127,7 +145,7 @@
         const maincontent = document.getElementById('content');
 
         eyecomfortbtn.addEventListener('click', () => {
-            if(maincontent.classList.contains('text-light')) {
+            if (maincontent.classList.contains('text-light')) {
                 maincontent.classList.remove('text-light');
                 maincontent.classList.add('text-secondary');
             } else {
@@ -137,35 +155,34 @@
         });
     </script>
 
+    <style>
+        .main-content img {
+            max-width: 100%;
+            height: auto;
+        }
 
-<style>
-    .main-content img {
-        max-width: 100%;
-        height: auto;
-    }
+        .main-content table {
+            width: 100%;
+            border-collapse: collapse;
+        }
 
-    .main-content table {
-        width: 100%;
-        border-collapse: collapse;
-    }
+        .main-content h1 {
+            font-size: 2rem;
+            font-weight: bold;
+        }
 
-    .main-content h1 {
-        font-size: 2rem;
-        font-weight: bold;
-    }
+        .main-content h2 {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
 
-    .main-content h2 {
-        font-size: 1.5rem;
-        font-weight: bold;
-    }
+        .main-content h3 {
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
 
-    .main-content h3 {
-        font-size: 1.3rem;
-        font-weight: bold;
-    }
-
-    .main-conten{
-        color: white;
-    }
-</style>
+        .main-conten {
+            color: white;
+        }
+    </style>
 @endsection
