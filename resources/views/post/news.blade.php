@@ -8,9 +8,9 @@
                 <div class="col-12 df dfc jcc aic">
                     <h1 class="display-5 text-center text-warning">{{$type}} created by {{$member->name}}</h1>
                     <p class="lead text-light text-center">
-                        Take actions on the {{$type}} of the society. You can only take action on the {{$type}} you created.
+                        Take actions on the {{$type}} of the society. You can only take action on the {{$type}} you have created.
                     </p>
-                    <a href="/reporter/createnews" class="btn btn-lg btn-outline-light">Create New News</a>
+                    <a href="/reporter/create{{$type}}" class="btn btn-lg btn-outline-light">Create New {{$type}}</a>
                 </div>
             </div>
         </div>
@@ -41,7 +41,7 @@
                                     <td>{{ $post->title }}</td>
                                     <td>{{ $post->created_at->addhours(6)->format('d F, Y \a\t g:m A') }}</td>
                                     <td>
-                                        <a href="/reporter/editnews/{{ $post->id }}" class="btn btn-sm btn-outline-success"><i class="uil uil-pen"></i> Edit</a>
+                                        <a href="/reporter/edit{{$type}}/{{ $post->id }}" class="btn btn-sm btn-outline-success"><i class="uil uil-pen"></i> Edit</a>
                                         <a href="/reporter/deletepost/{{ $post->id }}" class="btn btn-sm btn-outline-danger"><i class="uil uil-trash-alt"></i> Delete</a>
                                     </td>
                                 </tr>

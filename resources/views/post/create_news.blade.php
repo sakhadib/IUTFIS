@@ -11,7 +11,20 @@
                     <textarea class="form-control inp inp-title" name="title" id="inp-title" rows="1" placeholder="Title">@if($post != null){{$post->title}}@endif</textarea>
                 </div>
                 <div class="mb-3">
-                    <input class="form-control" name="category" list="datalistOptions" @if($post != null)value = {{$post->category}}@endif id="exampleDataList" placeholder="Category" title="Start typing and then select. if does not appear then write your own">
+
+                    <input class="form-control" 
+                            name="category" 
+                            list="datalistOptions" 
+                            @if($post != null)
+                                value = {{$post->category->name}}
+                            @endif 
+                            id="exampleDataList" 
+                            placeholder="Category" 
+                            @if($destination == 'editAnnouncement' || 'createAnnouncements')
+                                hidden value="Announcement"
+                            @endif
+                            title="Start typing and then select. if does not appear then write your own">
+
                     <datalist id="datalistOptions">
                         @foreach($categories as $category)
                         <option value="{{$category->name}}">
@@ -22,11 +35,20 @@
                 <div class="mb-3">
                     <textarea class="form-control inp inp-body math" name="content" id="text" rows="15" placeholder="Start Writing ...">@if($post != null){{$post->content}}@endif</textarea>
                 </div>
-                
+                @if($post != null)
+                <input type="text" name="id" value="{{$post->id}}" hidden>
+                @endif
                 <div class="row">
                     
                     <div class="col-md-12 df jcfe">
-                        <button type="submit" class="btn btn-primary me-auto" style="width: 100%">Create</button> 
+                        
+                        <button type="submit" class="btn btn-primary me-auto" style="width: 100%">
+                        @if($post != null)
+                            Update
+                        @else
+                            Create
+                        @endif
+                        </button> 
                     </div>
                 </div>
                                
@@ -110,6 +132,11 @@
         /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.4); */
         font-family: 'jetbrains mono', monospace;
         font-size: 0.8rem;
+    }
+
+    .markdown-here img {
+        max-width: 100%;
+        height: auto;
     }
 </style>
 

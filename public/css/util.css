@@ -179,13 +179,13 @@
 /* Signup */
 
 ::-webkit-scrollbar{
-    width: 3px;
+    width: 8px;
 }
 
 ::-webkit-scrollbar-thumb{
     background: #1B75BC;
-    border-radius: 20px;
+    border-radius: 50%;
 }
 ::-webkit-scrollbar-track-piece{
-    background-color: rgba(0,0,0,1);
+    background-color: rgba(0,0,0,0.4);
 }

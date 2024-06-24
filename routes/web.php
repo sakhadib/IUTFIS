@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\member_controller;
 use App\Http\Controllers\login_controller;
 use App\Http\Controllers\post_controller;
+use App\Http\Controllers\postview_controller;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,8 +27,20 @@ Route::get('/', function () {
 Route::get('reporter/createnews', [post_controller::class, 'createNews']);
 Route::post('reporter/createnews', [post_controller::class, 'storeNews']);
 Route::get('reporter/news', [post_controller::class, 'news']);
-Route::get('reporter/editnews/{id}', [post_controller::class, 'editNews']);
+Route::get('reporter/editNews/{id}', [post_controller::class, 'editNews']);
 Route::post('reporter/editnews', [post_controller::class, 'updateNews']);
+
+Route::get('reporter/createArticles', [post_controller::class, 'createArticle']);
+Route::post('reporter/createArticles', [post_controller::class, 'storeArticle']);
+Route::get('reporter/articles', [post_controller::class, 'articles']);
+Route::get('reporter/editArticles/{id}', [post_controller::class, 'editArticle']);
+Route::post('reporter/editArticle', [post_controller::class, 'updateArticle']);
+
+Route::get('reporter/createAnnouncements', [post_controller::class, 'createAnnouncement']);
+Route::post('reporter/createAnnouncements', [post_controller::class, 'storeAnnouncement']);
+Route::get('reporter/announcements', [post_controller::class, 'announcements']);
+Route::get('reporter/editAnnouncements/{id}', [post_controller::class, 'editAnnouncement']);
+Route::post('reporter/editAnnouncement', [post_controller::class, 'updateAnnouncement']);
 
 
 // Admin routes
@@ -63,3 +76,10 @@ Route::get('selector', [login_controller::class, 'selector']);
 
 Route::get('changepassword', [login_controller::class, 'changePassword']);
 Route::post('changepassword', [login_controller::class, 'storePassword']);
+
+
+
+
+// Viewer routes
+
+Route::get('news', [postview_controller::class, 'news']);
