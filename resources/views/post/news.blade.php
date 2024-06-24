@@ -27,7 +27,7 @@
                         </div>
                     @endif
 
-                    <table data-order='[[0, "desc"]]' data-page-length='25' id="stable" class="table table-hover table-responsive">
+                    <table data-order='[[1, "desc"]]' data-page-length='25' id="stable" class="table table-hover table-responsive">
                         <thead>
                             <tr>
                                 <th>title</th>
@@ -39,7 +39,7 @@
                             @foreach ($posts as $post)
                                 <tr>
                                     <td>{{ $post->title }}</td>
-                                    <td>{{ $post->created_at->addhours(6)->format('d F, Y \a\t g:m A') }}</td>
+                                    <td>{{date('j F Y \a\t g:i A', strtotime($post->created_at))}}</td>
                                     <td>
                                         <a href="/reporter/edit{{$type}}/{{ $post->id }}" class="btn btn-sm btn-outline-success"><i class="uil uil-pen"></i> Edit</a>
                                         <a href="/reporter/deletepost/{{ $post->id }}" class="btn btn-sm btn-outline-danger"><i class="uil uil-trash-alt"></i> Delete</a>

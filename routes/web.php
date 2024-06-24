@@ -24,7 +24,7 @@ Route::get('/', function () {
 
 // Reporter routes
 
-Route::get('reporter/createnews', [post_controller::class, 'createNews']);
+Route::get('reporter/createNews', [post_controller::class, 'createNews']);
 Route::post('reporter/createnews', [post_controller::class, 'storeNews']);
 Route::get('reporter/news', [post_controller::class, 'news']);
 Route::get('reporter/editNews/{id}', [post_controller::class, 'editNews']);
@@ -83,3 +83,9 @@ Route::post('changepassword', [login_controller::class, 'storePassword']);
 // Viewer routes
 
 Route::get('news', [postview_controller::class, 'news']);
+Route::get('articles', [postview_controller::class, 'articles']);
+Route::get('announcements', [postview_controller::class, 'announcements']);
+
+Route::get('News/{id}', [postview_controller::class, 'newsdetails']);
+Route::get('Articles/{id}', [postview_controller::class, 'articledetails']);
+Route::get('Announcements/{id}', [postview_controller::class, 'announcementdetails']);

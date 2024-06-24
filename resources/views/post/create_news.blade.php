@@ -20,7 +20,7 @@
                             @endif 
                             id="exampleDataList" 
                             placeholder="Category" 
-                            @if($destination == 'editAnnouncement' || 'createAnnouncements')
+                            @if($destination == 'editAnnouncement' || $destination == 'createAnnouncements')
                                 hidden value="Announcement"
                             @endif
                             title="Start typing and then select. if does not appear then write your own">
