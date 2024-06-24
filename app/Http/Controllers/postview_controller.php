@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Models\Member;
 use App\Models\Executive;
 use App\Models\Category;
+use App\Models\Panel;
 
 
 class postview_controller extends Controller
@@ -91,16 +92,23 @@ class postview_controller extends Controller
 
     public function newsdetails($id){
         $post = Post::where('id', $id)->first();
-        $executive = Executive::where('id', $post->executive_id)->first();
+        $executive = Executive::where('id', $post->executive_id)->orderBy('created_at', 'desc')->first();
+        $panel = Panel::where('id', $executive->panel_id)->first();
         $member = Member::where('id', $executive->member_id)->first();
         $category = Category::where('id', $post->category_id)->first();
         $post->member = $member;
+        $post->executive = $executive;
         $post->created_at->addHours(6);
         $post->category = $category;
+        $post->panel = $panel;
+
+
+        $more_posts = Post::where('type', 'N')->where('id', '!=', $id)->where('executive_id', $executive->id)->orderBy('created_at', 'desc')->take(3)->get();
 
         return view('postdetails', 
             [
-                'post' => $post
+                'post' => $post,
+                'more_posts' => $more_posts
             ]);
     }
 

@@ -29,7 +29,7 @@
 
     {{-- markdown --}}
 
-    <script defer src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    {{-- <script defer src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> --}}
     <script defer src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script defer type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
