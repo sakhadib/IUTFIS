@@ -63,7 +63,7 @@
                 <a class="nav-link" href="/announcements">Announcements</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/activities">Activities</a>
+                <a class="nav-link" href="/events">Events</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#">Executives</a>

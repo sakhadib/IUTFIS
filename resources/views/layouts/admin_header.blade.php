@@ -113,6 +113,16 @@
                   </ul>
                 </li>
 
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                   Workshop
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="/reporter/Events">All Workshop</a></li>
+                    <li><a class="dropdown-item" href="/reporter/createWorkshop">Create new Workshop</a></li>
+                  </ul>
+                </li>
+
                 
               @endif
 

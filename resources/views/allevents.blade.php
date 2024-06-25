@@ -5,13 +5,14 @@
 <div class="event-bg">
     <div class="declaration">
         <div class="vh-10"></div>
-        <div class="container mt-5 df jcc aic">
+        <div class="container mt-5 mb-5 df jcc aic">
             <div class="row">
                 <div class="col-12 df dfc jcc aic">
                     <h1 class="display-3 text-center text-light">FIS Events</h1>
                     <p class="text-light lead">
                         Upcoming Events of IUT FIS. Click on them to learn more.
                     </p>
+                    <a href="/allevents" class="btn btn-lg btn-outline-light">Show All Events</a>
                 </div>
             </div>
         </div>

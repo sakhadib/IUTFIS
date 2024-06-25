@@ -181,4 +181,29 @@ class postview_controller extends Controller
         ]);
     }
 
+
+    public function eventdetails($id){
+        $event = Event::where('id', $id)->first();
+        $member = Member::where('id', $event->member_id)->first();
+        $executive = Executive::where('member_id', $member->id)->orderBy('created_at', 'desc')->first();
+        return view('eventdetails', [
+            'event' => $event,
+            'member' => $member,
+            'executive' => $executive
+        ]);
+    }
+
+
+    public function allevents(){
+        $events = Event::All();
+        return view('allevents', [
+            'events' => $events,
+            'type' => 'Events'
+        ]);
+    }
+
+
+
+    
+
 }

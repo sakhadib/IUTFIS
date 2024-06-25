@@ -7,6 +7,7 @@ use App\Http\Controllers\post_controller;
 use App\Http\Controllers\postview_controller;
 use App\Http\Controllers\home_Controller;
 use App\Http\Controllers\event_controller;
+use App\Http\Controllers\workshop_controller;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,6 +50,9 @@ Route::get('reporter/Events', [event_controller::class, 'allEvents']);
 Route::get('reporter/editEvents/{id}', [event_controller::class, 'editEvent']);
 Route::post('reporter/editEvents/{id}', [event_controller::class, 'updateEvent']);
 Route::get('reporter/deleteEvent/{id}', [event_controller::class, 'deleteEvent']);
+
+
+Route::get('reporter/createWorkshop', [workshop_controller::class, 'createWorkshop']);
 
 
 // Admin routes
@@ -101,3 +105,5 @@ Route::get('Articles/{id}', [postview_controller::class, 'articledetails']);
 Route::get('Announcements/{id}', [postview_controller::class, 'announcementdetails']);
 
 Route::get('events', [postview_controller::class, 'events']);
+Route::get('event/{id}', [postview_controller::class, 'eventdetails']);
+Route::get('allevents', [postview_controller::class, 'allevents']);
