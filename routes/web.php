@@ -100,4 +100,4 @@ Route::get('News/{id}', [postview_controller::class, 'newsdetails']);
 Route::get('Articles/{id}', [postview_controller::class, 'articledetails']);
 Route::get('Announcements/{id}', [postview_controller::class, 'announcementdetails']);
 
-Route::get('Events', [postview_controller::class, 'events']);
+Route::get('events', [postview_controller::class, 'events']);

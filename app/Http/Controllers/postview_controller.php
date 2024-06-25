@@ -8,6 +8,7 @@ use App\Models\Member;
 use App\Models\Executive;
 use App\Models\Category;
 use App\Models\Panel;
+use App\Models\Event;
 
 
 class postview_controller extends Controller
@@ -158,6 +159,26 @@ class postview_controller extends Controller
                 'post' => $post,
                 'more_posts' => $more_posts
             ]);
+    }
+
+
+
+
+
+
+
+
+
+
+
+    // Events
+
+    public function events(){
+        $events = Event::where('start_date', '>=', date('Y-m-d'))->get();
+        return view('allevents', [
+            'events' => $events,
+            'type' => 'Events'
+        ]);
     }
 
 }

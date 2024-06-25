@@ -35,7 +35,7 @@
 <body>
 
     <nav class="navbar navbar-dark navbar-expand-lg bgd fixed-top bs" id="boss_navbar">
-        <div class="container">
+        <div class="container-fluid">
           <a class="navbar-brand" href="/" style="font-family: poppins, sans-sherif"><img src="/rsx/logo.svg" alt="" style="width: 80px; margin-top:-5px"></a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -100,6 +100,16 @@
                   <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="/reporter/announcements">All Announcements</a></li>
                     <li><a class="dropdown-item" href="/reporter/createAnnouncements">Create new Announcement</a></li>
+                  </ul>
+                </li>
+
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                   Event
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="/reporter/Events">All Events</a></li>
+                    <li><a class="dropdown-item" href="/reporter/createEvents">Create new Event</a></li>
                   </ul>
                 </li>
 
