@@ -5,6 +5,8 @@ use App\Http\Controllers\member_controller;
 use App\Http\Controllers\login_controller;
 use App\Http\Controllers\post_controller;
 use App\Http\Controllers\postview_controller;
+use App\Http\Controllers\home_Controller;
+use App\Http\Controllers\event_controller;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,11 +18,6 @@ use App\Http\Controllers\postview_controller;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
 
 // Reporter routes
 
@@ -41,6 +38,17 @@ Route::post('reporter/createAnnouncements', [post_controller::class, 'storeAnnou
 Route::get('reporter/announcements', [post_controller::class, 'announcements']);
 Route::get('reporter/editAnnouncements/{id}', [post_controller::class, 'editAnnouncement']);
 Route::post('reporter/editAnnouncement', [post_controller::class, 'updateAnnouncement']);
+
+
+Route::get('reporter/deletepost/{id}', [post_controller::class, 'deletePost']);
+
+
+Route::get('reporter/createEvents', [event_controller::class, 'createEvent']);
+Route::post('reporter/createEvents', [event_controller::class, 'storeEvent']);
+Route::get('reporter/Events', [event_controller::class, 'allEvents']);
+Route::get('reporter/editEvents/{id}', [event_controller::class, 'editEvent']);
+Route::post('reporter/editEvents/{id}', [event_controller::class, 'updateEvent']);
+Route::get('reporter/deleteEvent/{id}', [event_controller::class, 'deleteEvent']);
 
 
 // Admin routes
@@ -82,6 +90,8 @@ Route::post('changepassword', [login_controller::class, 'storePassword']);
 
 // Viewer routes
 
+Route::get('/', [home_Controller::class, 'index']);
+
 Route::get('news', [postview_controller::class, 'news']);
 Route::get('articles', [postview_controller::class, 'articles']);
 Route::get('announcements', [postview_controller::class, 'announcements']);
@@ -89,3 +99,5 @@ Route::get('announcements', [postview_controller::class, 'announcements']);
 Route::get('News/{id}', [postview_controller::class, 'newsdetails']);
 Route::get('Articles/{id}', [postview_controller::class, 'articledetails']);
 Route::get('Announcements/{id}', [postview_controller::class, 'announcementdetails']);
+
+Route::get('Events', [postview_controller::class, 'events']);

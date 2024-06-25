@@ -492,4 +492,26 @@ class post_controller extends Controller
 
         return redirect('reporter/announcements')->with('success', 'Announcement updated successfully');
     }
+
+
+
+
+
+
+    public function deletePost($id)
+    {
+        $post = Post::find($id);
+
+        if($post == null){
+            return redirect('reporter/news')->with('error', 'Post not found.');
+        }
+
+        if($post->executive_id != session('executive_id')){
+            return redirect('reporter/news')->with('error', 'You are not authorized to delete this post.');
+        }
+
+        $post->delete();
+
+        return redirect('reporter/news')->with('success', 'Post deleted successfully.');
+    }
 }

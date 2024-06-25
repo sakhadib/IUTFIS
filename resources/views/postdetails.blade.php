@@ -22,8 +22,14 @@
                         {{$post->category->name}}
                     </p>
                 </div>
+                
+            </div>
+            <div class="row">
                 <div class="col-auto">
                     <button class="btn-sm btn btn-outline-secondary" id="ecb"><i class="uil uil-eye"></i> eye comfort mode</button>
+                </div>
+                <div class="col-auto">
+                    <button class="btn-sm btn btn-outline-secondary" id="share"><i class="uil uil-copy-alt"></i> copy link to share</button>
                 </div>
             </div>
         </div>
@@ -108,17 +114,25 @@
         }
     </style>
 
-    <!-- MathJax Configuration -->
+
+
     <script>
-        window.MathJax = {
-            tex: {
-                inlineMath: [['$', '$'], ['\\(', '\\)']],
-                displayMath: [['$$', '$$'], ['\\[', '\\]']]
-            },
-            svg: {
-                fontCache: 'global'
-            }
-        };
+        const shareBtn = document.getElementById('share');
+
+        shareBtn.addEventListener('click', () => {
+            const link = window.location.href;
+
+            navigator.clipboard.writeText(link)
+                .then(() => {
+                    shareBtn.innerHTML = '<i class="uil uil-check-circle"></i> Copied to clipboard';
+                    setTimeout(() => {
+                        shareBtn.innerHTML = '<i class="uil uil-copy-alt"></i> Copy link to share';
+                    }, 7000);
+                })
+                .catch((error) => {
+                    console.error('Failed to copy link to clipboard:', error);
+                });
+        });
     </script>
 
     <!-- Include MathJax -->

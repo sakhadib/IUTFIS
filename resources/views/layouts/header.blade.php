@@ -54,13 +54,13 @@
                 <a class="nav-link" aria-current="page" href="/">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/announcements">Announcements</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/workshop">Workshops</a>
-              </li>
-              <li class="nav-item">
                 <a class="nav-link" href="/news">News</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/articles">Articles</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/announcements">Announcements</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="/activities">Activities</a>
