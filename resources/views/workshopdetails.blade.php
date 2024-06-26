@@ -55,6 +55,7 @@
                                 <h1 class="display-6 text-light"> {{$event->location}}</h1>
                             </div> 
                         </div>
+                        @if($event->link != 'none')
                         <div class="row mt-5">
                             <div class="col-md-12">
                                 <a href="{{$event->link}}" style="text-decoration: none">
@@ -63,6 +64,7 @@
                                 
                             </div> 
                         </div>
+                        @endif
                     </div>
                 </div>
 
@@ -107,7 +109,7 @@
                 </div>
             </div>
 
-            <div class="row mt-5 mb-4">
+            <div class="row mt-5">
                 <div class="col-md-12 df dfc">
                     <h2 class="display-4 text-warning mb-3">Workshop Details</h2>
                     <div class="container">
@@ -134,23 +136,7 @@
 
 
 
-            <div class="row text-light">
-                <div class="col-md-12 mt-4">
-                    @if ($errors->any())
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                @endif
-                </div>
-            </div>
+            
 
 
         </div>
