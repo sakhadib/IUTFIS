@@ -8,6 +8,7 @@ use App\Http\Controllers\postview_controller;
 use App\Http\Controllers\home_Controller;
 use App\Http\Controllers\event_controller;
 use App\Http\Controllers\workshop_controller;
+use App\Http\Controllers\achievement_controller;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,6 +63,19 @@ Route::get('reporter/deleteWorkshop/{id}', [workshop_controller::class, 'deleteW
 Route::get('reporter/addSpeaker/{id}', [workshop_controller::class, 'addSpeakerform']);
 Route::post('reporter/addSpeaker/{id}', [workshop_controller::class, 'storeSpeaker']);
 Route::get('reporter/removeSpeaker/{id}', [workshop_controller::class, 'removeSpeaker']);
+
+
+
+Route::get('reporter/createAchievements', [achievement_controller::class, 'createForm']);
+Route::post('reporter/createAchievements', [achievement_controller::class, 'store']);
+Route::get('reporter/achievements', [achievement_controller::class, 'allAchievements']);
+Route::get('reporter/editAchievements/{id}', [achievement_controller::class, 'editAchievement']);
+Route::post('reporter/editAchievements/{id}', [achievement_controller::class, 'updateAchievement']);
+Route::get('reporter/deleteAchievement/{id}', [achievement_controller::class, 'deleteAchievement']);
+
+Route::get('reporter/addWinner/{id}', [achievement_controller::class, 'addWinnerform']);
+Route::post('reporter/addWinner/{id}', [achievement_controller::class, 'storeWinner']);
+Route::get('reporter/removeWinner/{id}', [achievement_controller::class, 'removeWinner']);
 
 
 // Admin routes
@@ -119,3 +133,6 @@ Route::get('allevents', [postview_controller::class, 'allevents']);
 
 Route::get('workshops', [workshop_controller::class, 'viewworkshops']);
 Route::get('workshop/{id}', [workshop_controller::class, 'workshopdetails']);
+
+Route::get('achievements', [achievement_controller::class, 'viewachievements']);
+Route::get('achievement/{id}', [achievement_controller::class, 'viewwinners']);

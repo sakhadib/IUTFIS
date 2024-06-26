@@ -69,6 +69,9 @@
                 <a class="nav-link" href="/events">Events</a>
               </li>
               <li class="nav-item">
+                <a class="nav-link" href="/achievements">Achievements</a>
+              </li>
+              <li class="nav-item">
                 <a class="nav-link" href="#">Executives</a>
               </li>
               <li class="nav-item">
@@ -106,6 +109,7 @@
         .bgd{
           background-color: rgba(0, 14, 24, 0.5);
           transition: background-color ease-in-out 0.3s;
+          backdrop-filter: blur(6px);
         }
 
         .bg-body-tertiary{
