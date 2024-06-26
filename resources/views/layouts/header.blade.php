@@ -57,6 +57,9 @@
                 <a class="nav-link" href="/news">News</a>
               </li>
               <li class="nav-item">
+                <a class="nav-link" href="/workshops">Workshops</a>
+              </li>
+              <li class="nav-item">
                 <a class="nav-link" href="/articles">Articles</a>
               </li>
               <li class="nav-item">
@@ -109,6 +112,3 @@
           transition: background-color ease-in-out 0.3s;
         }
       </style>
-    
-</body>
-</html>

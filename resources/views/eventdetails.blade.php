@@ -116,7 +116,7 @@
     function makeLinksClickable(text) {
         var urlPattern = /(https?:\/\/[^\s]+)/g;
         return text.replace(urlPattern, function(url) {
-            return '<a href="' + url + '" target="_blank" rel="noopener noreferrer">' + url + '</a>';
+            return '<a href="' + url + '" target="_blank" rel="noopener noreferrer" class="link-l">' + url + '</a>';
         });
     }
 

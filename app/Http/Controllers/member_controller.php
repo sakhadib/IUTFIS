@@ -46,7 +46,7 @@ class member_controller extends Controller
         $request->validate([
             'email' => 'required|email|unique:members,email',
             'fullname' => 'required|string|max:255',
-            'profile_pic' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'profile_pic' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048', 
             'dept' => 'required|string|max:255',
             'std_id' => 'required|string|max:255|unique:members,student_id',
             'pass' => 'required|string|min:8',

@@ -118,7 +118,7 @@
                    Workshop
                   </a>
                   <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="/reporter/Events">All Workshop</a></li>
+                    <li><a class="dropdown-item" href="/reporter/workshops">All Workshop</a></li>
                     <li><a class="dropdown-item" href="/reporter/createWorkshop">Create new Workshop</a></li>
                   </ul>
                 </li>
@@ -178,6 +178,3 @@
           transition: background-color ease-in-out 0.3s;
         }
       </style>
-    
-</body>
-</html>

@@ -9,16 +9,16 @@
             <div class="col-md-12">
                 <div class="form-bg">
                     <div class="row mt-3">
-                        <h1 class="display-3 text-light text-center">Workshop</h1>
+                        <h1 class="display-3 text-light text-center">Edit Workshop</h1>
                     </div>
 
                     <div class="row mt-5">
-                        <form action="/reporter/createWorkshops" method="POST" enctype="multipart/form-data">
+                        <form action="/reporter/editWorkshops/{{$workshop->id}}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="col-md-9 mb-3">
                                     <div class="form-floating mb-3">
-                                        <input name="ws_title" type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+                                        <input name="ws_title" value="{{$workshop->title}}" type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
                                         <label for="floatingInput">Title</label>
                                         @error('ws_title')
                                         <div class="invalid-feedback">
@@ -29,10 +29,14 @@
                                 </div>
                                 <div class="col-md-3 df dfc aic jcc mb-3">
                                     <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
-                                        <input type="checkbox" name="in_iut" class="btn-check" id="btncheck1" autocomplete="off">
+                                        <input type="checkbox" name="in_iut" class="btn-check" id="btncheck1" autocomplete="off"
+                                        @if($workshop->in_iut == true) checked @endif
+                                        >
                                         <label class="btn btn-outline-light btn-lg" for="btncheck1">In IUT</label>
                                       
-                                        <input type="checkbox" name="is_online" class="btn-check" id="online-btn" autocomplete="off" onclick="toggleLinker()">
+                                        <input type="checkbox" name="is_online" class="btn-check" id="online-btn" autocomplete="off"
+                                        @if($workshop->is_online == true) checked @endif
+                                        >
                                         <label class="btn btn-outline-light btn-lg" for="online-btn">Online</label>                                      
                                     </div>
                                 </div>
@@ -40,7 +44,7 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-floating mb-3">
-                                        <input type="text" name="start_datetime" class="form-control datetimepicker @error('start_datetime') is-invalid @enderror" id="startDatetime" placeholder="Select start date and time" value="{{ old('start_datetime') }}">
+                                        <input value="{{$workshop->start_date}}" type="text" name="start_datetime" class="form-control datetimepicker @error('start_datetime') is-invalid @enderror" id="startDatetime" placeholder="Select start date and time" value="{{ old('start_datetime') }}">
                                         <label for="startDatetime">Start Date & Time</label>
                                         @error('start_datetime')
                                             <div class="invalid-feedback">
@@ -51,7 +55,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-floating mb-3">
-                                        <input type="text" name="end_datetime" class="form-control datetimepicker @error('end_datetime') is-invalid @enderror" id="endDatetime" placeholder="Select end date and time" value="{{ old('end_datetime') }}">
+                                        <input value="{{$workshop->end_date}}" type="text" name="end_datetime" class="form-control datetimepicker @error('end_datetime') is-invalid @enderror" id="endDatetime" placeholder="Select end date and time" value="{{ old('end_datetime') }}">
                                         <label for="endDatetime">End Date & Time</label>
                                         @error('end_datetime')
                                             <div class="invalid-feedback">
@@ -62,7 +66,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-floating mb-3">
-                                        <input type="text" name="location" class="form-control @error('location') is-invalid @enderror" id="location" placeholder="Enter location" value="{{ old('location') }}">
+                                        <input value="{{$workshop->location}}" type="text" name="location" class="form-control @error('location') is-invalid @enderror" id="location" placeholder="Enter location" value="{{ old('location') }}">
                                         <label for="location">Location</label>
                                         @error('location')
                                             <div class="invalid-feedback">
@@ -75,7 +79,7 @@
                             <div class="row">
                                 <div class="col-md-8">
                                     <div class="mb-3">
-                                        <textarea class="form-control @error('description') is-invalid @enderror" name="description" id="desc" rows="8" placeholder="Short Description about event ...">{{ old('description') }}</textarea>
+                                        <textarea class="form-control @error('description') is-invalid @enderror" name="description" id="desc" rows="8" placeholder="Short Description about event ...">{{ old('description') }} {{$workshop->description}} </textarea>
                                         @error('description')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
@@ -83,7 +87,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4" hidden>
                                     <div id="dropzone" class="dropzone mb-3" onclick="document.getElementById('fileInput').click();">
                                         <p style="margin: 0;">click to upload the featured image</p>
                                         <input name="workshop_pic" type="file" id="fileInput" class="d-none" accept="image/*" onchange="previewImage(event);">
@@ -95,10 +99,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row" hidden id="linker">
+                            <div class="row" id="linker">
                                 <div class="col-md-12">
                                     <div class="form-floating mb-3">
-                                        <input type="url" name="link" class="form-control @error('link') is-invalid @enderror" id="socialMediaLink" placeholder="Enter social media link" value="{{ old('link') }}">
+                                        <input value="{{$workshop->link}}" type="url" name="link" class="form-control @error('link') is-invalid @enderror" id="socialMediaLink" placeholder="Enter social media link" value="{{ old('link') }}">
                                         <label for="socialMediaLink">Workshop Link</label>
                                         @error('link')
                                             <div class="invalid-feedback">
@@ -110,7 +114,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-12 df jcc">
-                                    <button type="submit" class="btn btn-light btn-lg">Create Workshop</button>
+                                    <button type="submit" class="btn btn-light btn-lg">Update Workshop</button>
                                 </div>
                             </div>
                         </form>
@@ -144,17 +148,6 @@
 
 </div>
 
-
-<script>
-    function toggleLinker() {
-        var linker = document.getElementById('linker');
-        if (linker.hidden) {
-            linker.hidden = false;
-        } else {
-            linker.hidden = true;
-        }
-    }
-</script>
 
 
 <style>

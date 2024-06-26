@@ -11,4 +11,16 @@ class Workshop extends Model
 
     protected $table = 'workshops';
     protected $primaryKey = 'id';
+
+    protected $fillable = [
+        'title',
+        'description',
+        'start_date',
+        'end_date',
+        'location',
+        'in_IUT',
+        'is_online',
+        'link',
+        'featured_image',
+    ];
 }

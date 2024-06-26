@@ -52,7 +52,16 @@ Route::post('reporter/editEvents/{id}', [event_controller::class, 'updateEvent']
 Route::get('reporter/deleteEvent/{id}', [event_controller::class, 'deleteEvent']);
 
 
-Route::get('reporter/createWorkshop', [workshop_controller::class, 'createWorkshop']);
+Route::get('reporter/createWorkshops', [workshop_controller::class, 'createWorkshop']);
+Route::post('reporter/createWorkshops', [workshop_controller::class, 'storeWorkshop']);
+Route::get('reporter/workshops', [workshop_controller::class, 'allWorkshops']);
+Route::get('reporter/editWorkshops/{id}', [workshop_controller::class, 'editworkshop']);
+Route::post('reporter/editWorkshops/{id}', [workshop_controller::class, 'updateWorkshop']);
+Route::get('reporter/deleteWorkshop/{id}', [workshop_controller::class, 'deleteWorkshop']);
+
+Route::get('reporter/addSpeaker/{id}', [workshop_controller::class, 'addSpeakerform']);
+Route::post('reporter/addSpeaker/{id}', [workshop_controller::class, 'storeSpeaker']);
+Route::get('reporter/removeSpeaker/{id}', [workshop_controller::class, 'removeSpeaker']);
 
 
 // Admin routes
@@ -107,3 +116,6 @@ Route::get('Announcements/{id}', [postview_controller::class, 'announcementdetai
 Route::get('events', [postview_controller::class, 'events']);
 Route::get('event/{id}', [postview_controller::class, 'eventdetails']);
 Route::get('allevents', [postview_controller::class, 'allevents']);
+
+Route::get('workshops', [workshop_controller::class, 'viewworkshops']);
+Route::get('workshop/{id}', [workshop_controller::class, 'workshopdetails']);
