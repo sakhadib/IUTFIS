@@ -71,8 +71,14 @@
               <li class="nav-item">
                 <a class="nav-link" href="/achievements">Achievements</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Executives</a>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Executives
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="/executives">Current Executive Panel</a></li>
+                  <li><a class="dropdown-item" href="/panels">All Panels</a></li>
+                </ul>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#">About</a>

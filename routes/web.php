@@ -9,6 +9,7 @@ use App\Http\Controllers\home_Controller;
 use App\Http\Controllers\event_controller;
 use App\Http\Controllers\workshop_controller;
 use App\Http\Controllers\achievement_controller;
+use App\Http\Controllers\panel_controller;
 
 /*
 |--------------------------------------------------------------------------
@@ -136,3 +137,10 @@ Route::get('workshop/{id}', [workshop_controller::class, 'workshopdetails']);
 
 Route::get('achievements', [achievement_controller::class, 'viewachievements']);
 Route::get('achievement/{id}', [achievement_controller::class, 'viewwinners']);
+
+Route::get('executives', [panel_controller::class, 'currentExecutives']);
+Route::get('executives/{id}', [panel_controller::class, 'executives']);
+
+Route::get('panels', [panel_controller::class, 'index']);
+
+Route::get('profile/{id}', [panel_controller::class, 'profile']);

@@ -74,7 +74,7 @@ class post_controller extends Controller
         $post->title = $request->input('title');
         $post->content = $request->input('content');
         $post->category_id = $category->id;
-        $post->executive_id = $executive->id;
+        $post->executive_id = session('member_id');
         $post->type = 'N';
         $post->is_approved = true;
         $post->save();
@@ -95,7 +95,7 @@ class post_controller extends Controller
 
         $member = Member::find(session('member_id'));
         $executive = Executive::find(session('executive_id'));
-        $posts = Post::where('executive_id', $executive->id)->where('type', 'N')->get();
+        $posts = Post::where('executive_id', $member->id)->where('type', 'N')->get();
 
         return view('post.news',
             [
@@ -122,7 +122,7 @@ class post_controller extends Controller
         $executive = Executive::find(session('executive_id'));
         $post = Post::find($id);
 
-        if(!$post || $post->executive_id != $executive->id){
+        if(!$post || $post->executive_id != $member->id){
             return redirect('reporter/news')->with('error', 'You are not authorized to edit this news');
         }
 
@@ -150,7 +150,7 @@ class post_controller extends Controller
             'category' => 'required'
         ]);
 
-        $executive = Executive::find(session('executive_id'));
+        $member = Member::find(session('member_id'));
 
         $category = Category::where('name', $request->input('category'))->first();
         if(!$category){
@@ -163,7 +163,7 @@ class post_controller extends Controller
 
         $post = Post::find($request->input('id'));
 
-        if(!$post || $post->executive_id != $executive->id){
+        if(!$post || $post->executive_id != $member->id){
             return redirect('reporter/news')->with('error', 'You are not authorized to edit this news');
         }
 
@@ -216,7 +216,6 @@ class post_controller extends Controller
             'category' => 'required'
         ]);
 
-        $executive = Executive::find(session('executive_id'));
 
         $category = Category::where('name', $request->input('category'))->first();
         if(!$category){
@@ -233,7 +232,7 @@ class post_controller extends Controller
         $post->title = $request->input('title');
         $post->content = $request->input('content');
         $post->category_id = $category->id;
-        $post->executive_id = $executive->id;
+        $post->executive_id = session('member_id');
         $post->type = 'Ar';
         $post->is_approved = true;
         $post->save();
@@ -254,7 +253,7 @@ class post_controller extends Controller
 
         $member = Member::find(session('member_id'));
         $executive = Executive::find(session('executive_id'));
-        $posts = Post::where('executive_id', $executive->id)->where('type', 'Ar')->get();
+        $posts = Post::where('executive_id', $member->id)->where('type', 'Ar')->get();
 
         return view('post.news',
             [
@@ -281,7 +280,7 @@ class post_controller extends Controller
         $executive = Executive::find(session('executive_id'));
         $post = Post::find($id);
 
-        if(!$post || $post->executive_id != $executive->id){
+        if(!$post || $post->executive_id != $member->id){
             return redirect('reporter/articles')->with('error', 'You are not authorized to edit this article');
         }
 
@@ -391,7 +390,7 @@ class post_controller extends Controller
         $post->title = $request->input('title');
         $post->content = $request->input('content');
         $post->category_id = $category->id;
-        $post->executive_id = $executive->id;
+        $post->executive_id = session('member_id');
         $post->type = 'An';
         $post->is_approved = true;
         $post->save();
@@ -413,7 +412,7 @@ class post_controller extends Controller
 
         $member = Member::find(session('member_id'));
         $executive = Executive::find(session('executive_id'));
-        $posts = Post::where('executive_id', $executive->id)->where('type', 'An')->get();
+        $posts = Post::where('executive_id', $member->id)->where('type', 'An')->get();
 
         return view('post.news',
             [
@@ -441,7 +440,7 @@ class post_controller extends Controller
         $executive = Executive::find(session('executive_id'));
         $post = Post::find($id);
 
-        if(!$post || $post->executive_id != $executive->id){
+        if(!$post || $post->executive_id != $member->id){
             return redirect('reporter/announcements')->with('error', 'You are not authorized to edit this announcement');
         }
 
@@ -468,7 +467,7 @@ class post_controller extends Controller
             'content' => 'required|string'
         ]);
 
-        $executive = Executive::find(session('executive_id'));
+        $member = Member::find(session('member_id'));
 
         $category = Category::where('name', $request->input('category'))->first();
         if(!$category){
@@ -481,7 +480,7 @@ class post_controller extends Controller
 
         $post = Post::find($request->input('id'));
 
-        if(!$post || $post->executive_id != $executive->id){
+        if(!$post || $post->executive_id != $member->id){
             return redirect('reporter/announcements')->with('error', 'You are not authorized to edit this announcement');
         }
 
@@ -506,7 +505,7 @@ class post_controller extends Controller
             return redirect('reporter/news')->with('error', 'Post not found.');
         }
 
-        if($post->executive_id != session('executive_id')){
+        if($post->executive_id != session('member_id')){
             return redirect('reporter/news')->with('error', 'You are not authorized to delete this post.');
         }
 
