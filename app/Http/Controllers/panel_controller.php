@@ -106,6 +106,7 @@ class panel_controller extends Controller
 
         $newsCount = Post::where('executive_id', $member->id)->where('type', 'N')->count();
         $articleCount = Post::where('executive_id', $member->id)->where('type', 'Ar')->count();
+        $speakerCount = Speaker::where('member_id', $member->id)->count();
 
         return view('panel.profile', 
             [
@@ -113,7 +114,8 @@ class panel_controller extends Controller
                 'executive' => $executive,
                 'panel' => $panel,
                 'newsCount' => $newsCount,
-                'articleCount' => $articleCount
+                'articleCount' => $articleCount,
+                'speakerCount' => $speakerCount
             ]);
     }
 }
