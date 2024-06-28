@@ -12,7 +12,7 @@
                     <p class="text-light lead">
                         Workshops of IUT FIS. Click on them to learn more.
                     </p>
-                    <a href="/allevents" class="btn btn-lg btn-outline-light">Show All Events</a>
+                    <a href="/allworkshops" class="btn btn-lg btn-outline-light">Show All Workshops</a>
                 </div>
             </div>
         </div>

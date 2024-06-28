@@ -118,4 +118,63 @@ class panel_controller extends Controller
                 'speakerCount' => $speakerCount
             ]);
     }
+
+
+    public function update_links(Request $request, $id){
+        if($id != session('member_id')){
+            return redirect('profile/' . $id);
+        }
+
+        $request->validate([
+            'fb' => 'nullable|url',
+            'ig' => 'nullable|url',
+            'li' => 'nullable|url',
+            'port' => 'nullable|url',
+        ]);
+
+
+        $member = Member::where('id', $id)->first();
+        $member->facebook_link = $request->fb;
+        $member->instagram_link = $request->ig;
+        $member->linkedin_link = $request->li;
+        $member->portfolio_link = $request->port;
+
+        $member->save();
+
+        return redirect('profile/' . $id);
+    }
+
+    public function update_bio(Request $request, $id){
+            
+            if($id != session('member_id')){
+                return redirect('profile/' . $id);
+            }
+        
+            $request->validate([
+                'bio' => 'required|string'
+            ]);
+    
+            $member = Member::where('id', $id)->first();
+            $member->bio = $request->bio;
+    
+            $member->save();
+    
+            return redirect('profile/' . $id);
+    }
+
+
+    public function update_pm(Request $request, $id){
+        
+    
+        $request->validate([
+            'pm' => 'required|string'
+        ]);
+
+        $panel = Panel::where('id', $id)->first();
+        $panel->president_message = $request->pm;
+
+        $panel->save();
+
+        return redirect('profile/' . session('member_id'));
+    }
 }

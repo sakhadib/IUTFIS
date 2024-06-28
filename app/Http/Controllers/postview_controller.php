@@ -21,8 +21,7 @@ class postview_controller extends Controller
         $modifiedNewsArray = [];
 
         foreach ($post as $news) {
-            $executive = Executive::where('id', $news->executive_id)->first();
-            $member = Member::where('id', $executive->member_id)->first();
+            $member = Member::where('id', $news->executive_id)->first();
             $category = Category::where('id', $news->category_id)->first();
             $news->member = $member;
             $news->created_at->addHours(6);
@@ -48,8 +47,7 @@ class postview_controller extends Controller
         $modifiedNewsArray = [];
 
         foreach ($post as $news) {
-            $executive = Executive::where('id', $news->executive_id)->first();
-            $member = Member::where('id', $executive->member_id)->first();
+            $member = Member::where('id', $news->executive_id)->first();
             $category = Category::where('id', $news->category_id)->first();
             $news->member = $member;
             $news->created_at->addHours(6);
@@ -73,8 +71,7 @@ class postview_controller extends Controller
         $modifiedNewsArray = [];
 
         foreach ($post as $news) {
-            $executive = Executive::where('id', $news->executive_id)->first();
-            $member = Member::where('id', $executive->member_id)->first();
+            $member = Member::where('id', $news->executive_id)->first();
             $category = Category::where('id', $news->category_id)->first();
             $news->member = $member;
             $news->created_at->addHours(6);
@@ -93,9 +90,9 @@ class postview_controller extends Controller
 
     public function newsdetails($id){
         $post = Post::where('id', $id)->first();
-        $executive = Executive::where('id', $post->executive_id)->orderBy('created_at', 'desc')->first();
+        $executive = Executive::where('member_id', $post->executive_id)->orderBy('created_at', 'desc')->first();
         $panel = Panel::where('id', $executive->panel_id)->first();
-        $member = Member::where('id', $executive->member_id)->first();
+        $member = Member::where('id', $post->executive_id)->first();
         $category = Category::where('id', $post->category_id)->first();
         $post->member = $member;
         $post->executive = $executive;
@@ -116,9 +113,9 @@ class postview_controller extends Controller
 
     public function articledetails($id){
         $post = Post::where('id', $id)->first();
-        $executive = Executive::where('id', $post->executive_id)->orderBy('created_at', 'desc')->first();
+        $executive = Executive::where('member_id', $post->executive_id)->orderBy('created_at', 'desc')->first();
         $panel = Panel::where('id', $executive->panel_id)->first();
-        $member = Member::where('id', $executive->member_id)->first();
+        $member = Member::where('id', $post->executive_id)->first();
         $category = Category::where('id', $post->category_id)->first();
         $post->member = $member;
         $post->executive = $executive;
@@ -140,9 +137,9 @@ class postview_controller extends Controller
 
     public function announcementdetails($id){
         $post = Post::where('id', $id)->first();
-        $executive = Executive::where('id', $post->executive_id)->orderBy('created_at', 'desc')->first();
+        $executive = Executive::where('member_id', $post->executive_id)->orderBy('created_at', 'desc')->first();
         $panel = Panel::where('id', $executive->panel_id)->first();
-        $member = Member::where('id', $executive->member_id)->first();
+        $member = Member::where('id', $post->executive_id)->first();
         $category = Category::where('id', $post->category_id)->first();
         $post->member = $member;
         $post->executive = $executive;

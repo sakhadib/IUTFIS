@@ -79,7 +79,7 @@
                   </a>
                   <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="/reporter/news">All News</a></li>
-                    <li><a class="dropdown-item" href="/reporter/createnews">Create new news</a></li>
+                    <li><a class="dropdown-item" href="/reporter/createNews">Create new news</a></li>
                   </ul>
                 </li>
                 
@@ -161,7 +161,7 @@
                   <img src="/storage/{{session('member_photo')}}" alt="" class="profile-pic">
                 </a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="/profile">Profile</a></li>
+                  <li><a class="dropdown-item" href="/profile/{{session('member_id')}}">Profile</a></li>
                   <li><a class="dropdown-item" href="/logout">Logout</a></li>
                 </ul>
               </li>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Member;
 use App\Models\Executive;
+use App\Models\Panel;
 
 class login_controller extends Controller
 {
@@ -29,7 +30,7 @@ class login_controller extends Controller
             return redirect('login')->with('error', 'Invalid student ID or password');
         }
 
-        $executive = Executive::where('member_id', $member->id)->orderBy('created_at')->first();
+        $executive = Executive::where('member_id', $member->id)->orderBy('created_at', 'desc')->first();
 
         if(!$executive){
             return redirect('login')->with('error', 'You are not authorized to login');
@@ -54,12 +55,17 @@ class login_controller extends Controller
             return redirect('login')->with('error', 'Boy do hardwork and become admin or reporter to enter the ship');
         }
 
+        $position = $executive->position;
+        $panel = Panel::find($executive->panel_id);
+
         session([
             'member_id' => $member->id,
             'member_photo' => $member->photo,
             'executive_id' => $executive->id,
             'admin' => $is_admin,
-            'reporter' => $is_reporter
+            'reporter' => $is_reporter,
+            'position' => $position,
+            'panel_id' => $panel->id
         ]);
 
         if($is_admin && $is_reporter){
@@ -71,7 +77,7 @@ class login_controller extends Controller
         }
 
         if($is_reporter){
-            return redirect('reporter/dashboard');
+            return redirect('reporter/news');
         }
 
         

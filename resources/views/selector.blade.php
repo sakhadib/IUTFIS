@@ -16,7 +16,7 @@
                 <div class="main-box  df dfc jcc">
                     <h1 class="selector-icon"><i class="uil uil-newspaper"></i></h1>
                     <h1 class="display-5 text-light text-center">Reporter Galaxy</h1>
-                    <a href="/reporter/dashboard" class="btn btn-lg btn-outline-light mt-4"><i class="uil uil-rocket"></i> Launch</a>
+                    <a href="/reporter/news" class="btn btn-lg btn-outline-light mt-4"><i class="uil uil-rocket"></i> Launch</a>
                 </div>
             </div>
         </div>

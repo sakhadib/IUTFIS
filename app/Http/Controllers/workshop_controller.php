@@ -288,4 +288,12 @@ class workshop_controller extends Controller
             'speaker_non_members' => $speaker_non_members
         ]);
     }
+
+    public function view_all_workshops(){
+        $workshops = Workshop::orderBy('start_date', 'desc')->get();
+
+        return view('workshops', [
+            'workshops' => $workshops
+        ]);
+    }
 }

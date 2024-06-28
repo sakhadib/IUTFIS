@@ -134,6 +134,7 @@ Route::get('allevents', [postview_controller::class, 'allevents']);
 
 Route::get('workshops', [workshop_controller::class, 'viewworkshops']);
 Route::get('workshop/{id}', [workshop_controller::class, 'workshopdetails']);
+Route::get('allworkshops', [workshop_controller::class, 'view_all_workshops']);
 
 Route::get('achievements', [achievement_controller::class, 'viewachievements']);
 Route::get('achievement/{id}', [achievement_controller::class, 'viewwinners']);
@@ -144,3 +145,13 @@ Route::get('executives/{id}', [panel_controller::class, 'executives']);
 Route::get('panels', [panel_controller::class, 'index']);
 
 Route::get('profile/{id}', [panel_controller::class, 'profile']);
+Route::post('update_links/{id}', [panel_controller::class, 'update_links']);
+Route::post('updatebio/{id}', [panel_controller::class, 'update_bio']);
+Route::post('updatepm/{id}', [panel_controller::class, 'update_pm']);
+
+
+
+
+Route::fallback(function () {
+    return view('404');
+});

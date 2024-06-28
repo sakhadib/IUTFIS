@@ -64,7 +64,7 @@
                         </a>
                         @endif
 
-                        {{-- @if(session('member_id') == $member->id) --}}
+                        @if(session('member_id') == $member->id)
 
                         @if($member->facebook_link == null || $member->linkedin_link == null || $member->instagram_link == null || $member->portfolio_link == null)
                         <a href="#" class="btn btn-outline-light btn-lg" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -72,7 +72,7 @@
                         </a>
                         @endif
 
-                        {{-- @endif --}}
+                        @endif
 
                     </div>
                 </div>
@@ -83,7 +83,7 @@
     <div class="container mt-5">
         <div class="details-card">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-4 df dfc jcc">
                     <div class="row">
                         <div class="col-8">
                             <div class="h1 fs-3 text-light" style="font-family: jetbrains mono, monospace">
@@ -120,26 +120,27 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row mt-5">
-                        <div class="col-12 df dfc aifs jcc">
-                            <div class="btn-group">
-                                <a href="news/{{$member->id}}" class="btn btn-outline-light">My News</a>
-                                <a href="articles/{{$member->id}}" class="btn btn-outline-light">My Articles</a>
-                            </div>
-                        </div>
-                    </div>
+                    
                 </div>
                 <div class="col-md-8">
-                    <div class="row">
+                    <div class="row mt-4">
                         <div class="col-12">
                             <h1 class="display-4 text-light">
-                                About Me
+                                About Me &nbsp; 
+                                @if(session('member_id') == $member->id)
+                                    <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#bio-modal"><i class="fa fa-pencil" aria-hidden="true"></i> About Me</button>
+                                    @if(strtolower(session('position')) == 'president')
+                                    <button class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#pm"><i class="fa fa-pencil" aria-hidden="true"></i> Presidents Message</button>
+                                    @endif
+                                
+                                @endif
+
                             </h1>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-12">
-                            <p class="fs-5 text-light">
+                            <p class="fs-5 text-light" style="text-align: justify">
                                 {{$member->bio}}
                             </p>
                         </div>
@@ -152,7 +153,7 @@
 </div>
 
 
-{{-- @if(session('member_id') == $member->id) --}}
+@if(session('member_id') == $member->id)
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -164,6 +165,7 @@
         </div>
         <div class="modal-body">
           <form action="/update_links/{{$member->id}}" method="post">
+            @csrf
             <div class="form-floating mb-3">
                 <input name="fb" type="url" class="form-control" value="{{$member->facebook_link}}" id="floatingInput" placeholder="name@example.com">
                 <label for="floatingInput">Facebook Link</label>
@@ -187,7 +189,58 @@
     </div>
   </div>
 
-{{-- @endif --}}
+
+
+  <div class="modal fade" id="bio-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Write your bio here</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form action="/updatebio/{{session('member_id')}}" method="post">
+                @csrf
+                <div class="form-floating mb-3">
+                    <textarea name="bio" class="form-control" placeholder="About You..." id="floatingTextarea2" style="height: 300px;">
+                        {{$member->bio}}
+                    </textarea>
+                    <label for="floatingTextarea2">About You</label>
+                </div>
+                <button type="submit" class="btn btn-dark" style="width: 100%">Save</button>
+            </form>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="pm" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">President's Message</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form action="/updatepm/{{$panel->id}}" method="post">
+                @csrf
+                <div class="form-floating mb-3">
+                    <textarea name="pm" class="form-control" placeholder="About You..." id="floatingTextarea2" style="height: 300px;">
+                        {{$panel->president_message}}
+                    </textarea>
+                    <label for="floatingTextarea2">Write the message here ...</label>
+                </div>
+                <button type="submit" class="btn btn-dark" style="width: 100%">Save</button>
+            </form>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+@endif
 
 
 <style>
