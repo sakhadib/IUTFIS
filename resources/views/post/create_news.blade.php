@@ -33,7 +33,7 @@
                     </datalist>
                 </div>
                 <div class="mb-3">
-                    <textarea class="form-control inp inp-body math" name="content" id="text" rows="15" placeholder="Start Writing ...">@if($post != null){{$post->content}}@endif</textarea>
+                    <textarea class="form-control inp inp-body math" name="content" id="text" rows="15" placeholder="Start Writing . Click on Help to learn...">@if($post != null){{$post->content}}@endif</textarea>
                 </div>
                 @if($post != null)
                 <input type="text" name="id" value="{{$post->id}}" hidden>
@@ -42,13 +42,16 @@
                     
                     <div class="col-md-12 df jcfe">
                         
-                        <button type="submit" class="btn btn-primary me-auto" style="width: 100%">
+                        <button type="submit" class="btn btn-dark me-auto" >
                         @if($post != null)
                             Update
                         @else
                             Create
                         @endif
                         </button> 
+                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <i class="uil uil-fire"></i> Help
+                        </button>
                     </div>
                 </div>
                                
@@ -70,6 +73,72 @@
         </div>
     </div>
 </div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header bg-primary text-white">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Markdown Helper</h1>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <h2>Markdown Basics</h2>
+          <ul class="list-group">
+            <li class="list-group-item"><strong>Headings:</strong> Use <code>#</code> for headings. More <code>#</code> means smaller heading.<br>Example: <code># Heading 1</code>, <code>## Heading 2</code></li>
+            <li class="list-group-item"><strong>Bold:</strong> Use <code>**text**</code> or <code>__text__</code> for bold text.<br>Example: <code>**bold text**</code> or <code>__bold text__</code></li>
+            <li class="list-group-item"><strong>Italic:</strong> Use <code>*text*</code> or <code>_text_</code> for italic text.<br>Example: <code>*italic text*</code> or <code>_italic text_</code></li>
+            <li class="list-group-item"><strong>Lists:</strong> Use <code>-</code> or <code>*</code> for unordered lists, and numbers for ordered lists.<br>Example: <code>- Item 1</code>, <code>* Item 2</code>, <code>1. Item 3</code></li>
+            <li class="list-group-item"><strong>Links:</strong> Use <code>[text](url)</code> for links.<br>Example: <code>[Google](https://www.google.com)</code></li>
+            <li class="list-group-item"><strong>Images:</strong> Use <code>![alt text](url)</code> for images.<br>Example: <code>![Logo](https://example.com/logo.png)</code></li>
+            <li class="list-group-item"><strong>Inline Code:</strong> Use <code>`code`</code> for inline code.<br>Example: <code>`print("Hello, World!")`</code></li>
+            <li class="list-group-item"><strong>Code Blocks:</strong> Use <code>```language</code> to start a code block and <code>```</code> to end it.<br>Example: <code>```python<br>print("Hello, World!")<br>```</code></li>
+            <li class="list-group-item"><strong>Inline Equations:</strong> Use <code>\\(inline equation\\)</code> for inline equations.<br>Example: <code>\\(E = mc^2\\)</code></li>
+            <li class="list-group-item"><strong>Block Equations:</strong> Use <code>\\[block equation\\]</code> for block equations.<br>Example: <code>\\[a^2 + b^2 = c^2\\]</code></li>
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .modal-header {
+      background-color: #007bff;
+      color: white;
+    }
+  
+    .btn-close-white {
+      filter: invert(1);
+    }
+  
+    .modal-body h2 {
+      border-bottom: 2px solid #007bff;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+  
+    .list-group-item {
+      border: none;
+      padding: 15px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+  
+    .list-group-item:last-child {
+      border-bottom: none;
+    }
+  
+    .list-group-item code {
+      background-color: #f8f9fa;
+      padding: 2px 4px;
+      border-radius: 4px;
+    }
+  </style>
+  
 
 
 
@@ -139,6 +208,9 @@
         height: auto;
     }
 </style>
+
+
+
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {

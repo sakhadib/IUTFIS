@@ -177,7 +177,7 @@
                     <p class="lead text-light text-center">
                         Articles from FIS members. Click on them to learn more.
                     </p>
-                    <a href="/news" class="btn btn-lg btn-outline-light mb-5">Show All Articles</a>
+                    <a href="/articles" class="btn btn-lg btn-outline-light mb-5">Show All Articles</a>
                 </div>
                 <div class="col-md-7 offset-md-1">
                     <div class="container">

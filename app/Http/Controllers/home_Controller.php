@@ -36,7 +36,8 @@ class home_Controller extends Controller
             [
                 'newss' => $first_3_news,
                 'workshop' => $closest_workshop,
-                'articles' => $articles
+                'articles' => $articles,
+                'header' => 'FIS home'
             ]
         );
     }

@@ -33,7 +33,8 @@ class postview_controller extends Controller
             [
                 'posts' => $modifiedNewsArray,
                 'type' => 'News',
-                'post_count' => $post_count
+                'post_count' => $post_count,
+                'header' => 'News'
             ]);
     }
 
@@ -59,7 +60,8 @@ class postview_controller extends Controller
             [
                 'posts' => $modifiedNewsArray,
                 'type' => 'Articles',
-                'post_count' => $post_count
+                'post_count' => $post_count,
+                'header' => 'Articles'
             ]);
     }
 
@@ -83,13 +85,19 @@ class postview_controller extends Controller
             [
                 'posts' => $modifiedNewsArray,
                 'type' => 'Announcements',
-                'post_count' => $post_count
+                'post_count' => $post_count,
+                'header' => 'Announcements'
             ]);
     }
 
 
     public function newsdetails($id){
         $post = Post::where('id', $id)->first();
+        if($post == null || $post->type != 'N'){
+            return redirect('/notfound');
+        }
+
+
         $executive = Executive::where('member_id', $post->executive_id)->orderBy('created_at', 'desc')->first();
         $panel = Panel::where('id', $executive->panel_id)->first();
         $member = Member::where('id', $post->executive_id)->first();
@@ -101,18 +109,24 @@ class postview_controller extends Controller
         $post->panel = $panel;
 
 
-        $more_posts = Post::where('type', 'N')->where('id', '!=', $id)->where('executive_id', $executive->id)->orderBy('created_at', 'desc')->take(3)->get();
+        $more_posts = Post::where('type', 'N')->where('id', '!=', $id)->where('executive_id', $member->id)->orderBy('created_at', 'desc')->take(5)->get();
 
         return view('postdetails', 
             [
                 'post' => $post,
-                'more_posts' => $more_posts
+                'more_posts' => $more_posts,
+                'header' => $post->title,
+                'type' => 'News'
             ]);
     }
 
 
     public function articledetails($id){
         $post = Post::where('id', $id)->first();
+        if($post == null || $post->type != 'Ar'){
+            return redirect('/notfound');
+        }
+
         $executive = Executive::where('member_id', $post->executive_id)->orderBy('created_at', 'desc')->first();
         $panel = Panel::where('id', $executive->panel_id)->first();
         $member = Member::where('id', $post->executive_id)->first();
@@ -124,12 +138,14 @@ class postview_controller extends Controller
         $post->panel = $panel;
 
 
-        $more_posts = Post::where('type', 'Ar')->where('id', '!=', $id)->where('executive_id', $executive->id)->orderBy('created_at', 'desc')->take(3)->get();
+        $more_posts = Post::where('type', 'Ar')->where('id', '!=', $id)->where('executive_id', $member->id)->orderBy('created_at', 'desc')->take(5)->get();
 
         return view('postdetails', 
             [
                 'post' => $post,
-                'more_posts' => $more_posts
+                'more_posts' => $more_posts,
+                'header' => $post->title,
+                'type' => 'Articles'
             ]);
     }
 
@@ -137,6 +153,11 @@ class postview_controller extends Controller
 
     public function announcementdetails($id){
         $post = Post::where('id', $id)->first();
+        if($post == null || $post->type != 'An'){
+            return redirect('/notfound');
+        }
+
+
         $executive = Executive::where('member_id', $post->executive_id)->orderBy('created_at', 'desc')->first();
         $panel = Panel::where('id', $executive->panel_id)->first();
         $member = Member::where('id', $post->executive_id)->first();
@@ -149,12 +170,14 @@ class postview_controller extends Controller
 
 
 
-        $more_posts = Post::where('type', 'An')->where('id', '!=', $id)->where('executive_id', $executive->id)->orderBy('created_at', 'desc')->take(3)->get();
+        $more_posts = Post::where('type', 'An')->where('id', '!=', $id)->where('executive_id', $member->id)->orderBy('created_at', 'desc')->take(5)->get();
 
         return view('postdetails', 
             [
                 'post' => $post,
-                'more_posts' => $more_posts
+                'more_posts' => $more_posts,
+                'header' => $post->title,
+                'type' => 'Announcements'
             ]);
     }
 
@@ -174,7 +197,8 @@ class postview_controller extends Controller
         $events = Event::where('start_date', '>=', date('Y-m-d'))->get();
         return view('allevents', [
             'events' => $events,
-            'type' => 'Events'
+            'type' => 'Events',
+            'header' => 'Upcoming Events'
         ]);
     }
 
@@ -186,7 +210,8 @@ class postview_controller extends Controller
         return view('eventdetails', [
             'event' => $event,
             'member' => $member,
-            'executive' => $executive
+            'executive' => $executive,
+            'header' => $event->name
         ]);
     }
 
@@ -195,7 +220,8 @@ class postview_controller extends Controller
         $events = Event::All();
         return view('allevents', [
             'events' => $events,
-            'type' => 'Events'
+            'type' => 'Events',
+            'header' => 'All Events'
         ]);
     }
 

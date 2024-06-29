@@ -10,6 +10,7 @@ use App\Http\Controllers\event_controller;
 use App\Http\Controllers\workshop_controller;
 use App\Http\Controllers\achievement_controller;
 use App\Http\Controllers\panel_controller;
+use App\Http\Controllers\about_controller;
 
 /*
 |--------------------------------------------------------------------------
@@ -151,7 +152,14 @@ Route::post('updatepm/{id}', [panel_controller::class, 'update_pm']);
 
 
 
+Route::get('about', [about_controller::class, 'index']);
+
+
+
+
+
+
 
 Route::fallback(function () {
-    return view('404');
+    return view('404', ['header' => '404 - Not found']);
 });

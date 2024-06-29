@@ -21,19 +21,15 @@
                             </p>
                         </div>   
                     </div>
-                    <div class="row">
-                        <div class="col-md-10 offset-md-2">
-                            <a href="#" class="btn btn-outline-light">Join Us</a>
-                        </div>
-                    </div>
+                    
                     <div class="row mt-4">
                         <div class="col-md-9 offset-md-2">
                             <p class="text-light">Follow us on: &nbsp;&nbsp;&nbsp;
-                                <a href="#" class="text-light me-3"><i class="uil uil-facebook-f fs-3"></i></a>
-                                <a href="#" class="text-light me-3"><i class="uil uil-twitter fs-3"></i></a>
-                                <a href="#" class="text-light me-3"><i class="uil uil-instagram fs-3"></i></a>
-                                <a href="#" class="text-light me-3"><i class="uil uil-youtube fs-3"></i></a>
-                                <a href="#" class="text-light me-3"><i class="uil uil-linkedin fs-3"></i></a>
+                                <a href="https://www.facebook.com/IUTFIS/" target="blank" class="text-light me-3"><i class="uil uil-facebook-f fs-3"></i></a>
+                                <a href="mailto:iutfis2061@gmail.com" target = "blank" class="text-light me-3"><i class="uil uil-envelope fs-3"></i></a>
+                                <a href="https://www.instagram.com/iut_interstellar_society/" target = "blank" class="text-light me-3"><i class="uil uil-instagram fs-3"></i></a>
+                                <a href="https://www.youtube.com/@iutfis" target = "blank" class="text-light me-3"><i class="uil uil-youtube fs-3"></i></a>
+                                <a href="https://www.linkedin.com/company/iut-al-fazari-interstellar-society/?originalSubdomain=bd" target = "blank" class="text-light me-3"><i class="uil uil-linkedin fs-3"></i></a>
                                 
                             </p>
                             
@@ -188,7 +184,7 @@
 
 {{-- For the footer clock --}}
 
-{{-- <script>
+<script>
     async function fetchUserTimezone() {
         try {
             // Using a public API to fetch the user's IP information
@@ -238,7 +234,7 @@
 
     // Initialize the time display
     updateTime();
-</script> --}}
+</script>
 
 <script>
     document.getElementById('year').innerText = new Date().getFullYear();

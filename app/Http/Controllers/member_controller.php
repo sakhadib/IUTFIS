@@ -19,7 +19,7 @@ class member_controller extends Controller
         }
 
         $members = Member::orderBy('name')->get();
-        return view('admin.members', ['members' => $members]);
+        return view('admin.members', ['members' => $members, 'header' => 'Members']);
     }
 
 
@@ -29,7 +29,7 @@ class member_controller extends Controller
             return redirect('login')->with('error', 'You are not authorized to view this page');
         }
         
-        return view('admin.member_create');
+        return view('admin.member_create', ['header' => 'Add Member']);
     }
 
     /**
@@ -81,7 +81,7 @@ class member_controller extends Controller
             return redirect('login')->with('error', 'You are not authorized to view this page');
         }
         
-        return view('admin.panel_create');
+        return view('admin.panel_create', ['header' => 'Add Panel']);
     }
 
     public function panelstore(Request $request)
@@ -123,7 +123,7 @@ class member_controller extends Controller
         $executive = Executive::where('member_id', $id)->orderBy('created_at', 'desc')->first();
         $executive_panel = Panel::where('id', $executive->panel_id)->first();
 
-        return view('admin.make_executive', ['member' => $member, 'panels' => $panels, 'executive' => $executive, 'executive_panel' => $executive_panel]);
+        return view('admin.make_executive', ['member' => $member, 'panels' => $panels, 'executive' => $executive, 'executive_panel' => $executive_panel, 'header' => 'Make Executive']);
     }
 
     public function storeexecutive(Request $request)
@@ -201,7 +201,10 @@ class member_controller extends Controller
         }
 
         return view('admin.executives', 
-            ['executives' => $modified_executives]
+            [
+                'executives' => $modified_executives,
+                'header' => 'Executives'
+            ]
         );
     }
 
@@ -226,7 +229,7 @@ class member_controller extends Controller
         }
 
         return view('admin.reporters', 
-            ['reporters' => $modified_reporters]
+            ['reporters' => $modified_reporters, 'header' => 'Reporters']
         );
     }
 
@@ -275,7 +278,7 @@ class member_controller extends Controller
         }
 
         return view('admin.admins', 
-            ['admins' => $modified_admins]
+            ['admins' => $modified_admins, 'header' => 'Admins']
         );
     }
 

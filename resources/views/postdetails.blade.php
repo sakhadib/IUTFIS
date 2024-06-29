@@ -86,7 +86,7 @@
                             @foreach($more_posts as $more_post)
                                 <div class="row mt-2">
                                     <div class="col-12">
-                                        <a href="/post/{{$more_post->id}}" class="link-light">
+                                        <a href="/{{$type}}/{{$more_post->id}}" class="link-light">
                                             <p class="lead">{{$more_post->title}}</p>
                                         </a>
                                     </div>

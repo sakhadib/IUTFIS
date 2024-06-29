@@ -14,7 +14,7 @@ class event_controller extends Controller
             return redirect('login')->with('error', 'Please login to access this page.');
         }
         
-        return view('post.createEvent');
+        return view('post.createEvent', ['header' => 'Create Event']);
     }
 
     public function storeEvent(Request $request)
@@ -55,7 +55,8 @@ class event_controller extends Controller
         return view('post.events', [
             'events' => $events,
             'member' => $member,
-            'type' => 'Events'
+            'type' => 'Events',
+            'header' => 'Events'
         ]);
     }
 
@@ -66,7 +67,7 @@ class event_controller extends Controller
         }
         
         $event = Event::find($id);
-        return view('post.editEvent', ['event' => $event]);
+        return view('post.editEvent', ['event' => $event, 'header' => 'Edit Event']);
     }
 
     public function updateEvent(Request $request, $id)

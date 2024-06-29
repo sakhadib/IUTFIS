@@ -11,7 +11,7 @@ class login_controller extends Controller
 {
     public function index()
     {
-        return view('login');
+        return view('login', ['header' => 'Login']);
     }
 
     public function login(Request $request)
@@ -88,7 +88,7 @@ class login_controller extends Controller
             return redirect('login')->with('error', 'You are not authorized to view this page');
         }
 
-        return view('selector');
+        return view('selector', ['header' => 'Selector Galaxy']);
     }
 
 
@@ -98,7 +98,7 @@ class login_controller extends Controller
         }
 
         $member = session('member');
-        return view('change_password', ['member' => $member]);
+        return view('change_password', ['member' => $member, 'header' => 'Change Password']);
     }
 
 

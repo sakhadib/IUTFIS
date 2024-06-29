@@ -20,7 +20,8 @@ class workshop_controller extends Controller
 
         return view('post.createWorkshop',
             [
-                'members' => $members
+                'members' => $members,
+                'header' => 'Create Workshop'
             ]
     );
     }
@@ -80,7 +81,7 @@ class workshop_controller extends Controller
             return redirect('reporter/workshops')->with('error', 'Workshop not found');
         }
 
-        return view('post.editWorkshop', ['workshop' => $workshop]);
+        return view('post.editWorkshop', ['workshop' => $workshop, 'header' => 'Edit Workshop']);
     }
 
 
@@ -139,7 +140,8 @@ class workshop_controller extends Controller
         return view('post.workshops',
             [
                 'workshops' => $workshops,
-                'type' => 'Workshops'
+                'type' => 'Workshops',
+                'header' => 'All Workshops'
             ]
         );
     }
@@ -197,7 +199,8 @@ class workshop_controller extends Controller
             'workshop' => $workshop,
             'members' => $members,
             'speaker_members' => $speaker_members,
-            'speaker_non_members' => $speaker_non_members
+            'speaker_non_members' => $speaker_non_members,
+            'header' => 'Add Speaker'
         ]);
     }
 
@@ -252,7 +255,8 @@ class workshop_controller extends Controller
         $workshops = Workshop::where('start_date', '>', now())->get();
 
         return view('workshops', [
-            'workshops' => $workshops
+            'workshops' => $workshops,
+            'header' => 'Upcoming Workshops'
         ]);
     }
 
@@ -285,7 +289,8 @@ class workshop_controller extends Controller
         return view('workshopdetails', [
             'workshop' => $workshop,
             'speaker_members' => $speaker_members,
-            'speaker_non_members' => $speaker_non_members
+            'speaker_non_members' => $speaker_non_members,
+            'header' => 'Workshop on ' . $workshop->title . ' at ' . date('d F Y h:i A', strtotime($workshop->start_date))
         ]);
     }
 
@@ -293,7 +298,8 @@ class workshop_controller extends Controller
         $workshops = Workshop::orderBy('start_date', 'desc')->get();
 
         return view('workshops', [
-            'workshops' => $workshops
+            'workshops' => $workshops,
+            'header' => 'All Workshops'
         ]);
     }
 }

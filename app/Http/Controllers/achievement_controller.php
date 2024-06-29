@@ -17,7 +17,7 @@ class achievement_controller extends Controller
             return redirect('/login')->with('error', 'Please login to continue');
         }
         
-        return view('ach.create');
+        return view('ach.create', ['header' => 'Add Achievement']);
     }
 
     public function store(Request $request)
@@ -50,7 +50,7 @@ class achievement_controller extends Controller
     public function allAchievements()
     {
         $achievements = Achievement::all();
-        return view('ach.all', ['achievements' => $achievements, 'type' => 'Achievements']);
+        return view('ach.all', ['achievements' => $achievements, 'type' => 'Achievements', 'header' => 'Achievements']);
     }
 
 
@@ -83,6 +83,7 @@ class achievement_controller extends Controller
             'achievement' => $achievement,
             'members' => $members,
             'winner_members' => $winner_members,
+            'header' => 'Add Winner'
         ]);
     }
 
@@ -140,7 +141,7 @@ class achievement_controller extends Controller
     public function viewachievements()
     {
         $achievements = Achievement::orderBy('competition_date', 'desc')->get();
-        return view('ach.achievements', ['achievements' => $achievements, 'type' => 'Achievements']);
+        return view('ach.achievements', ['achievements' => $achievements, 'type' => 'Achievements', 'header' => 'Achievements']);
     }
 
 
@@ -164,6 +165,7 @@ class achievement_controller extends Controller
         return view('ach.winners', [
             'achievement' => $achievement,
             'winner_members' => $winner_members,
+            'header' => $achievement->rank . ' on ' . $achievement->competition
         ]);
     }
 
@@ -176,7 +178,7 @@ class achievement_controller extends Controller
             return redirect('login')->with('error', 'You need to login first');
         }
 
-        return view('ach.edit', ['achievement' => $achievement]);
+        return view('ach.edit', ['achievement' => $achievement, 'header' => 'Edit Achievement']);
     }
 
 

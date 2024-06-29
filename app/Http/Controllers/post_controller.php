@@ -13,7 +13,7 @@ class post_controller extends Controller
 {
     public function index()
     {
-        return view('post.index');
+        return view('post.index', ['header' => 'Posts']);
     }
 
 
@@ -43,7 +43,8 @@ class post_controller extends Controller
                 'executive' => $executive,
                 'categories' => $categories,
                 'destination' => 'createnews',
-                'post' => null
+                'post' => null,
+                'header' => 'Create News'
             ]
     );
     }
@@ -102,7 +103,8 @@ class post_controller extends Controller
                 'member' => $member,
                 'executive' => $executive,
                 'posts' => $posts,
-                'type' => 'News'
+                'type' => 'News',
+                'header' => 'News'
             ]
     );
     }
@@ -136,7 +138,8 @@ class post_controller extends Controller
                 'executive' => $executive,
                 'post' => $post,
                 'categories' => $categories,
-                'destination' => 'editnews'
+                'destination' => 'editnews',
+                'header' => 'Edit News'
             ]
     );
     }
@@ -202,7 +205,8 @@ class post_controller extends Controller
                 'executive' => $executive,
                 'categories' => $categories,
                 'destination' => 'createArticles',
-                'post' => null
+                'post' => null,
+                'header' => 'Create Article'
             ]
     );
     }
@@ -260,7 +264,8 @@ class post_controller extends Controller
                 'member' => $member,
                 'executive' => $executive,
                 'posts' => $posts,
-                'type' => 'Articles'
+                'type' => 'Articles',
+                'header' => 'Articles'
             ]
     );
     }
@@ -294,7 +299,8 @@ class post_controller extends Controller
                 'executive' => $executive,
                 'post' => $post,
                 'categories' => $categories,
-                'destination' => 'editArticle'
+                'destination' => 'editArticle',
+                'header' => 'Edit Article'
             ]
     );
     }
@@ -361,7 +367,8 @@ class post_controller extends Controller
                 'executive' => $executive,
                 'categories' => $categories,
                 'destination' => 'createAnnouncements',
-                'post' => null
+                'post' => null,
+                'header' => 'Create Announcement'
             ]
     );
     }
@@ -419,7 +426,8 @@ class post_controller extends Controller
                 'member' => $member,
                 'executive' => $executive,
                 'posts' => $posts,
-                'type' => 'Announcements'
+                'type' => 'Announcements',
+                'header' => 'Announcements'
             ]
     );
     }
@@ -454,7 +462,8 @@ class post_controller extends Controller
                 'executive' => $executive,
                 'post' => $post,
                 'categories' => $categories,
-                'destination' => 'editAnnouncement'
+                'destination' => 'editAnnouncement',
+                'header' => 'Edit Announcement'
             ]
     );
     }

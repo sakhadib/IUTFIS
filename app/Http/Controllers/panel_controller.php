@@ -30,7 +30,7 @@ class panel_controller extends Controller
             $mod_panels[] = $mod_panel;
         }
         
-        return view('panel.index', ['panels' => $mod_panels]);
+        return view('panel.index', ['panels' => $mod_panels, 'header' => 'Panels']);    
     }
     
     
@@ -59,7 +59,8 @@ class panel_controller extends Controller
         
         [
             'executives' => $mod_members,
-            'current_panel' => $current_panel
+            'current_panel' => $current_panel,
+            'header' => 'Current Executives'
         ]
         
         );
@@ -90,7 +91,8 @@ class panel_controller extends Controller
         
         [
             'executives' => $mod_members,
-            'current_panel' => $panel
+            'current_panel' => $panel,
+            'header' => 'Panel ' . $panel->host_year
         ]
         
         );
@@ -101,7 +103,17 @@ class panel_controller extends Controller
     public function profile($id){
 
         $member = Member::where('id', $id)->first();
+
+        if($member == null){
+            return redirect('/notfound');
+        }
+
         $executive = Executive::where('member_id', $member->id)->orderBy('created_at', 'desc')->first();
+
+        if($executive == null){
+            return redirect('/notfound');
+        }
+
         $panel = Panel::where('id', $executive->panel_id)->first();
 
         $newsCount = Post::where('executive_id', $member->id)->where('type', 'N')->count();
@@ -115,7 +127,8 @@ class panel_controller extends Controller
                 'panel' => $panel,
                 'newsCount' => $newsCount,
                 'articleCount' => $articleCount,
-                'speakerCount' => $speakerCount
+                'speakerCount' => $speakerCount,
+                'header' => $member->name
             ]);
     }
 
