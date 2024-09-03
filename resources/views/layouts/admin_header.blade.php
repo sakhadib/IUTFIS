@@ -126,7 +126,7 @@
                   </a>
                   <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="/reporter/workshops">All Workshop</a></li>
-                    <li><a class="dropdown-item" href="/reporter/createWorkshop">Create new Workshop</a></li>
+                    <li><a class="dropdown-item" href="/reporter/createWorkshops">Create new Workshop</a></li>
                   </ul>
                 </li>
 
