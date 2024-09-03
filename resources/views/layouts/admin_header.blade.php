@@ -30,8 +30,8 @@
     <script defer src="{{url('css/dt.js')}}"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/dataTables.bootstrap5.min.css">
 
-    {{-- Math --}}
-    <script defer type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"> </script>
+     {{-- Math --}}
+     <script defer type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"> </script>
 
     {{-- markdown --}}
     <script defer src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>

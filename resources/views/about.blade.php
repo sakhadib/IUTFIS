@@ -25,37 +25,37 @@
     <div class="row">
         <div class="col-md-2 col-6 mb-3">
             <div class="stat-box df dfc jcc aic">
-                <h1 class="display-4">{{$total_member_count}}</h1>
+                <h1 class="display-4" id="tmc">{{$total_member_count}}</h1>
                 <p class="lead">Members</p>
             </div>
         </div>
         <div class="col-md-2 col-6 mb-3">
             <div class="stat-box df dfc jcc aic">
-                <h1 class="display-4">{{$total_news_count}}</h1>
+                <h1 class="display-4" id="tnc">{{$total_news_count}}</h1>
                 <p class="lead">News</p>
             </div>
         </div>
         <div class="col-md-2 col-6 mb-3">
             <div class="stat-box df dfc jcc aic">
-                <h1 class="display-4">{{$total_article_count}}</h1>
+                <h1 class="display-4" id="tac">{{$total_article_count}}</h1>
                 <p class="lead">Articles</p>
             </div>
         </div>
         <div class="col-md-2 col-6 mb-3">
             <div class="stat-box df dfc jcc aic">
-                <h1 class="display-4">{{$total_workshop_count}}</h1>
+                <h1 class="display-4" id="twc">{{$total_workshop_count}}</h1>
                 <p class="lead">Workshops</p>
             </div>
         </div>
         <div class="col-md-2 col-6 mb-3">
             <div class="stat-box df dfc jcc aic">
-                <h1 class="display-4">{{$total_event_count}}</h1>
+                <h1 class="display-4" id="tec">{{$total_event_count}}</h1>
                 <p class="lead">Events</p>
             </div>
         </div>
         <div class="col-md-2 col-6 mb-3">
             <div class="stat-box df dfc jcc aic">
-                <h1 class="display-4">{{$total_achievement_count}}</h1>
+                <h1 class="display-4" id="tachc">{{$total_achievement_count}}</h1>
                 <p class="lead">Achievements</p>
             </div>
         </div>
