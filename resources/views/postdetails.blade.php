@@ -11,14 +11,14 @@
             </div>
             <div class="row align-items-center mb-3">
                 <div class="col-auto">
-                    <p class="lead text-secondary mb-0">
+                    <p class="lead text-secondary mb-0 d-flex flex-wrap align-items-center" style="gap:0.5em;">
                         <i class="bi bi-calendar-event"></i> {{date('j F Y \a\t g:i A', strtotime($post->created_at))}}
-                        <span class="mx-2">|</span>
-                        <span>by <a href="/profile/{{$post->member->id}}" class="fw-semibold text-white link-unstyled">{{$post->member->name}}</a></span>
+                        <span class="mx-2 d-none d-md-inline">|</span>
+                        <span class="d-block d-md-inline mt-1 mt-md-0">by <span class="fw-semibold text-white">{{$post->member->name}}</span></span>
                     </p>
                 </div>
-                <div class="col-auto">
-                    <span class="badge bg-white text-dark fs-6 px-3 py-2 ms-2" style="border-radius: 1em;">{{$post->category->name}}</span>
+                <div class="col-auto mt-2 mt-md-0">
+                    <span class="badge bg-white text-dark fs-6 px-3 py-2 ms-0 ms-md-2 shadow-sm border border-1 border-light category-badge">{{$post->category->name}}</span>
                 </div>
             </div>
             <div class="row mb-4">
@@ -32,7 +32,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8">
-                    <div class="main-content math post-content p-5 rounded-4 shadow-lg bg-dark-glass" style="text-align: justify; min-height: 350px;">
+                    <div class="main-content math post-content p-5 rounded-4 shadow-lg bg-dark-glass" style="text-align: justify; min-height: 350px;" id="main-content">
                         {!! Str::markdown($post->content) !!}
                     </div>
                 </div>
@@ -164,13 +164,87 @@
             border-radius: 4px;
             padding: 0 0.2em;
         }
+        .category-badge {
+            display: inline-block;
+            min-width: 80px;
+            text-align: center;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+        }
+        /* Responsive styles for mobile */
         @media (max-width: 991px) {
             .main-content.post-content {
                 padding: 2em 1em;
+                font-size: 1.02rem;
             }
             .author-pic {
                 width: 80px;
                 height: 80px;
+            }
+            .container.py-5, .container.mb-5, .container {
+                padding-left: 0.5rem !important;
+                padding-right: 0.5rem !important;
+            }
+            .row.mb-4, .row.align-items-center.mb-3, .row.mb-3, .row.mb-2 {
+                margin-bottom: 1rem !important;
+            }
+            .col-md-8, .col-md-3, .offset-md-1 {
+                max-width: 100%;
+                flex: 0 0 100%;
+                margin-left: 0 !important;
+            }
+            .main-content.post-content {
+                border-radius: 1.2em;
+                box-shadow: 0 4px 16px 0 rgba(31, 38, 135, 0.10);
+            }
+            .vh-10, .vh-5 {
+                min-height: 0 !important;
+                height: 1.5rem !important;
+            }
+            .row.align-items-center.mb-3 .col-auto {
+                width: 100%;
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+            .row.align-items-center.mb-3 .category-badge {
+                margin-top: 0.5em;
+                margin-left: 0 !important;
+                width: 100%;
+                min-width: 0;
+                font-size: 1rem !important;
+            }
+            .row.align-items-center.mb-3 p.lead {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 0.2em !important;
+            }
+            .row.align-items-center.mb-3 span.d-block {
+                margin-top: 0.3em;
+            }
+        }
+        @media (max-width: 600px) {
+            .main-content.post-content {
+                padding: 1em 0.3em;
+                font-size: 0.98rem;
+            }
+            .author-pic {
+                width: 60px;
+                height: 60px;
+            }
+            .display-3 {
+                font-size: 2rem !important;
+            }
+            .fs-4 {
+                font-size: 1.1rem !important;
+            }
+            .badge.bg-white.text-dark.fs-6 {
+                font-size: 0.9rem !important;
+                padding: 0.4em 0.8em !important;
+            }
+            .btn, .btn-sm, .btn-outline-light {
+                font-size: 0.9rem !important;
+                padding: 0.3em 0.7em !important;
             }
         }
     </style>
@@ -196,10 +270,10 @@
         });
     </script>
 
-    <!-- Include MathJax -->
+    {{-- <!-- Include MathJax -->
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> --}}
     {{-- <script>
         document.addEventListener('DOMContentLoaded', (event) => {
             const rawMarkdown = document.getElementById('markdown-content').value.trim();
@@ -217,15 +291,17 @@
 
     <script>
         const eyecomfortbtn = document.getElementById('ecb');
-        const maincontent = document.getElementById('content');
+        const maincontent = document.getElementById('main-content');
 
         eyecomfortbtn.addEventListener('click', () => {
             if (maincontent.classList.contains('text-light')) {
                 maincontent.classList.remove('text-light');
                 maincontent.classList.add('text-secondary');
+                maincontent.style.backgroundColor = '#222a33';
             } else {
                 maincontent.classList.remove('text-secondary');
                 maincontent.classList.add('text-light');
+                maincontent.style.backgroundColor = '';
             }
         });
     </script>
