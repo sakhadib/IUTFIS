@@ -3,114 +3,175 @@
 @section('main')
     <div class="post-page">
         <div class="vh-10"></div>
-        <div class="container">
-            <div class="row">
+        <div class="container py-5">
+            <div class="row mb-4">
                 <div class="col-12">
-                    <h1 class="display-4 text-light">{{$post->title}}</h1>
+                    <h1 class="display-3 fw-bold text-white mb-2" style="letter-spacing: 1px;">{{$post->title}}</h1>
                 </div>
             </div>
-            <div class="row">
+            <div class="row align-items-center mb-3">
                 <div class="col-auto">
-                    <p class="lead text-secondary">
-                        {{date('j F Y \a\t g:i A', strtotime($post->created_at))}}
-                        by <a href="/profile/{{$post->member->id}}" class="link-success" style="text-decoration: none;">{{$post->member->name}}</a>
+                    <p class="lead text-secondary mb-0">
+                        <i class="bi bi-calendar-event"></i> {{date('j F Y \a\t g:i A', strtotime($post->created_at))}}
+                        <span class="mx-2">|</span>
+                        <span>by <a href="/profile/{{$post->member->id}}" class="fw-semibold text-white link-unstyled">{{$post->member->name}}</a></span>
                     </p>
                 </div>
                 <div class="col-auto">
-                    <p class="text-secondary lead">
-                        &nbsp;| &nbsp; Topic : 
-                        {{$post->category->name}}
-                    </p>
+                    <span class="badge bg-white text-dark fs-6 px-3 py-2 ms-2" style="border-radius: 1em;">{{$post->category->name}}</span>
                 </div>
-                
             </div>
-            <div class="row">
+            <div class="row mb-4">
                 <div class="col-auto">
-                    <button class="btn-sm btn btn-outline-secondary" id="ecb"><i class="uil uil-eye"></i> eye comfort mode</button>
-                </div>
-                <div class="col-auto">
-                    <button class="btn-sm btn btn-outline-secondary" id="share"><i class="uil uil-copy-alt"></i> copy link to share</button>
+                    <button class="btn btn-outline-light btn-sm me-2" id="ecb"><i class="uil uil-eye"></i> Eye Comfort</button>
+                    <button class="btn btn-outline-light btn-sm" id="share"><i class="uil uil-copy-alt"></i> Copy Link</button>
                 </div>
             </div>
         </div>
 
-        <div class="container mt-5">
+        <div class="container">
             <div class="row">
                 <div class="col-md-8">
-                    <!-- Use a hidden textarea to store raw markdown content -->
-                    <textarea id="markdown-content" style="display: none;">{!! $post->content !!}</textarea>
-                    <div class="lead text-light main-content math" style="text-align: justify" id="content">
-                        <!-- This will be filled with converted HTML -->
+                    <div class="main-content math post-content p-5 rounded-4 shadow-lg bg-dark-glass" style="text-align: justify; min-height: 350px;">
+                        {!! Str::markdown($post->content) !!}
                     </div>
                 </div>
                 <div class="col-md-3 offset-md-1">
                     <div class="container">
-                        <div class="row">
-                            <div class="col-12">
-                                <img src="/storage/{{$post->member->photo}}" alt="" class="author-pic">
+                        <div class="row mb-3">
+                            <div class="col-12 text-center">
+                                <img src="/storage/{{$post->member->photo}}" alt="" class="author-pic mb-3 shadow">
+                                <h2 class="fs-4 text-white mb-1">{{$post->member->name}}</h2>
+                                <p class="text-light fs-6 mb-1">{{$post->executive->position}}@if($post->executive->year == 2) Team @endif, {{$post->panel->host_year}}<sup>th</sup> Panel</p>
+                                <a href="/profile/{{$post->member->id}}" class="btn btn-outline-light btn-sm mt-2">Visit Profile</a>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-12 df jcc mt-3">
-                                <h1 class="fs-3 text-light">
-                                    {{$post->member->name}}
-                                </h1>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-12 df jcc">
-                                <p class="text-light fs-5">
-                                    {{$post->executive->position}}
-                                    @if($post->executive->year == 2)
-                                        Team
-                                    @endif
-                                    , {{$post->panel->host_year}}<sup>th</sup> Panel
-                                </p>
-                                
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-12 df jcc">
-                                <a href="/profile/{{$post->member->id}}" class="btn btn-outline-light">Visit Profile</a>
-                            </div>
-                        </div>
-                        
-
                         @if($more_posts != null)
-                            <div class="row mt-5">
+                            <div class="row mt-4">
                                 <div class="col-12">
-                                    <p class="fs-5 text-light">More from {{$post->member->name}}</p>
+                                    <p class="fs-6 text-light mb-2">More from {{$post->member->name}}</p>
                                 </div>
                             </div>
                             @foreach($more_posts as $more_post)
-                                <div class="row mt-2">
+                                <div class="row mb-2">
                                     <div class="col-12">
                                         <a href="/{{$type}}/{{$more_post->id}}" class="link-light">
-                                            <p class="lead">{{$more_post->title}}</p>
+                                            <p class="mb-1">{{$more_post->title}}</p>
                                         </a>
                                     </div>
                                 </div>
                             @endforeach
                         @endif
-                        
                     </div>
                 </div>
             </div>
         </div>
+        <div class="vh-5"></div>
     </div>
 
     <style>
         .post-page {
-            background-color: rgba(0, 14, 24, 1);
+            background: linear-gradient(120deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
             min-height: 100vh;
         }
-
         .author-pic {
-            width: 100%;
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid #fff;
+            background: #222;
+        }
+        .main-content.post-content {
+            background: rgba(20, 20, 40, 0.92);
+            color: #fff;
+            font-size: 1.15rem;
+            line-height: 1.8;
+            letter-spacing: 0.01em;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+        }
+        .main-content.post-content h1, .main-content.post-content h2, .main-content.post-content h3, .main-content.post-content h4 {
+            color: #ffd700;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        .main-content.post-content p, .main-content.post-content ul, .main-content.post-content ol, .main-content.post-content blockquote {
+            margin-bottom: 1.2em;
+        }
+        .main-content.post-content blockquote {
+            border-left: 4px solid #ffd700;
+            background: rgba(255,255,255,0.05);
+            padding: 0.8em 1.2em;
+            font-style: italic;
+            color: #e0e0e0;
+        }
+        .main-content.post-content pre, .main-content.post-content code {
+            background: #23263a;
+            color: #ffd700;
+            border-radius: 6px;
+            padding: 0.2em 0.5em;
+            font-size: 1em;
+        }
+        .main-content.post-content pre {
+            padding: 1em;
+            overflow-x: auto;
+        }
+        .main-content.post-content img {
+            max-width: 100%;
             height: auto;
-            border-radius: 20px;
-            border: 2px solid white;
+            margin: 1.5em 0;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+        }
+        .main-content.post-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5em;
+        }
+        .main-content.post-content th, .main-content.post-content td {
+            border: 1px solid #444;
+            padding: 0.7em 1em;
+        }
+        .main-content.post-content th {
+            background: #23263a;
+            color: #ffd700;
+        }
+        .main-content.post-content hr {
+            border: none;
+            border-top: 2px solid #ffd700;
+            margin: 2em 0;
+        }
+        .main-content.post-content .katex, .main-content.post-content .MathJax {
+            font-size: 1.15em;
+            background: none;
+            color: #fff;
+        }
+        .main-content.post-content ul, .main-content.post-content ol {
+            padding-left: 2em;
+        }
+        .main-content.post-content li {
+            margin-bottom: 0.5em;
+        }
+        .main-content.post-content a {
+            color: #ffd700;
+            text-decoration: underline;
+        }
+        .main-content.post-content a:hover {
+            color: #fff;
+            background: #ffd700;
+            text-decoration: none;
+            border-radius: 4px;
+            padding: 0 0.2em;
+        }
+        @media (max-width: 991px) {
+            .main-content.post-content {
+                padding: 2em 1em;
+            }
+            .author-pic {
+                width: 80px;
+                height: 80px;
+            }
         }
     </style>
 
@@ -139,7 +200,7 @@
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script>
+    {{-- <script>
         document.addEventListener('DOMContentLoaded', (event) => {
             const rawMarkdown = document.getElementById('markdown-content').value.trim();
             const contentElement = document.getElementById('content');
@@ -152,7 +213,7 @@
                 window.MathJax.typesetPromise();
             }
         });
-    </script>
+    </script> --}}
 
     <script>
         const eyecomfortbtn = document.getElementById('ecb');
@@ -168,35 +229,4 @@
             }
         });
     </script>
-
-    <style>
-        .main-content img {
-            max-width: 100%;
-            height: auto;
-        }
-
-        .main-content table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .main-content h1 {
-            font-size: 2rem;
-            font-weight: bold;
-        }
-
-        .main-content h2 {
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-
-        .main-content h3 {
-            font-size: 1.3rem;
-            font-weight: bold;
-        }
-
-        .main-conten {
-            color: white;
-        }
-    </style>
 @endsection
