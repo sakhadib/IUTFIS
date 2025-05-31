@@ -1,84 +1,162 @@
-# Mathematical Findings of General Relativity
+@extends('layouts.main')
 
-General Relativity, formulated by Albert Einstein in 1915, is a theory of gravitation that describes gravity not as a force, but as a consequence of the curvature of spacetime caused by the uneven distribution of mass. This theory extends Special Relativity and Newton's Law of Universal Gravitation, providing a unified description of gravity as a geometric property of space and time.
+@section('main')
+<div class="post-bg">
+    <div class="vh-40 df aic news-bg-black">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 df dfc jcc aic">
+                    <h1 class=" display-1 text-center text-warning">{{$type}}</h1>
+                    <p class="lead text-light text-center">these are astronomy related {{$type}}. Check if you are interested</p>
+                    
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
 
-## The Core Equations: Einstein's Field Equations
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6">
+                @if($post_count > 0)
+                <div class="post-holder-big">
+                    <h1 class="display-5"><a href="/{{$type}}/{{$posts[0]->id}}" class="link-dark link-unstyled">{{$posts[0]->title}}</a></h1>
+                    <p class="fs-6 text-secondary">
+                        <a href="/profile/{{$posts[0]->member->id}}" class="link-dark link-unstyled">
+                            <img src="/storage/{{$posts[0]->member->photo}}" class="profile-pic" alt="">
+                            {{$posts[0]->member->name}}
+                        </a>
+                        at {{date('j F Y \a\t g:i A', strtotime($posts[0]->created_at))}}
+                        on <strong>{{$posts[0]->category->name}}</strong>
+                        
+                    </p>
+                    <p class="lead text-secondary">
+                        {{$posts[0]->content ? substr(str_replace(['#', '*'], '', $posts[0]->content), 0, 600) : ''}}
+                        ... <a href="/{{$type}}/{{$posts[0]->id}}">Read more</a>
+                    </p>
+                </div>
+                @endif
+            </div>
+            <div class="col-md-6">
+                @if($post_count > 1)
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="post-holder-big">
+                            <h1 class="display-6"><a href="/{{$type}}/{{$posts[1]->id}}" class="link-dark link-unstyled">{{$posts[1]->title}}</a></h1>
+                            <p class="fs-6 text-secondary">
+                                <a href="/profile/{{$posts[1]->member->id}}" class="link-dark link-unstyled">
+                                    <img src="/storage/{{$posts[1]->member->photo}}" class="profile-pic" alt="">
+                                    {{$posts[1]->member->name}}
+                                </a>
+                                at {{date('j F Y \a\t g:i A', strtotime($posts[1]->created_at))}}
+                                on <strong>{{$posts[1]->category->name}}</strong>
+                                
+                            </p>
+                            <p class="lead text-secondary">
+                                {{$posts[1]->content ? substr(str_replace(['#', '*'], '', $posts[1]->content), 0, 100) : ''}}
+                                ... <a href="/{{$type}}/{{$posts[1]->id}}">Read more</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                @endif
 
-The heart of General Relativity is the Einstein Field Equations (EFE), which describe how matter and energy in the universe influence the curvature of spacetime. The EFE are a set of ten interrelated differential equations. In its compact form, the EFE can be written as:
+                @if($post_count > 2)
+                <div class="row mt-4">
+                    <div class="col-md-12">
+                        <div class="post-holder-big">
+                            <h1 class="display-6"><a href="/{{$type}}/{{$posts[2]->id}}" class="link-dark link-unstyled">{{$posts[2]->title}}</a></h1>
+                            <p class="fs-6 text-secondary">
+                                <a href="/profile/{{$posts[2]->member->id}}" class="link-dark link-unstyled">
+                                    <img src="/storage/{{$posts[2]->member->photo}}" class="profile-pic" alt="">
+                                    {{$posts[2]->member->name}}
+                                </a>
+                                at {{date('j F Y \a\t g:i A', strtotime($posts[1]->created_at))}}
+                                on <strong>{{$posts[2]->category->name}}</strong>
+                                
+                            </p>
+                            <p class="lead text-secondary">
+                                {{$posts[2]->content ? substr(str_replace(['#', '*'], '', $posts[2]->content), 0, 100) : ''}}
+                                ... <a href="/{{$type}}/{{$posts[2]->id}}">Read more</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                @endif
+                
+            </div>
+            
+        </div>
+    </div>
 
-\\[ R_{\mu\nu} - \frac{1}{2} R g_{\mu\nu} + \Lambda g_{\mu\nu} = \frac{8 \pi G}{c^4} T_{\mu\nu} \\]
+    <div class="mt-5 mb-5">
+        <div class="container">
+            @foreach($posts as $index => $n)
+            @if($index >= 3)
+            <div class="row mt-5">
+                <div class="col-12">
+                <h1 class="fs-5"><mark>{{date('j F Y \a\t g:i A', strtotime($n->created_at))}}</mark></h1>
+                    <h1 class="display-6"><a href="/{{$type}}/{{$n->id}}" class="link-dark link-unstyled">{{$n->title}}</a></h1>
+                    <p class="fs-6 text-secondary">
+                        <a href="/profile/{{$n->member->id}}" class="link-dark link-unstyled">
+                            <img src="/storage/{{$n->member->photo}}" class="profile-pic" alt="">
+                            {{$n->member->name}}
+                        </a>
+                        on <strong>{{$n->category->name}}</strong>
+                    </p>
+                    <p class="lead text-secondary">
+                        {{$n->content ? substr(str_replace(['#', '*'], '', $n->content), 0, 250) : ''}}
+                        ... <a href="/{{$type}}/{{$n->id}}">Read more</a>
+                    </p>
+                </div>
+            </div>
+            <hr>
+            @endif
+            @endforeach
+        </div>
+        
+    </div>
 
-Where:
-- \\( R_{\mu\nu} \\) is the Ricci curvature tensor.
-- \\( R \\) is the Ricci scalar (trace of the Ricci tensor).
-- \\( g_{\mu\nu} \\) is the metric tensor.
-- \\( \Lambda \\) is the cosmological constant.
-- \\( G \\) is the gravitational constant.
-- \\( c \\) is the speed of light.
-- \\( T_{\mu\nu} \\) is the stress-energy tensor.
+</div>
 
-### Breakdown of the Equation Components
 
-1. **Ricci Curvature Tensor (\\( R_{\mu\nu} \\))**: Represents gravitational effects due to matter.
-2. **Ricci Scalar (\\( R \\))**: Summarizes the curvature of spacetime.
-3. **Metric Tensor (\\( g_{\mu\nu} \\))**: Describes the geometry of spacetime.
-4. **Cosmological Constant (\\( \Lambda \\))**: Represents the energy density of empty space or dark energy.
-5. **Stress-Energy Tensor (\\( T_{\mu\nu} \\))**: Encodes the density and flux of energy and momentum in spacetime.
+<style>
+    .news-bg-black {
+        background-color: rgba(0, 0, 0, 0.6);
+        transition: background-color ease-in-out 0.3s;
+        border-bottom: 5px solid rgb(134, 134, 134);
+        backdrop-filter: blur(10px);
+    }
 
-## Schwarzschild Solution
+    .link-unstyled{
+        text-decoration: none;
+    }
 
-One of the most important solutions to the Einstein Field Equations is the Schwarzschild solution, which describes the gravitational field outside a spherical mass. The Schwarzschild metric is given by:
+    .date-picker{
+        background-color: rgba(0, 14, 24, 0.9);
+        border-radius: 10px;
+        padding: 20px;
+        border-bottom: 3px solid rgb(134, 134, 134);
+        border-top: 3px solid rgb(134, 134, 134);
+    }
+</style>
 
-\\[ ds^2 = -\left(1 - \frac{2GM}{c^2r}\right)c^2dt^2 + \left(1 - \frac{2GM}{c^2r}\right)^{-1}dr^2 + r^2 d\theta^2 + r^2 \sin^2\theta \, d\phi^2 \\]
 
-Where:
-- \\( ds^2 \\) is the spacetime interval.
-- \\( G \\) is the gravitational constant.
-- \\( M \\) is the mass of the spherical object.
-- \\( c \\) is the speed of light.
-- \\( r, \theta, \phi \\) are the spherical coordinates.
+<style>
+    .post-holder-big{
+        /* background-color: rgba(0, 0, 0, 0.9); */
+        border-radius: 10px;
+        padding: 25px;
+        padding-top: 40px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    }
 
-## Predictions of General Relativity
+    .post-bg{
+        background-image: url('/rsx/{{$type}}bg.jpg');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+    }
+</style>
 
-### 1. **Gravitational Time Dilation**
-
-Time runs slower in stronger gravitational fields. This effect can be described by the following formula for a static gravitational field:
-
-\\[ t = t_0 \sqrt{1 - \frac{2GM}{c^2r}} \\]
-
-Where:
-- \\( t \\) is the time experienced far from the gravitational source.
-- \\( t_0 \\) is the time experienced at distance \\( r \\) from the source.
-
-### 2. **Gravitational Lensing**
-
-Light bends when it passes near a massive object due to the curvature of spacetime. The angle of deflection \\( \alpha \\) for light passing close to a massive object of mass \\( M \\) is given by:
-
-\\[ \alpha \approx \frac{4GM}{c^2b} \\]
-
-Where \\( b \\) is the impact parameter (the closest distance between the light path and the center of mass).
-
-### 3. **Perihelion Precession of Mercury**
-
-The orbit of Mercury precesses around the Sun slightly more than can be accounted for by Newtonian mechanics. General Relativity explains this with the following formula for the additional precession \\( \Delta \omega \\):
-
-\\[ \Delta \omega = \frac{6 \pi G M_{\odot}}{c^2 a (1 - e^2)} \\]
-
-Where:
-- \\( M_{\odot} \\) is the mass of the Sun.
-- \\( a \\) is the semi-major axis of Mercury's orbit.
-- \\( e \\) is the orbital eccentricity.
-
-### 4. **Gravitational Waves**
-
-Ripples in spacetime that travel at the speed of light, generated by certain movements of mass, such as merging black holes. The amplitude \\( h \\) of gravitational waves can be approximated by:
-
-\\[ h \approx \frac{4G}{c^4} \frac{E}{r} \\]
-
-Where:
-- \\( E \\) is the energy released in the form of gravitational waves.
-- \\( r \\) is the distance from the source.
-
-## Conclusion
-
-General Relativity has revolutionized our understanding of gravity, providing insights into the structure and behavior of the universe. Its mathematical framework, primarily through the Einstein Field Equations, has explained phenomena ranging from the precession of planetary orbits to the bending of light and the detection of gravitational waves.
+@endsection
