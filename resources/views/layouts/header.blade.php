@@ -119,4 +119,9 @@
         .bg-body-tertiary{
           transition: background-color ease-in-out 0.3s;
         }
+
+        body{
+          background: var(--bg-dark);
+          color: var(--text-light);
+        }
       </style>
