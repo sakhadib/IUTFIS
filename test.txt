@@ -1,248 +1,120 @@
-   <!-- foot -->
-   <div class="hm-7 vh-55 df dfc jcc aic footer-bg">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-5">
-                <img src="{{url('rsx/logo.svg')}}" alt="" style="width: 300px">
-                <h1 class="display-4 l mt-3">IUT Al-Fazari Interstellar Society</h1>
-                <p class="text-light lead"> #LookUpToWonder</p>
+@extends('layouts.main')
+
+@section('main')
+
+<div class="event-bg">
+    <div class="declaration">
+        <div class="vh-10"></div>
+        <div class="container mt-5 mb-5 df jcc aic">
+            <div class="row">
+                <div class="col-12 df dfc jcc aic">
+                    <h1 class="display-3 text-center text-light">FIS Events</h1>
+                    <p class="text-light lead">
+                        Upcoming Events of IUT FIS. Click on them to learn more.
+                    </p>
+                    <a href="/allevents" class="btn btn-lg btn-outline-light">Show All Events</a>
+                </div>
             </div>
-            <div class="col-md-7 df dfc jcc">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-10 offset-md-2">
-                            <h1 class="display-4 text-secondary" id="Date-Time"></h1>
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        @foreach($events as $event)
+        <div class="row mt-5">
+            <div class="col-md-12">
+                <div class="event-box">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <h1 class="display-5 text-light">{{$event->name}}</h1>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-10 offset-md-2">
-                            <p class="lead text-light">
-                                Humans of the Red Heaven have conquered the Earth. It's time to dive into deep space!
-                            </p>
-                        </div>   
-                    </div>
-                    
-                    <div class="row mt-4">
-                        <div class="col-md-9 offset-md-2">
-                            <p class="text-light">Follow us on: &nbsp;&nbsp;&nbsp;
-                                <a href="https://www.facebook.com/IUTFIS/" target="blank" class="text-light me-3"><i class="uil uil-facebook-f fs-3"></i></a>
-                                <a href="mailto:iutfis2061@gmail.com" target = "blank" class="text-light me-3"><i class="uil uil-envelope fs-3"></i></a>
-                                <a href="https://www.instagram.com/iut_interstellar_society/" target = "blank" class="text-light me-3"><i class="uil uil-instagram fs-3"></i></a>
-                                <a href="https://www.youtube.com/@iutfis" target = "blank" class="text-light me-3"><i class="uil uil-youtube fs-3"></i></a>
-                                <a href="https://www.linkedin.com/company/iut-al-fazari-interstellar-society/?originalSubdomain=bd" target = "blank" class="text-light me-3"><i class="uil uil-linkedin fs-3"></i></a>
-                                
-                            </p>
-                            
+                        <div class="row mt-3">
+                            <div class="col-md-auto">
+                                <h1 class="fs-5 text-light"><i class="uil uil-schedule"></i> &nbsp; {{date('j F Y', strtotime($event->start_date))}}</h1>
+                            </div>
+                            <div class="col-md-auto">
+                                <h1 class="fs-5 text-light"><i class="uil uil-clock-seven"></i> &nbsp; {{date('g:i A', strtotime($event->start_date))}}</h1>
+                            </div>
+                            <div class="col-md-auto">
+                                <h1 class="fs-5 text-light" data-start="{{ $event->start_date }}" data-end="{{ $event->end_date }}"><i class="uil uil-hourglass"></i> &nbsp; <span class="duration"></span></h1>
+                            </div>
+                            <div class="col-md-auto">
+                                <h1 class="fs-5 text-light"><i class="uil uil-map-marker"></i> &nbsp; {{$event->location}}</h1>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <p class="text-light lead">{{ Str::limit($event->description, 200) }}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-auto">
+                                <a href="/event/{{$event->id}}" class="btn btn-lg btn-light mt-3">Learn More</a>
+                            </div>
+                            <div class="col-auto">
+                                <a href="{{$event->link}}" class="btn btn-lg btn-outline-light mt-3">Visit Social Event Link</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                <p class="text-secondary text-center">© <span id="year"></span> IUT Al-Fazari Interstellar Society. All rights reserved.</p>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <p class="text-secondary text-center">Coded and Crafted By <a href="https://portfolio.sakhawatadib.com">Adib Sakhawat</a></p>
-            </div>
-        </div>
+        @endforeach
+        <div class="vh-10"></div>
     </div>
-    </div>
-  </div> 
+</div>
 
-
-  <style>
-    .footer-bg{
-      background-color: rgba(0, 14, 24, 1);
+<style>
+    .event-bg {
+        background-image: url('/rsx/eventbg.jpg');
+        background-attachment: fixed;
+        background-size: cover;
+        background-position: center;
+        min-height: 100vh;
     }
 
-    .table-holder{
-        background-color: white;
-        padding: 35px;
+    .declaration {
+        background-color: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(5px);
+        min-height: 35vh;
+        border-bottom: 20px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .event-box {
+        background-color: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(10px);
+        padding: 20px;
         border-radius: 10px;
-        box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 0 100px rgba(0, 0, 0, 0.8);
+        border: 4px solid rgba(255, 255, 255, 0.1);
     }
-
-    .ad-main-bg{
-        background-color: rgba(0, 14, 24, .7);
-        backdrop-filter: blur(4px);
-        border-bottom: 15px solid rgba(255, 255, 255, 0.109);
-    }
-
-    .the-ad-section{
-        min-height: 80vh;
-    }
-
-    .form-holder{
-        background-color: white;
-        padding: 35px;
-        border-radius: 10px;
-        box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
-    }
-
-    .custom_form_title{
-        font-size: 40px;
-        box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
-    }
-
-    .custom_form_title:focus{
-        border: 0;
-        box-shadow: 0 0 30px rgba(81, 191, 255, 0.5);
-    }
-
-    .custom_form_content{
-        font-size: 20px;
-        box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
-    }
-
-    .custom_form_content:focus{
-        border: 0;
-        box-shadow: 0 0 30px rgba(81, 191, 255, 0.5);
-    }
-
-    .custom_form_normal{
-        font-size: 20px;
-        box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
-        padding-top: 10px;
-        padding-bottom: 10px;
-    }
-
-    .custom_form_normal:focus{
-        border: 0;
-        box-shadow: 0 0 30px rgba(81, 191, 255, 0.5);
-    }
-
-    .custom_form_btn{
-        font-size: 20px;
-        padding-top: 10px;
-        padding-bottom: 10px;
-        box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
-        width: 100%;
-    }
-  </style>
-
+</style>
 
 <script>
-    new DataTable('#stable');
-</script>
-
-
-<script>
-    document.addEventListener('scroll', () => {
-        const navbar = document.getElementById('boss_navbar');
-        if (window.scrollY === 0) {
-            navbar.className = 'navbar navbar-dark navbar-expand-lg bgd fixed-top bs';
-        } else {
-            navbar.className = 'navbar navbar-dark navbar-expand-lg bg-dark fixed-top bs';
-        }
-    });
-</script>
-
-
-<script>
-    // Function to update MathJax rendering and display line breaks
-    function updateMathPreview() {
-        // Get references to the textarea and the preview element
-        const typedMath = document.getElementById('content');
-        const mathPreview = document.getElementById('the_content');
-
-        // Replace newline characters with HTML line break elements
-        const contentWithLineBreaks = typedMath.value.replace(/\n/g, '<br>');
-
-        // Update the content of the preview element with the content of the textarea
-        mathPreview.innerHTML = contentWithLineBreaks;
-
-        // Update MathJax rendering
-        MathJax.texReset();
-        MathJax.typesetClear();
-        MathJax.typesetPromise([mathPreview]);
-    }
-
-    // Call the function when the document is fully loaded
     document.addEventListener("DOMContentLoaded", function() {
-        updateMathPreview();
+        document.querySelectorAll('.duration').forEach(function(element) {
+            const startDate = new Date(element.parentElement.getAttribute('data-start'));
+            const endDate = new Date(element.parentElement.getAttribute('data-end'));
+            const durationMs = endDate - startDate;
+            const minutes = Math.floor((durationMs / (1000 * 60)) % 60);
+            const hours = Math.floor((durationMs / (1000 * 60 * 60)) % 24);
+            const days = Math.floor(durationMs / (1000 * 60 * 60 * 24));
+
+            let durationStr = "";
+            if (days > 0) {
+                durationStr += days + " day" + (days > 1 ? "s " : " ");
+            }
+            if (hours > 0) {
+                durationStr += hours + " hour" + (hours > 1 ? "s " : " ");
+            }
+            if (minutes > 0) {
+                durationStr += minutes + " minute" + (minutes > 1 ? "s" : "");
+            }
+
+            element.textContent = durationStr || "0 minutes";
+        });
     });
-
-    // Add event listener to the textarea for input event
-    document.getElementById('content').addEventListener('input', updateMathPreview);
 </script>
 
-<!-- Foot end -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{{-- For the footer clock --}}
-
-<script>
-    async function fetchUserTimezone() {
-        try {
-            // Using a public API to fetch the user's IP information
-            const response = await fetch('https://ipapi.co/json/');
-            const data = await response.json();
-            return data.timezone;
-        } catch (error) {
-            console.error('Error fetching IP information:', error);
-            return 'UTC'; // Fallback to UTC in case of error
-        }
-    }
-
-    async function fetchCurrentTime(timezone) {
-        try {
-            // Using a public API to fetch the current time for the given timezone
-            const response = await fetch(`http://worldtimeapi.org/api/timezone/${timezone}`);
-            const data = await response.json();
-            return new Date(data.datetime);
-        } catch (error) {
-            console.error('Error fetching time:', error);
-            return new Date(); // Fallback to local time in case of error
-        }
-    }
-
-    function formatTime(date) {
-        let hours = date.getHours();
-        let minutes = date.getMinutes();
-        let seconds = date.getSeconds();
-        let ampm = hours >= 12 ? 'PM' : 'AM';
-        
-        hours = hours % 12;
-        hours = hours ? hours : 12; // the hour '0' should be '12'
-        minutes = minutes < 10 ? '0'+minutes : minutes;
-        seconds = seconds < 10 ? '0'+seconds : seconds;
-        
-        return `${hours}:${minutes}:${seconds} ${ampm}`;
-    }
-
-    async function updateTime() {
-        const timezone = await fetchUserTimezone();
-        const currentTime = await fetchCurrentTime(timezone);
-        setInterval(() => {
-            currentTime.setSeconds(currentTime.getSeconds() + 1);
-            document.getElementById('Date-Time').innerText = formatTime(currentTime);
-        }, 1000);
-    }
-
-    // Initialize the time display
-    updateTime();
-</script>
-
-<script>
-    document.getElementById('year').innerText = new Date().getFullYear();
-</script>
-</body>
-</html>
+@endsection
