@@ -1,198 +1,333 @@
 @extends('layouts.main')
 
+{{-- SEO Meta Tags --}}
+@section('title', $type ?? 'Posts')
+@section('description', 'Explore our collection of astronomy-related ' . strtolower($type ?? 'posts') . ' curated by the University Astronomy Club.')
+@section('keywords', 'astronomy, university, club, posts, articles, science, space, news')
+
 @section('main')
-<div class="post-bg">
+<div class="posts-page-dark">
+
     <!-- Hero Section -->
-    <div class="vh-40 d-flex align-items-center justify-content-center hero-overlay">
-        <div class="container text-center">
-            <h1 class="display-1 mb-3">{{$type ?? 'Posts'}}</h1>
-            <p class="lead text-light mb-0">Explore our collection of astronomy-related {{$type ?? 'posts'}} curated by the University Astronomy Club.</p>
+    <section class="hero-section-dark d-flex align-items-center justify-content-center text-center">
+        <div class="overlay-dark"></div>
+        <div class="container">
+            <h1 class="display-4 fw-bold mb-2 text-light">{{ $type ?? 'Posts' }}</h1>
+            <p class="lead text-secondary">Stay updated with the latest astronomy insights from the University Astronomy Club.</p>
         </div>
-    </div>
+    </section>
 
-    <!-- Featured Posts -->
-    <div class="container mt-5 position-relative z-2">
-        <div class="row g-4">
-            @if(!empty($posts[0]))
-            <div class="col-lg-6">
-                <div class="card bg-dark-glass border-0 shadow-lg h-100">
-                    <div class="card-body">
-                        <h2 class="card-title display-5 mb-3">
-                            <a href="/{{$type}}/{{$posts[0]->id}}" class="link-unstyled">{{$posts[0]->title}}</a>
-                        </h2>
-                        <div class="d-flex align-items-center mb-2">
-                            <a href="/profile/{{$posts[0]->member->id ?? 0}}" class="d-flex align-items-center link-unstyled me-2">
-                                <img src="{{ $posts[0]->member->photo ? '/storage/'.$posts[0]->member->photo : '/default-profile.png' }}" class="profile-pic-sm me-2" alt="">
-                                <span class="fw-bold text-light">{{$posts[0]->member->name ?? 'Unknown'}}</span>
-                            </a>
-                            <span class="text-secondary small ms-2">
-                                <i class="bi bi-clock"></i>
-                                {{ $posts[0]->created_at ? date('j M Y, g:i A', strtotime($posts[0]->created_at)) : '' }}
-                            </span>
-                            <span class="badge bg-light text-dark ms-3">{{$posts[0]->category->name ?? 'General'}}</span>
-                        </div>
-                        <p class="card-text text-light">
-                            {{ $posts[0]->content ? \Illuminate\Support\Str::limit(strip_tags(str_replace(['#', '*'], '', $posts[0]->content)), 400) : '' }}
-                            <a href="/{{$type}}/{{$posts[0]->id}}">Read more</a>
-                        </p>
+    <!-- Search Bar -->
+    <section class="search-section-dark py-4">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="input-group dark-input-group rounded-pill overflow-hidden">
+                        <span class="input-group-text bg-transparent border-0 px-3 text-secondary">
+                            <i class="fas fa-search"></i>
+                        </span>
+                        <input
+                            type="text"
+                            id="searchInput"
+                            class="form-control bg-transparent border-0 text-light ps-0"
+                            {{-- placeholder="Search articles..." --}}
+                            aria-label="Search articles"
+                            style="background: transparent !important; color: #fff !important; caret-color: #ffc107;"
+                            onfocus="this.placeholder=''" 
+                            {{-- onblur="this.placeholder='Search articles...'" --}}
+                        />
                     </div>
                 </div>
             </div>
-            @endif
+        </div>
+    </section>
 
-            <div class="col-lg-6">
-                <div class="row g-4">
-                    @foreach([1,2] as $i)
-                        @if(!empty($posts[$i]))
+    <!-- Posts Grid (Dark) -->
+    <section class="posts-section-dark py-5">
+        <div class="container">
+            @if(count($posts) == 0)
+                <div class="alert alert-warning text-center bg-secondary text-light border-0">
+                    No {{ strtolower($type ?? 'posts') }} are currently available.
+                </div>
+            @else
+                <div class="row gx-4 gy-5" id="postsContainer">
+
+                    {{-- Featured (Most Recent) Post Without Image --}}
+                    @if(!empty($posts[0]))
                         <div class="col-12">
-                            <div class="card bg-dark-glass border-0 shadow h-100">
-                                <div class="card-body">
-                                    <h3 class="card-title display-6 mb-2">
-                                        <a href="/{{$type}}/{{$posts[$i]->id}}" class="link-unstyled">{{$posts[$i]->title}}</a>
-                                    </h3>
-                                    <div class="d-flex align-items-center mb-2">
-                                        <a href="/profile/{{$posts[$i]->member->id ?? 0}}" class="d-flex align-items-center link-unstyled me-2">
-                                            <img src="{{ $posts[$i]->member->photo ? '/storage/'.$posts[$i]->member->photo : '/default-profile.png' }}" class="profile-pic-xs me-2" alt="">
-                                            <span class="fw-bold text-light">{{$posts[$i]->member->name ?? 'Unknown'}}</span>
-                                        </a>
-                                        <span class="text-secondary small ms-2">
-                                            <i class="bi bi-clock"></i>
-                                            {{ $posts[$i]->created_at ? date('j M Y, g:i A', strtotime($posts[$i]->created_at)) : '' }}
-                                        </span>
-                                        <span class="badge bg-light text-dark ms-3">{{$posts[$i]->category->name ?? 'General'}}</span>
+                            <a href="/{{ $type }}/{{ $posts[0]->id }}" class="text-decoration-none">
+                                <div class="card featured-card-dark shadow-sm border-0 px-4 py-5">
+                                    <div class="card-body">
+                                        <h2 class="card-title display-5 fw-bold text-light mb-3">
+                                            {{ $posts[0]->title }}
+                                        </h2>
+                                        <div class="post-meta-dark mb-4 d-flex flex-wrap align-items-center text-secondary small">
+                                            <a href="/profile/{{ $posts[0]->member->id ?? 0 }}" class="d-flex align-items-center me-4 text-decoration-none text-secondary">
+                                                <div class="avatar-sm-dark d-inline-flex align-items-center justify-content-center me-2 rounded-circle">
+                                                    <i class="fas fa-user"></i>
+                                                </div>
+                                                <span>{{ $posts[0]->member->name ?? 'Unknown' }}</span>
+                                            </a>
+                                            <div class="me-4 d-flex align-items-center">
+                                                <i class="fas fa-clock me-1"></i>
+                                                {{ $posts[0]->created_at ? $posts[0]->created_at->format('j M Y, g:i A') : '' }}
+                                            </div>
+                                            <span class="badge category-badge-dark">
+                                                {{ $posts[0]->category->name ?? 'General' }}
+                                            </span>
+                                        </div>
+                                        <p class="card-text text-light fs-6">
+                                            {{ $posts[0]->content 
+                                                ? \Illuminate\Support\Str::limit(
+                                                      strip_tags(
+                                                        str_replace(['#', '*'], '', $posts[0]->content)
+                                                      ),
+                                                      350
+                                                  )
+                                                : '' 
+                                            }}
+                                        </p>
+                                        <button class="btn btn-outline-light btn-lg mt-3">
+                                            Read More <i class="fas fa-arrow-right ms-2"></i>
+                                        </button>
                                     </div>
-                                    <p class="card-text text-light">
-                                        {{ $posts[$i]->content ? \Illuminate\Support\Str::limit(strip_tags(str_replace(['#', '*'], '', $posts[$i]->content)), 120) : '' }}
-                                        <a href="/{{$type}}/{{$posts[$i]->id}}">Read more</a>
-                                    </p>
                                 </div>
-                            </div>
+                            </a>
                         </div>
-                        @endif
-                    @endforeach
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Other Posts -->
-    <div class="container mt-5">
-        <div class="row">
-            <div class="col-12">
-                @forelse($posts as $index => $n)
-                    @if($index >= 3)
-                    <div class="card bg-dark-glass border-0 shadow-sm mb-4">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center mb-2">
-                                <span class="text-secondary small me-3">
-                                    <i class="bi bi-calendar-event"></i>
-                                    {{ $n->created_at ? date('j M Y, g:i A', strtotime($n->created_at)) : '' }}
-                                </span>
-                                <span class="badge bg-light text-dark">{{$n->category->name ?? 'General'}}</span>
-                            </div>
-                            <h4 class="card-title mb-2">
-                                <a href="/{{$type}}/{{$n->id}}" class="link-unstyled">{{$n->title}}</a>
-                            </h4>
-                            <div class="d-flex align-items-center mb-2">
-                                <a href="/profile/{{$n->member->id ?? 0}}" class="d-flex align-items-center link-unstyled">
-                                    <img src="{{ $n->member->photo ? '/storage/'.$n->member->photo : '/default-profile.png' }}" class="profile-pic-xs me-2" alt="">
-                                    <span class="fw-bold text-light">{{$n->member->name ?? 'Unknown'}}</span>
-                                </a>
-                            </div>
-                            <p class="card-text text-light">
-                                {{ $n->content ? \Illuminate\Support\Str::limit(strip_tags(str_replace(['#', '*'], '', $n->content)), 250) : '' }}
-                                <a href="/{{$type}}/{{$n->id}}">Read more</a>
-                            </p>
-                        </div>
-                    </div>
                     @endif
-                @empty
-                    <div class="alert alert-warning mt-4">No posts are currently available.</div>
-                @endforelse
-            </div>
+
+                    {{-- Secondary Posts (Dark Cards, No Images) --}}
+                    @foreach($posts as $index => $post)
+                        @continue($index == 0)
+                        <div class="col-lg-4 col-md-6">
+                            <a href="/{{ $type }}/{{ $post->id }}" class="text-decoration-none">
+                                <div class="card post-card-dark h-100 border-0 shadow-sm">
+                                    <div class="card-body d-flex flex-column">
+                                        <h3 class="card-title h5 fw-semibold text-light mb-3">
+                                            {{ $post->title }}
+                                        </h3>
+                                        <div class="post-meta-dark d-flex flex-wrap align-items-center mb-3 text-secondary small">
+                                            <a href="/profile/{{ $post->member->id ?? 0 }}" class="d-flex align-items-center me-3 text-decoration-none text-secondary">
+                                                <div class="avatar-xs-dark d-inline-flex align-items-center justify-content-center me-2 rounded-circle">
+                                                    <i class="fas fa-user"></i>
+                                                </div>
+                                                <span>{{ $post->member->name ?? 'Unknown' }}</span>
+                                            </a>
+                                            <div class="me-3 d-flex align-items-center">
+                                                <i class="fas fa-clock me-1"></i>
+                                                {{ $post->created_at ? $post->created_at->format('j M Y') : '' }}
+                                            </div>
+                                            <span class="badge category-badge-secondary-dark ms-auto">
+                                                {{ $post->category->name ?? 'General' }}
+                                            </span>
+                                        </div>
+                                        <p class="card-text text-secondary mb-4 fs-6 flex-grow-1">
+                                            {{ $post->content 
+                                                ? \Illuminate\Support\Str::limit(
+                                                      strip_tags(
+                                                        str_replace(['#','*'], '', $post->content)
+                                                      ),
+                                                      120
+                                                  )
+                                                : '' 
+                                            }}
+                                        </p>
+                                        <div class="mt-auto">
+                                            <button class="btn btn-sm btn-light">
+                                                Read More
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    @endforeach
+
+                </div>
+            @endif
         </div>
-    </div>
+    </section>
 </div>
 
-<!-- Modern Astronomy Club Styles -->
+{{-- Dark Styles --}}
 <style>
-    .post-bg {
-        background: linear-gradient(120deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
-        background-image: url('/rsx/{{$type ?? "default"}}bg.jpg'), linear-gradient(120deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
-        min-height: 100vh;
-        position: relative;
+    /* Root Variables for Dark Theme */
+    :root {
+        --bg-dark: #121212;
+        --surface: #1e1e1e;
+        --on-surface: #e0e0e0;
+        --on-surface-secondary: #a0a0a0;
+        --primary-light: #bb86fc;
+        --accent-light: #03dac6;
+        --border-dark: #2a2a2a;
+        --card-radius-dark: 0.75rem;
     }
-    .hero-overlay {
-        background: rgba(10, 10, 30, 0.7);
-        min-height: 40vh;
-        border-bottom: 4px solid #ffd70044;
-        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+
+    /* Base */
+    .posts-page-dark {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--bg-dark);
+        color: var(--on-surface);
+        min-height: 100vh;
+    }
+    a {
+        transition: opacity 0.2s ease-in-out;
+    }
+    a:hover {
+        opacity: 0.8;
+        text-decoration: none;
+    }
+
+    /* Hero Section Dark */
+    .hero-section-dark {
+        position: relative;
+        height: 40vh;
+        background: #1a1a1a url('/images/dark-astronomy-hero.jpg') center/cover no-repeat;
+        display: flex;
+    }
+    .overlay-dark {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.6);
+    }
+    .hero-section-dark .container {
         position: relative;
         z-index: 1;
     }
-    .bg-dark-glass {
-        background: rgba(20, 20, 40, 0.85);
-        backdrop-filter: blur(6px);
-        border-radius: 18px;
+    .hero-section-dark h1 {
+        font-size: 3rem;
+        color: var(--primary-light);
     }
-    .profile-pic-sm {
-        width: 48px;
-        height: 48px;
-        border-radius: 50%;
-        object-fit: cover;
-        border: 2px solid #ffd700;
-        background: #222;
+    .hero-section-dark p {
+        color: var(--on-surface-secondary);
     }
-    .profile-pic-xs {
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        object-fit: cover;
-        border: 1.5px solid #ffd700;
-        background: #222;
+
+    /* Search Section Dark */
+    .search-section-dark {
+        background-color: var(--bg-dark);
     }
-    .link-unstyled {
-        text-decoration: none !important;
+    .dark-input-group {
+        background-color: var(--surface);
+        border: 1px solid var(--border-dark);
     }
-    .text-gradient {
-        /* background: linear-gradient(90deg, #ffd700, #00c3ff, #ff6e7f); */
-        /* -webkit-background-clip: text; */
-        /* -webkit-text-fill-color: transparent; */
-        /* background-clip: text; */
+    #searchInput {
+        color: var(--on-surface);
+        padding: 0.75rem 1rem;
     }
-    .bg-gradient-astro {
-        /* background: linear-gradient(90deg, #ffd700 0%, #00c3ff 100%); */
-        /* color: #222 !important; */
-        /* font-weight: 600; */
-        /* border-radius: 1em; */
-        /* padding: 0.3em 1em; */
-        /* font-size: 0.95em; */
+    .dark-input-group .input-group-text {
+        color: var(--on-surface-secondary);
     }
-    .z-2 { z-index: 2; }
-    .mt-n5 { margin-top: -3rem !important; }
-    .badge.bg-light.text-dark {
-        background: #fff !important;
-        color: #222 !important;
-        font-weight: 600;
-        border-radius: 1em;
-        padding: 0.3em 1em;
-        font-size: 0.95em;
-        border: 1px solid #eee;
+
+    /* Posts Section Dark */
+    .posts-section-dark {
+        background-color: var(--bg-dark);
     }
-    .card-title a.link-unstyled,
-    h1.display-1,
-    h2.card-title,
-    h3.card-title,
-    h4.card-title {
-        color: #fff !important;
+
+    /* Featured Card Dark */
+    .featured-card-dark {
+        background-color: var(--surface);
+        border-radius: var(--card-radius-dark);
     }
+    .featured-card-dark h2 {
+        color: var(--primary-light);
+    }
+    .featured-card-dark p {
+        color: var(--on-surface);
+        line-height: 1.5;
+    }
+    .post-meta-dark {
+        color: var(--on-surface-secondary);
+    }
+    .avatar-sm-dark {
+        width: 36px;
+        height: 36px;
+        background-color: var(--border-dark);
+        color: var(--on-surface-secondary);
+        font-size: 1.2rem;
+    }
+    .category-badge-dark {
+        background-color: var(--accent-light);
+        color: var(--bg-dark);
+        font-size: 0.8rem;
+        padding: 0.25rem 0.6rem;
+        border-radius: 0.5rem;
+    }
+    .btn-outline-light {
+        border-color: var(--on-surface-secondary);
+        color: var(--on-surface);
+    }
+    .btn-outline-light:hover {
+        background-color: var(--on-surface-secondary);
+        color: var(--bg-dark);
+    }
+
+    /* Secondary Cards Dark */
+    .post-card-dark {
+        background-color: var(--surface);
+        border-radius: var(--card-radius-dark);
+    }
+    .post-card-dark h3 {
+        color: var(--primary-light);
+    }
+    .post-card-dark p {
+        color: var(--on-surface-secondary);
+        line-height: 1.4;
+    }
+    .avatar-xs-dark {
+        width: 28px;
+        height: 28px;
+        background-color: var(--border-dark);
+        color: var(--on-surface-secondary);
+        font-size: 1rem;
+    }
+    .category-badge-secondary-dark {
+        background-color: var(--accent-light);
+        color: var(--bg-dark);
+        font-size: 0.7rem;
+        padding: 0.2rem 0.5rem;
+        border-radius: 0.4rem;
+    }
+    .btn-light {
+        background-color: var(--primary-light);
+        color: var(--bg-dark);
+    }
+    .btn-light:hover {
+        background-color: var(--accent-light);
+        color: var(--bg-dark);
+    }
+
     /* Responsive tweaks */
-    @media (max-width: 991px) {
-        .mt-n5 { margin-top: 0 !important; }
-        .vh-40 { min-height: 30vh !important; }
+    @media (max-width: 768px) {
+        .hero-section-dark {
+            height: 30vh;
+        }
+        .featured-card-dark {
+            padding: 2rem 1rem;
+        }
     }
 </style>
+
+{{-- JavaScript for Search Filtering --}}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('searchInput');
+        const postItems = Array.from(document.querySelectorAll('.post-card-dark, .featured-card-dark'));
+
+        searchInput.addEventListener('input', function() {
+            const query = searchInput.value.trim().toLowerCase();
+            postItems.forEach(card => {
+                const titleEl = card.querySelector('.card-title');
+                const snippetEl = card.querySelector('.card-text');
+                const titleText = titleEl ? titleEl.textContent.toLowerCase() : '';
+                const snippetText = snippetEl ? snippetEl.textContent.toLowerCase() : '';
+                const parentCol = card.closest('div[class^="col-"]');
+                if (query === '' || titleText.includes(query) || snippetText.includes(query)) {
+                    parentCol.style.display = '';
+                } else {
+                    parentCol.style.display = 'none';
+                }
+            });
+        });
+    });
+</script>
 @endsection

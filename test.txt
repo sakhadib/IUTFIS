@@ -1,274 +1,198 @@
 @extends('layouts.main')
+
 @section('main')
-<div class="vh-10"></div>
+<div class="post-bg">
+    <!-- Hero Section -->
+    <div class="vh-40 d-flex align-items-center justify-content-center hero-overlay">
+        <div class="container text-center">
+            <h1 class="display-1 mb-3">{{$type ?? 'Posts'}}</h1>
+            <p class="lead text-light mb-0">Explore our collection of astronomy-related {{$type ?? 'posts'}} curated by the University Astronomy Club.</p>
+        </div>
+    </div>
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-5 offset-md-1 mt-5 mb-5">
-            <form action="/reporter/{{$destination}}" method="POST" id="markdownForm">
-                @csrf
-                <div class="mb-3">
-                    <textarea class="form-control inp inp-title" name="title" id="inp-title" rows="1" placeholder="Title">@if($post != null){{$post->title}}@endif</textarea>
-                </div>
-                <div class="mb-3">
-
-                    <input class="form-control" 
-                            name="category" 
-                            list="datalistOptions" 
-                            @if($post != null)
-                                value = {{$post->category->name}}
-                            @endif 
-                            id="exampleDataList" 
-                            placeholder="Category" 
-                            @if($destination == 'editAnnouncement' || $destination == 'createAnnouncements')
-                                hidden value="Announcement"
-                            @endif
-                            title="Start typing and then select. if does not appear then write your own">
-
-                    <datalist id="datalistOptions">
-                        @foreach($categories as $category)
-                        <option value="{{$category->name}}">
-                        @endforeach
-                        
-                    </datalist>
-                </div>
-                <div class="mb-3">
-                    <textarea class="form-control inp inp-body math" name="content" id="text" rows="15" placeholder="Start Writing . Click on Help to learn...">@if($post != null){{$post->content}}@endif</textarea>
-                </div>
-                @if($post != null)
-                <input type="text" name="id" value="{{$post->id}}" hidden>
-                @endif
-                <div class="row">
-                    
-                    <div class="col-md-12 df jcfe">
-                        
-                        <button type="submit" class="btn btn-dark me-auto" >
-                        @if($post != null)
-                            Update
-                        @else
-                            Create
-                        @endif
-                        </button> 
-                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                            <i class="uil uil-fire"></i> Help
-                        </button>
+    <!-- Featured Posts -->
+    <div class="container mt-5 position-relative z-2">
+        <div class="row g-4">
+            @if(!empty($posts[0]))
+            <div class="col-lg-6">
+                <div class="card bg-dark-glass border-0 shadow-lg h-100">
+                    <div class="card-body">
+                        <h2 class="card-title display-5 mb-3">
+                            <a href="/{{$type}}/{{$posts[0]->id}}" class="link-unstyled">{{$posts[0]->title}}</a>
+                        </h2>
+                        <div class="d-flex align-items-center mb-2">
+                            <a href="/profile/{{$posts[0]->member->id ?? 0}}" class="d-flex align-items-center link-unstyled me-2">
+                                <img src="{{ $posts[0]->member->photo ? '/storage/'.$posts[0]->member->photo : '/default-profile.png' }}" class="profile-pic-sm me-2" alt="">
+                                <span class="fw-bold text-light">{{$posts[0]->member->name ?? 'Unknown'}}</span>
+                            </a>
+                            <span class="text-secondary small ms-2">
+                                <i class="bi bi-clock"></i>
+                                {{ $posts[0]->created_at ? date('j M Y, g:i A', strtotime($posts[0]->created_at)) : '' }}
+                            </span>
+                            <span class="badge bg-light text-dark ms-3">{{$posts[0]->category->name ?? 'General'}}</span>
+                        </div>
+                        <p class="card-text text-light">
+                            {{ $posts[0]->content ? \Illuminate\Support\Str::limit(strip_tags(str_replace(['#', '*'], '', $posts[0]->content)), 400) : '' }}
+                            <a href="/{{$type}}/{{$posts[0]->id}}">Read more</a>
+                        </p>
                     </div>
                 </div>
-                               
-            </form>
-            
-        </div>
-        <div class="col-md-5 preview mt-5 mb-5">
-            <h1 class="display-5 mb-4" id="main-title"></h1>
-            <div class="row">
-                <div class="col-md-auto">
-                    <p class="bcard" id="post-date"></p>
-                </div>
-                <div class="col-md-auto">
-                    <p class="bcard">{{$member->name}}</p>
+            </div>
+            @endif
+
+            <div class="col-lg-6">
+                <div class="row g-4">
+                    @foreach([1,2] as $i)
+                        @if(!empty($posts[$i]))
+                        <div class="col-12">
+                            <div class="card bg-dark-glass border-0 shadow h-100">
+                                <div class="card-body">
+                                    <h3 class="card-title display-6 mb-2">
+                                        <a href="/{{$type}}/{{$posts[$i]->id}}" class="link-unstyled">{{$posts[$i]->title}}</a>
+                                    </h3>
+                                    <div class="d-flex align-items-center mb-2">
+                                        <a href="/profile/{{$posts[$i]->member->id ?? 0}}" class="d-flex align-items-center link-unstyled me-2">
+                                            <img src="{{ $posts[$i]->member->photo ? '/storage/'.$posts[$i]->member->photo : '/default-profile.png' }}" class="profile-pic-xs me-2" alt="">
+                                            <span class="fw-bold text-light">{{$posts[$i]->member->name ?? 'Unknown'}}</span>
+                                        </a>
+                                        <span class="text-secondary small ms-2">
+                                            <i class="bi bi-clock"></i>
+                                            {{ $posts[$i]->created_at ? date('j M Y, g:i A', strtotime($posts[$i]->created_at)) : '' }}
+                                        </span>
+                                        <span class="badge bg-light text-dark ms-3">{{$posts[$i]->category->name ?? 'General'}}</span>
+                                    </div>
+                                    <p class="card-text text-light">
+                                        {{ $posts[$i]->content ? \Illuminate\Support\Str::limit(strip_tags(str_replace(['#', '*'], '', $posts[$i]->content)), 120) : '' }}
+                                        <a href="/{{$type}}/{{$posts[$i]->id}}">Read more</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
+                    @endforeach
                 </div>
             </div>
-            <div class="markdown-here" id="content"></div>
-            <!-- <p>$$e^2$$</p> -->
+        </div>
+    </div>
+
+    <!-- Other Posts -->
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-12">
+                @forelse($posts as $index => $n)
+                    @if($index >= 3)
+                    <div class="card bg-dark-glass border-0 shadow-sm mb-4">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-2">
+                                <span class="text-secondary small me-3">
+                                    <i class="bi bi-calendar-event"></i>
+                                    {{ $n->created_at ? date('j M Y, g:i A', strtotime($n->created_at)) : '' }}
+                                </span>
+                                <span class="badge bg-light text-dark">{{$n->category->name ?? 'General'}}</span>
+                            </div>
+                            <h4 class="card-title mb-2">
+                                <a href="/{{$type}}/{{$n->id}}" class="link-unstyled">{{$n->title}}</a>
+                            </h4>
+                            <div class="d-flex align-items-center mb-2">
+                                <a href="/profile/{{$n->member->id ?? 0}}" class="d-flex align-items-center link-unstyled">
+                                    <img src="{{ $n->member->photo ? '/storage/'.$n->member->photo : '/default-profile.png' }}" class="profile-pic-xs me-2" alt="">
+                                    <span class="fw-bold text-light">{{$n->member->name ?? 'Unknown'}}</span>
+                                </a>
+                            </div>
+                            <p class="card-text text-light">
+                                {{ $n->content ? \Illuminate\Support\Str::limit(strip_tags(str_replace(['#', '*'], '', $n->content)), 250) : '' }}
+                                <a href="/{{$type}}/{{$n->id}}">Read more</a>
+                            </p>
+                        </div>
+                    </div>
+                    @endif
+                @empty
+                    <div class="alert alert-warning mt-4">No posts are currently available.</div>
+                @endforelse
+            </div>
         </div>
     </div>
 </div>
 
-
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-scrollable">
-      <div class="modal-content">
-        <div class="modal-header bg-primary text-white">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Markdown Helper</h1>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <h2>Markdown Basics</h2>
-          <ul class="list-group">
-            <li class="list-group-item"><strong>Headings:</strong> Use <code>#</code> for headings. More <code>#</code> means smaller heading.<br>Example: <code># Heading 1</code>, <code>## Heading 2</code></li>
-            <li class="list-group-item"><strong>Bold:</strong> Use <code>**text**</code> or <code>__text__</code> for bold text.<br>Example: <code>**bold text**</code> or <code>__bold text__</code></li>
-            <li class="list-group-item"><strong>Italic:</strong> Use <code>*text*</code> or <code>_text_</code> for italic text.<br>Example: <code>*italic text*</code> or <code>_italic text_</code></li>
-            <li class="list-group-item"><strong>Lists:</strong> Use <code>-</code> or <code>*</code> for unordered lists, and numbers for ordered lists.<br>Example: <code>- Item 1</code>, <code>* Item 2</code>, <code>1. Item 3</code></li>
-            <li class="list-group-item"><strong>Links:</strong> Use <code>[text](url)</code> for links.<br>Example: <code>[Google](https://www.google.com)</code></li>
-            <li class="list-group-item"><strong>Images:</strong> Use <code>![alt text](url)</code> for images.<br>Example: <code>![Logo](https://example.com/logo.png)</code></li>
-            <li class="list-group-item"><strong>Inline Code:</strong> Use <code>`code`</code> for inline code.<br>Example: <code>`print("Hello, World!")`</code></li>
-            <li class="list-group-item"><strong>Code Blocks:</strong> Use <code>```language</code> to start a code block and <code>```</code> to end it.<br>Example: <code>```python<br>print("Hello, World!")<br>```</code></li>
-            <li class="list-group-item"><strong>Inline Equations:</strong> Use <code>\\(inline equation\\)</code> for inline equations.<br>Example: <code>\\(E = mc^2\\)</code></li>
-            <li class="list-group-item"><strong>Block Equations:</strong> Use <code>\\[block equation\\]</code> for block equations.<br>Example: <code>\\[a^2 + b^2 = c^2\\]</code></li>
-          </ul>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <style>
-    .modal-header {
-      background-color: #007bff;
-      color: white;
-    }
-  
-    .btn-close-white {
-      filter: invert(1);
-    }
-  
-    .modal-body h2 {
-      border-bottom: 2px solid #007bff;
-      padding-bottom: 10px;
-      margin-bottom: 20px;
-    }
-  
-    .list-group-item {
-      border: none;
-      padding: 15px;
-      border-bottom: 1px solid #f0f0f0;
-    }
-  
-    .list-group-item:last-child {
-      border-bottom: none;
-    }
-  
-    .list-group-item code {
-      background-color: #f8f9fa;
-      padding: 2px 4px;
-      border-radius: 4px;
-    }
-  </style>
-  
-
-
-
+<!-- Modern Astronomy Club Styles -->
 <style>
-    .inp {
-        border: none;
-        border-radius: 0;
-        /* background-color: rgba(150, 150, 150, 0.1); */
-        /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.4); */
-        border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    .post-bg {
+        background: linear-gradient(120deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+        background-image: url('/rsx/{{$type ?? "default"}}bg.jpg'), linear-gradient(120deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        min-height: 100vh;
+        position: relative;
     }
-    .inp-title {
-        font-size: 2rem;
-        font-weight: bold;
+    .hero-overlay {
+        background: rgba(10, 10, 30, 0.7);
+        min-height: 40vh;
+        border-bottom: 4px solid #ffd70044;
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        position: relative;
+        z-index: 1;
     }
-    .inp-body {
-        font-size: 1.2rem;
+    .bg-dark-glass {
+        background: rgba(20, 20, 40, 0.85);
+        backdrop-filter: blur(6px);
+        border-radius: 18px;
     }
-
-    .form-control:hover{
-        border: none;
-        box-shadow: none;
-        border-radius: 10px;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.5);
-        background-color: rgba(150, 150, 150, 0.1);
+    .profile-pic-sm {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #ffd700;
+        background: #222;
     }
-
-    .form-control:focus {
-        border: none;
-        box-shadow: none;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.5);
-        background-color: rgba(150, 150, 150, 0.1);
-        border-radius: 10px;
+    .profile-pic-xs {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 1.5px solid #ffd700;
+        background: #222;
     }
-
-    .preview {
-        border: 1px solid rgba(0, 0, 0, 0.2);
-        border-radius: 10px;
-        padding: 10px;
-        padding-left: 20px;
-        padding-right: 20px;
-        background-color: rgba(150, 150, 150, 0.1);
-        min-height: 30vh;
-        /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.4); */
+    .link-unstyled {
+        text-decoration: none !important;
     }
-
-    @media (min-width: 992px) { /* Desktop screens and larger */
-        .preview {
-            margin-left: 50px;
-        }
+    .text-gradient {
+        /* background: linear-gradient(90deg, #ffd700, #00c3ff, #ff6e7f); */
+        /* -webkit-background-clip: text; */
+        /* -webkit-text-fill-color: transparent; */
+        /* background-clip: text; */
     }
-
-    .bcard {
-        border: 1px solid rgba(12, 103, 0, 0.559);
-        border-radius: 10px;
-        padding: 5px;
-        padding-left: 12px;
-        padding-right: 12px;
-        background-color: rgba(30, 255, 0, 0.078);
-        /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.4); */
-        font-family: 'jetbrains mono', monospace;
-        font-size: 0.8rem;
+    .bg-gradient-astro {
+        /* background: linear-gradient(90deg, #ffd700 0%, #00c3ff 100%); */
+        /* color: #222 !important; */
+        /* font-weight: 600; */
+        /* border-radius: 1em; */
+        /* padding: 0.3em 1em; */
+        /* font-size: 0.95em; */
     }
-
-    .markdown-here img {
-        max-width: 100%;
-        height: auto;
+    .z-2 { z-index: 2; }
+    .mt-n5 { margin-top: -3rem !important; }
+    .badge.bg-light.text-dark {
+        background: #fff !important;
+        color: #222 !important;
+        font-weight: 600;
+        border-radius: 1em;
+        padding: 0.3em 1em;
+        font-size: 0.95em;
+        border: 1px solid #eee;
+    }
+    .card-title a.link-unstyled,
+    h1.display-1,
+    h2.card-title,
+    h3.card-title,
+    h4.card-title {
+        color: #fff !important;
+    }
+    /* Responsive tweaks */
+    @media (max-width: 991px) {
+        .mt-n5 { margin-top: 0 !important; }
+        .vh-40 { min-height: 30vh !important; }
     }
 </style>
-
-
-
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Event listener for textarea input
-        document.getElementById('text').addEventListener('input', function() {
-            updatePreview();
-            updateMathPreview();
-        });
-
-        // Event listener for modal show
-        document.getElementById('exampleModal').addEventListener('show.bs.modal', function () {
-            updateMathPreview();
-        });
-
-        // Function to update the preview
-        function updatePreview() {
-            let textValue = document.getElementById('text').value;
-            document.getElementById('content').innerHTML = marked.parse(textValue);
-        }
-
-        // Function to update MathJax rendering and display line breaks
-        function updateMathPreview() {
-            const content = document.getElementById('content');
-            const contentWithLineBreaks = content.innerHTML.replace(/\n/g, '<br>');
-
-            content.innerHTML = contentWithLineBreaks;
-
-            // Update MathJax rendering
-            MathJax.texReset();
-            MathJax.typesetClear();
-            MathJax.typesetPromise([content]);
-        }
-    });
-</script>
-
-<script>
-    title_input = document.getElementById('inp-title');
-    title_preview = document.getElementById('main-title');
-    title_input.addEventListener('input', function() {
-        title_preview.innerHTML = title_input.value;
-    });
-
-    date = new Date();
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    document.getElementById('post-date').innerHTML = date.toLocaleDateString('en-US', options);
-
-    link_input = document.getElementById('inp-link');
-    link_display = document.getElementById('link-display');
-    link_input.addEventListener('input', function() {
-        link_display.src = link_input.value;
-    });
-</script>
-
-
-<script>
-    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
-</script>
-
-
 @endsection
