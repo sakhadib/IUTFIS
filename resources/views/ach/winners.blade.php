@@ -1,172 +1,335 @@
 @extends('layouts.main')
 
+
+
 @section('main')
+
+
 @php
-    $event = $achievement;    
+$event = $achievement;    
 @endphp
-    <div class="main footer-bg">
-        <div class="vh-10"></div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h1 class="display-3 text-success">
-                        {{$event->competition}}
-                    </h1>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="container">
-                        
-                        <div class="row mt-5">
-                            <div class="col-1 df jcc">
-                                <h1 class="display-6 text-light"><i class="uil uil-schedule"></i> </h1>
-                            </div> 
-                            <div class="col-11">
-                                <h1 class="display-6 text-light"> {{date('j F Y - l', strtotime($event->competition_date))}}</h1>
-                            </div> 
-                        </div>
-                        <div class="row mt-5">
-                            <div class="col-1 df jcc">
-                                <h1 class="display-6 text-light"><i class="uil uil-analytics"></i></h1>
-                            </div> 
-                            <div class="col-11">
-                                <h1 class="display-6 text-light">{{$event->rank}}</h1>
-                            </div> 
-                        </div>
-                        <div class="row mt-5">
-                            <div class="col-md-12">
-                                <a href="{{$event->reff_link}}" style="text-decoration: none" target="blank">
-                                    <h1 class="btn btn-lg btn-outline-light"><i class="uil uil-link-h"></i> &nbsp; View Competition</h1>
-                                </a>
-                                
-                            </div> 
-                        </div>
-                    </div>
-                </div>
 
-                
-            </div>
-            <div class="vh-5"></div>
-
-            <div class="row mb-4 mt-4">
-                <div class="col-md-auto">
-                    <h1 class="display-4 text-success">
-                        Winning Team
-                    </h1>
-                </div>
-                
-            </div>
-
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        @foreach($winner_members as $mem)
-                        <div class="row mb-4">
-                            <div class="col-md-12">
-                                <a href="/profile/{{$mem->member->id}}" class="link-light mb-3" style="text-decoration: none; font-size: 1.5rem;">
-                                    <img src="/storage/{{$mem->member->photo}}" alt="" class="profile-pic-big"> &nbsp;
-                                    {{$mem->member->name}}, <span class="text-secondary">{{$mem->member->student_id}}, {{$mem->member->department}}, Islamic University of Technology</span>
-                                </a>
-                            </div>
-                        </div>
-                        @endforeach
-                        
-                    </div>
-                </div>
-            </div>
-
-            <div class="row mt-5">
-                <div class="col-md-12 df dfc">
-                    <h2 class="display-4 text-success mb-3">Success Story</h2>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <p class="lead text-light mt-4" id="eventDescription" style="text-align: justify">
-                                    {!! nl2br(e($event->story)) !!}
-                                </p>
-                            </div>
-                        </div>
-                        
-                    </div>
-                </div>
-                
-
-                
-            </div>
-
-
-
-            
-
-
-        </div>
-    </div>
-
-
-
-
-    <style>
-        .main{
-            min-height: 100vh;
+<!-- SEO & Schema.org -->
+<meta name="description" content="Winners of {{ $event->competition }} held on {{ date('j F Y', strtotime($event->competition_date)) }}. See the winning team and their success story.">
+<meta property="og:title" content="{{ $event->competition }} Winners">
+<meta property="og:description" content="Winners of {{ $event->competition }} held on {{ date('j F Y', strtotime($event->competition_date)) }}. See the winning team and their success story.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="{{ url()->current() }}">
+<meta property="og:site_name" content="IUT Al-Fazari Interstellar Society">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Event",
+        "name": "{{ $event->competition }}",
+        "startDate": "{{ date('c', strtotime($event->competition_date)) }}",
+        "eventStatus": "https://schema.org/EventCompleted",
+        "location": {
+            "@type": "Place",
+            "name": "Islamic University of Technology",
+            "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Dhaka",
+                "addressCountry": "BD"
+            }
         }
-
-        .ws-image{
-            width: 100%;
-            height: auto;
-            border-radius: 20px;
-            border-bottom: 7px solid rgba(255, 255, 255, 0.5);
-            border-top: 7px solid rgba(255, 255, 255, 0.5);
+        "description": "{{ strip_tags($event->story) }}",
+        "organizer": {
+            "@type": "Organization",
+            "name": "IUT Al-Fazari Interstellar Society"
         }
-    </style>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        document.querySelectorAll('.duration').forEach(function(element) {
-            const startDate = new Date(element.parentElement.getAttribute('data-start'));
-            const endDate = new Date(element.parentElement.getAttribute('data-end'));
-            const durationMs = endDate - startDate;
-            const minutes = Math.floor((durationMs / (1000 * 60)) % 60);
-            const hours = Math.floor((durationMs / (1000 * 60 * 60)) % 24);
-            const days = Math.floor(durationMs / (1000 * 60 * 60 * 24));
-
-            let durationStr = "";
-            if (days > 0) {
-                durationStr += days + " day" + (days > 1 ? "s " : " ");
-            }
-            if (hours > 0) {
-                durationStr += hours + " hour" + (hours > 1 ? "s " : " ");
-            }
-            if (minutes > 0) {
-                durationStr += minutes + " minute" + (minutes > 1 ? "s" : "");
-            }
-
-            element.textContent = durationStr || "0 minutes";
-        });
-    });
+    }
 </script>
 
+<!-- Google Fonts, Bootstrap, Font Awesome -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <style>
-    .profile-pic-big{
-        width: 45px;
-        height: 45px;
+    :root {
+        --primary: #101624;
+        --secondary: #182032;
+        --accent: #6ec1e4; /* sky blue */
+        --accent-dark: #3a8ecb; /* powder blue/darker sky blue */
+        --light: #eafaf1;
+        --glass-bg: rgba(110,193,228,0.10);
+        --glass-border: rgba(110,193,228,0.18);
+    }
+    body, .main.footer-bg {
+        background: var(--primary) !important;
+        color: var(--light);
+        font-family: 'Montserrat', 'Roboto', Arial, sans-serif;
+    }
+    .winner-hero-section {
+        background: linear-gradient(120deg, #101624 80%, #182032 100%);
+        border-bottom: 3px solid var(--accent);
+        margin-bottom: 2.5rem;
+        position: relative;
+    }
+    .trophy-icon {
+        font-size: 4rem;
+        color: var(--accent);
+        filter: drop-shadow(0 0 12px rgba(110,193,228,0.18));
+        animation: trophy-bounce 1.5s infinite alternate;
+    }
+    @keyframes trophy-bounce {
+        0% { transform: translateY(0); }
+        100% { transform: translateY(-10px); }
+    }
+    .section-title {
+        font-family: 'Montserrat', 'Roboto', Arial, sans-serif;
+        font-weight: 700;
+        color: var(--accent);
+        position: relative;
+        padding-bottom: 10px;
+        margin-bottom: 25px;
+        font-size: 2.1rem;
+    }
+    .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 80px;
+        height: 3px;
+        background: var(--accent);
+    }
+    .interactive-card, .team-member-card {
+        background: var(--glass-bg);
+        border-radius: 20px;
+        border: 1.5px solid var(--glass-border);
+        box-shadow: 0 4px 24px 0 rgba(110,193,228,0.10), 0 1.5px 8px 0 rgba(58,142,203,0.10);
+        padding: 2.2rem 1.5rem 1.5rem 1.5rem;
+        min-width: 260px;
+        max-width: 340px;
+        margin: 0.7rem 0.7rem 1.5rem 0.7rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s, background 0.2s;
+        backdrop-filter: blur(8px);
+        position: relative;
+        overflow: hidden;
+    }
+    .interactive-card:hover, .interactive-card:focus-within, .team-member-card:hover {
+        box-shadow: 0 0 32px 6px var(--accent-dark);
+        border-color: var(--accent);
+        background: linear-gradient(120deg, var(--glass-bg) 80%, rgba(58,142,203,0.13) 100%);
+        transform: translateY(-4px) scale(1.03);
+    }
+    .competition-title {
+        color: var(--accent);
+        font-family: 'Montserrat', 'Roboto', Arial, sans-serif;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        margin-bottom: 0.5rem;
+    }
+    .competition-date, .competition-rank {
+        color: var(--light);
+        font-size: 1.15rem;
+        margin-bottom: 0.5rem;
+    }
+    .competition-rank i, .competition-date i {
+        color: var(--accent);
+        margin-right: 8px;
+    }
+    .btn-modern {
+        background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+        color: #fff;
+        border: none;
+        border-radius: 50px;
+        font-weight: 700;
+        padding: 12px 32px;
+        font-size: 1.1rem;
+        transition: box-shadow 0.2s, transform 0.2s;
+        box-shadow: none;
+    }
+    .btn-modern:hover, .btn-modern:focus {
+        box-shadow: 0 0 8px 2px var(--accent-dark);
+        color: #fff;
+        transform: translateY(-2px) scale(1.03);
+    }
+    .profile-pic-big {
+        width: 80px;
+        height: 80px;
+        border-radius: 18px;
+        border: 3px solid var(--accent);
+        object-fit: cover;
+        background: var(--secondary);
+        margin-bottom: 18px;
+        box-shadow: 0 2px 12px 0 rgba(110,193,228,0.13);
+    }
+    .member-info {
+        color: var(--light);
+        font-size: 1.08rem;
+        margin-bottom: 0.5rem;
+    }
+    .member-name {
+        color: var(--accent);
+        font-weight: 700;
+        font-size: 1.18rem;
+        margin-bottom: 6px;
+        letter-spacing: 0.2px;
+    }
+    .btn-outline-success.btn-sm {
+        border-radius: 30px;
+        border: 1.5px solid var(--accent);
+        color: var(--accent);
+        background: transparent;
+        font-weight: 600;
+        transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+    .btn-outline-success.btn-sm:hover, .btn-outline-success.btn-sm:focus {
+        background: linear-gradient(90deg, var(--accent), var(--accent-dark));
+        color: #fff;
+        border-color: var(--accent-dark);
+    }
+    .success-story-card {
+        background: var(--glass-bg);
+        border-radius: 16px;
+        border: 1.5px solid var(--glass-border);
+        box-shadow: 0 2px 8px rgba(110,193,228,0.10);
+        padding: 2rem 1.5rem;
+        margin-bottom: 2rem;
+        backdrop-filter: blur(8px);
+    }
+    #eventDescription a {
+        color: var(--accent);
+        text-decoration: underline;
+        word-break: break-all;
+    }
+    .share-achievement-box {
+        background: var(--glass-bg);
+        border: 1.5px solid var(--glass-border);
+        box-shadow: 0 1px 4px rgba(110,193,228,0.04);
+        display: inline-block;
+        backdrop-filter: blur(8px);
+    }
+    .social-btn {
+        width: 42px;
+        height: 42px;
         border-radius: 50%;
-        border: 2px solid #1B75BC;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        font-size: 1.1rem;
+        transition: all 0.3s;
+        border: 2px solid transparent;
+        background: var(--accent-dark);
+        box-shadow: 0 0 8px 1px var(--accent);
+    }
+    .social-btn:hover {
+        transform: translateY(-5px) scale(1.08);
+        border-color: var(--accent);
+        background: var(--accent);
+        color: #fff;
+    }
+    .facebook { background: #3b5998; }
+    .twitter { background: #1da1f2; }
+    .linkedin { background: #0077b5; }
+    .whatsapp { background: #25d366; }
+    @media (max-width: 900px) {
+        .team-member-card, .interactive-card {
+            min-width: 90vw;
+            max-width: 98vw;
+            padding: 1.1rem 0.7rem 1.5rem 0.7rem;
+            margin-bottom: 1.1rem;
+        }
+        .profile-pic-big {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 10px;
+        }
+    }
+    @media (max-width: 600px) {
+        .winner-hero-section {
+            padding: 2.5rem 0 1.5rem;
+        }
+        .section-title {
+            font-size: 1.4rem;
+            margin-bottom: 18px;
+            padding-bottom: 7px;
+        }
+        .success-story-card {
+            padding: 1.1rem 0.7rem;
+            margin-bottom: 1.1rem;
+        }
     }
 </style>
 
-<script>
-    // Function to convert URLs in text to clickable links
-    function makeLinksClickable(text) {
-        var urlPattern = /(https?:\/\/[^\s]+)/g;
-        return text.replace(urlPattern, function(url) {
-            return '<a href="' + url + '" target="_blank" rel="noopener noreferrer" class="link-success" style="text-decoration:none;">' + url + '</a>';
+<div class="main footer-bg">
+    <div class="vh-10"></div>
+    <div class="container py-5">
+        <!-- Animated Confetti (Celebration) -->
+        <div id="confetti-canvas" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:999;"></div>
+        
+        <!-- Hero Section with Trophy -->
+        <section class="winner-hero-section text-center py-5">
+            <div class="container">
+                <div class="trophy-icon mb-3">
+                    <i class="fa-solid fa-trophy"></i>
+                </div>
+                <h1 class="competition-title display-3 mb-2">{{$event->competition}}</h1>
+                <div class="competition-date mb-2"><i class="fa-regular fa-calendar"></i> {{date('j F Y - l', strtotime($event->competition_date))}}</div>
+                <div class="competition-rank mb-3"><i class="fa-solid fa-trophy"></i> {{$event->rank}}</div>
+                <a href="{{$event->reff_link}}" class="btn btn-modern mb-3" target="_blank" rel="noopener"><i class="fa-solid fa-link"></i> View Competition</a>
+            </div>
+        </section>
+        
+        <div class="container py-4">
+            <div class="row mb-4">
+                <div class="col-12">
+                    <h2 class="section-title"><i class="fa-solid fa-users me-2"></i>Winning Team</h2>
+                </div>
+                <div class="col-12 d-flex flex-wrap gap-3 justify-content-center">
+                    @foreach($winner_members as $mem)
+                    <div class="team-member-card interactive-card text-center">
+                        <img src="/storage/{{$mem->member->photo}}" alt="{{$mem->member->name}}" class="profile-pic-big mx-auto mb-2">
+                        <div class="member-name">{{$mem->member->name}}</div>
+                        <div class="member-info">{{$mem->member->student_id}}, {{$mem->member->department}}, Islamic University of Technology</div>
+                        <a href="/profile/{{$mem->member->id}}" class="btn btn-outline-success btn-sm mt-2">View Profile</a>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col-12">
+                    <h2 class="section-title"><i class="fa-solid fa-star me-2"></i>Success Story</h2>
+                </div>
+                <div class="col-12">
+                    <div class="success-story-card">
+                        <p class="lead mt-2" id="eventDescription" style="text-align: justify">
+                            {!! nl2br(e($event->story)) !!}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        
+    </div>
+    
+    
+    
+    
+    <script>
+        
+        window.addEventListener('DOMContentLoaded', function() {
+            // confettiEffect();
+            // Make links clickable in story (fix: preserve HTML, only replace plain URLs)
+            var eventDescriptionElement = document.getElementById('eventDescription');
+            
+            if (eventDescriptionElement)
+            {
+                let html = eventDescriptionElement.innerHTML;
+                // Only replace plain URLs that are not already inside an anchor tag
+                html = html.replace(/(https?:\/\/(?![^<]*?>)[^\s<]+)/g, function(url) {
+                    return '<a href="' + url + '" target="_blank" rel="noopener noreferrer">' + url + '</a>';
+                });
+                eventDescriptionElement.innerHTML = html;
+            }
         });
-    }
-
-    // Get the event description element and update its HTML with clickable links
-    var eventDescriptionElement = document.getElementById('eventDescription');
-    eventDescriptionElement.innerHTML = makeLinksClickable(eventDescriptionElement.innerHTML);
-</script>
-@endsection
+    </script>
+    @endsection
