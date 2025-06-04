@@ -157,7 +157,9 @@ Route::get('about', [about_controller::class, 'index']);
 
 
 
-
+Route::get('toast', function () {
+    return view('toast');
+});
 
 
 Route::fallback(function () {
