@@ -43,6 +43,11 @@
                 <p class="text-secondary text-center">© <span id="year"></span> IUT Al-Fazari Interstellar Society. All rights reserved.</p>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-12">
+                <p class="text-secondary text-center">Coded and Crafted By <a href="https://portfolio.sakhawatadib.com">Adib Sakhawat</a></p>
+            </div>
+        </div>
     </div>
     </div>
   </div> 
