@@ -79,6 +79,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            background: url('/rsx/newsbg.jpg') no-repeat center center fixed;
         }
 
         .form-bg{
