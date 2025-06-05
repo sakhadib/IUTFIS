@@ -1,58 +1,232 @@
-   <!-- foot -->
-   <div class="hm-7 vh-55 df dfc jcc aic footer-bg">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-5">
-                <img src="{{url('rsx/logo.svg')}}" alt="" style="width: 300px">
-                <h1 class="display-4 l mt-3">IUT Al-Fazari Interstellar Society</h1>
-                <p class="text-light lead"> #LookUpToWonder</p>
-            </div>
-            <div class="col-md-7 df dfc jcc">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-10 offset-md-2">
-                            <h1 class="display-4 text-secondary" id="Date-Time"></h1>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-10 offset-md-2">
-                            <p class="lead text-light">
-                                Humans of the Red Heaven have conquered the Earth. It's time to dive into deep space!
-                            </p>
-                        </div>   
-                    </div>
-                    
-                    <div class="row mt-4">
-                        <div class="col-md-9 offset-md-2">
-                            <p class="text-light">Follow us on: &nbsp;&nbsp;&nbsp;
-                                <a href="https://www.facebook.com/IUTFIS/" target="blank" class="text-light me-3"><i class="uil uil-facebook-f fs-3"></i></a>
-                                <a href="mailto:iutfis2061@gmail.com" target = "blank" class="text-light me-3"><i class="uil uil-envelope fs-3"></i></a>
-                                <a href="https://www.instagram.com/iut_interstellar_society/" target = "blank" class="text-light me-3"><i class="uil uil-instagram fs-3"></i></a>
-                                <a href="https://www.youtube.com/@iutfis" target = "blank" class="text-light me-3"><i class="uil uil-youtube fs-3"></i></a>
-                                <a href="https://www.linkedin.com/company/iut-al-fazari-interstellar-society/?originalSubdomain=bd" target = "blank" class="text-light me-3"><i class="uil uil-linkedin fs-3"></i></a>
-                                
-                            </p>
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
+{{-- resources/views/partials/footer.blade.php --}}
+<footer class="footer-dark">
+  <div class="overlay"></div>
+  <div class="container py-5">
+    <div class="row g-4">
+      
+      {{-- About Section --}}
+      <div class="col-md-4">
+        <img src="/rsx/logo.svg" alt="IUT Al-Fazari Interstellar Society" class="footer-logo mb-3">
+        <p class="text-light mb-1">#LookUpToWonder</p>
+        <p class="text-secondary small">
+          The IUT Al-Fazari Interstellar Society propels students into the cosmos with inspiring events, workshops, and a vibrant community. Reach for the stars—literally.
+        </p>
+      </div>
+      
+      {{-- Quick Links --}}
+      <div class="col-md-3">
+        <h5 class="text-light mb-3">Quick Links</h5>
+        <ul class="list-unstyled">
+          <li class="mb-2"><a href="/workshops" class="text-secondary link-hover">Workshops</a></li>
+          <li class="mb-2"><a href="/events" class="text-secondary link-hover">Events</a></li>
+          <li class="mb-2"><a href="/about" class="text-secondary link-hover">About Us</a></li>
+          <li><a href="/contact" class="text-secondary link-hover">Contact</a></li>
+        </ul>
+      </div>
+      
+      {{-- Contact Info --}}
+      <div class="col-md-3">
+        <h5 class="text-light mb-3">Contact</h5>
+        <p class="text-secondary mb-2">
+          <i class="fas fa-envelope me-2"></i>
+          <a href="mailto:iutfis2061@gmail.com" class="text-secondary link-hover">iutfis2061@gmail.com</a>
+        </p>
+        <p class="text-secondary">
+          <i class="fas fa-map-marker-alt me-2"></i>
+          Dhaka, Bangladesh
+        </p>
+      </div>
+      
+      {{-- Social & Live Clock --}}
+      <div class="col-md-2 text-center">
+        <h5 class="text-light mb-3">Connect</h5>
+        <div class="social-icons mb-4">
+          <a href="https://www.facebook.com/IUTFIS/" target="_blank" class="text-light me-3">
+            <i class="fab fa-facebook-f fs-4"></i>
+          </a>
+          <a href="mailto:iutfis2061@gmail.com" class="text-light me-3">
+            <i class="fas fa-envelope fs-4"></i>
+          </a>
+          <a href="https://www.instagram.com/iut_interstellar_society/" target="_blank" class="text-light me-3">
+            <i class="fab fa-instagram fs-4"></i>
+          </a>
+          <a href="https://www.youtube.com/@iutfis" target="_blank" class="text-light me-3">
+            <i class="fab fa-youtube fs-4"></i>
+          </a>
+          <a href="https://www.linkedin.com/company/iut-al-fazari-interstellar-society" target="_blank" class="text-light">
+            <i class="fab fa-linkedin fs-4"></i>
+          </a>
         </div>
-        <div class="row">
-            <div class="col-md-12">
-                <p class="text-secondary text-center">© <span id="year"></span> IUT Al-Fazari Interstellar Society. All rights reserved.</p>
-            </div>
+        <div class="live-clock text-light fs-5" id="footerClock">
+          <!-- JS will inject local time -->
         </div>
+      </div>
+      
     </div>
+    
+    <hr class="border-secondary my-4">
+    
+    <div class="row">
+      <div class="col text-center">
+        <p class="text-secondary small mb-1">
+          &copy; <span id="currentYear"></span> IUT Al-Fazari Interstellar Society. All rights reserved.
+        </p>
+        <p class="text-secondary small">
+          Designed &amp; Crafted by <a href="https://portfolio.sakhawatadib.com" class="text-secondary link-hover">Adib Sakhawat</a>
+        </p>
+      </div>
     </div>
-  </div> 
+    
+  </div>
+</footer>
+
+<style>
+  /* ==================== Dark‐Mode Footer ==================== */
+  
+  .footer-dark {
+    position: relative;
+    background: #0d0d2b url('/images/space-bg-footer.jpg') center/cover no-repeat;
+    color: var(--bs-light);
+  }
+  .footer-dark .overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.75);
+  }
+  .footer-dark .container {
+    position: relative;
+    z-index: 1;
+  }
+  .footer-dark .footer-logo {
+    max-width: 180px;
+  }
+  .footer-dark h5 {
+    color: var(--bs-light);
+    font-weight: 600;
+  }
+  .footer-dark p {
+    margin: 0;
+  }
+  .footer-dark .text-secondary {
+    color: #a0a0a0 !important;
+  }
+  .footer-dark .link-hover:hover {
+    color: var(--bs-white) !important;
+  }
+  .footer-dark .social-icons a {
+    transition: transform 0.2s ease;
+  }
+  .footer-dark .social-icons a:hover {
+    transform: translateY(-2px);
+    color: var(--bs-white) !important;
+  }
+  .footer-dark .live-clock {
+    font-family: 'Courier New', Courier, monospace;
+  }
+  .footer-dark hr.border-secondary {
+    border-color: #2a2a3d !important;
+  }
+  
+  /* Responsive tweaks */
+  @media (max-width: 576px) {
+    .footer-dark .social-icons {
+      margin-bottom: 1rem;
+    }
+    .footer-dark .live-clock {
+      font-size: 1rem;
+    }
+  }
+</style>
+
+{{-- ========== Footer Scripts ========== --}}
+<script>
+  // 1) Display current year:
+  document.getElementById('currentYear').innerText = new Date().getFullYear();
+
+  // 2) Simple live‐updating local time clock:
+  function updateFooterClock() {
+    const now = new Date();
+    let h = now.getHours(), m = now.getMinutes(), s = now.getSeconds();
+    const ampm = h >= 12 ? 'PM' : 'AM';
+    h = h % 12 || 12;
+    m = m < 10 ? '0'+m : m;
+    s = s < 10 ? '0'+s : s;
+    const timeString = `${h}:${m}:${s} ${ampm}`;
+    document.getElementById('footerClock').innerText = timeString;
+  }
+  setInterval(updateFooterClock, 1000);
+  updateFooterClock();
+</script>
 
 
-  <style>
-    .footer-bg{
-      background-color: rgba(0, 14, 24, 1);
+
+<style>
+  :root {
+  --bg-dark: #0a0a1f;
+  --surface: #1f1f36;
+  --text-light: #e0e0e0;
+  --text-secondary: #a1a1b3;
+  --text-accent: #a07bff;
+  --border-subtle: #2c2c45;
+  --card-radius: 1.25rem;
+  --transition-speed: 0.2s;
+  --glass-bg: rgba(31,31,54,0.85);
+  --glass-blur: 12px;
+}
+
+
+</style>
+
+
+<script>
+    new DataTable('#stable');
+</script>
+
+
+<script>
+    document.addEventListener('scroll', () => {
+        const navbar = document.getElementById('boss_navbar');
+        if (window.scrollY === 0) {
+            navbar.className = 'navbar navbar-dark navbar-expand-lg bgd fixed-top bs';
+        } else {
+            navbar.className = 'navbar navbar-dark navbar-expand-lg bg-dark fixed-top bs';
+        }
+    });
+</script>
+
+
+<script>
+    // Function to update MathJax rendering and display line breaks
+    function updateMathPreview() {
+        // Get references to the textarea and the preview element
+        const typedMath = document.getElementById('content');
+        const mathPreview = document.getElementById('the_content');
+
+        // Replace newline characters with HTML line break elements
+        const contentWithLineBreaks = typedMath.value.replace(/\n/g, '<br>');
+
+        // Update the content of the preview element with the content of the textarea
+        mathPreview.innerHTML = contentWithLineBreaks;
+
+        // Update MathJax rendering
+        MathJax.texReset();
+        MathJax.typesetClear();
+        MathJax.typesetPromise([mathPreview]);
     }
 
+    // Call the function when the document is fully loaded
+    document.addEventListener("DOMContentLoaded", function() {
+        updateMathPreview();
+    });
+
+    // Add event listener to the textarea for input event
+    document.getElementById('content').addEventListener('input', updateMathPreview);
+</script>
+
+
+
+<style>
+  
     .table-holder{
         background-color: white;
         padding: 35px;
@@ -116,128 +290,4 @@
         box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
         width: 100%;
     }
-  </style>
-
-
-<script>
-    new DataTable('#stable');
-</script>
-
-
-<script>
-    document.addEventListener('scroll', () => {
-        const navbar = document.getElementById('boss_navbar');
-        if (window.scrollY === 0) {
-            navbar.className = 'navbar navbar-dark navbar-expand-lg bgd fixed-top bs';
-        } else {
-            navbar.className = 'navbar navbar-dark navbar-expand-lg bg-dark fixed-top bs';
-        }
-    });
-</script>
-
-
-<script>
-    // Function to update MathJax rendering and display line breaks
-    function updateMathPreview() {
-        // Get references to the textarea and the preview element
-        const typedMath = document.getElementById('content');
-        const mathPreview = document.getElementById('the_content');
-
-        // Replace newline characters with HTML line break elements
-        const contentWithLineBreaks = typedMath.value.replace(/\n/g, '<br>');
-
-        // Update the content of the preview element with the content of the textarea
-        mathPreview.innerHTML = contentWithLineBreaks;
-
-        // Update MathJax rendering
-        MathJax.texReset();
-        MathJax.typesetClear();
-        MathJax.typesetPromise([mathPreview]);
-    }
-
-    // Call the function when the document is fully loaded
-    document.addEventListener("DOMContentLoaded", function() {
-        updateMathPreview();
-    });
-
-    // Add event listener to the textarea for input event
-    document.getElementById('content').addEventListener('input', updateMathPreview);
-</script>
-
-<!-- Foot end -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{{-- For the footer clock --}}
-
-<script>
-    async function fetchUserTimezone() {
-        try {
-            // Using a public API to fetch the user's IP information
-            const response = await fetch('https://ipapi.co/json/');
-            const data = await response.json();
-            return data.timezone;
-        } catch (error) {
-            console.error('Error fetching IP information:', error);
-            return 'UTC'; // Fallback to UTC in case of error
-        }
-    }
-
-    async function fetchCurrentTime(timezone) {
-        try {
-            // Using a public API to fetch the current time for the given timezone
-            const response = await fetch(`http://worldtimeapi.org/api/timezone/${timezone}`);
-            const data = await response.json();
-            return new Date(data.datetime);
-        } catch (error) {
-            console.error('Error fetching time:', error);
-            return new Date(); // Fallback to local time in case of error
-        }
-    }
-
-    function formatTime(date) {
-        let hours = date.getHours();
-        let minutes = date.getMinutes();
-        let seconds = date.getSeconds();
-        let ampm = hours >= 12 ? 'PM' : 'AM';
-        
-        hours = hours % 12;
-        hours = hours ? hours : 12; // the hour '0' should be '12'
-        minutes = minutes < 10 ? '0'+minutes : minutes;
-        seconds = seconds < 10 ? '0'+seconds : seconds;
-        
-        return `${hours}:${minutes}:${seconds} ${ampm}`;
-    }
-
-    async function updateTime() {
-        const timezone = await fetchUserTimezone();
-        const currentTime = await fetchCurrentTime(timezone);
-        setInterval(() => {
-            currentTime.setSeconds(currentTime.getSeconds() + 1);
-            document.getElementById('Date-Time').innerText = formatTime(currentTime);
-        }, 1000);
-    }
-
-    // Initialize the time display
-    updateTime();
-</script>
-
-<script>
-    document.getElementById('year').innerText = new Date().getFullYear();
-</script>
-</body>
-</html>
+</style>

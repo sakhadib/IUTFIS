@@ -23,201 +23,185 @@
     <div class="container about df dfc jcc" id="more">
         <div class="row mt-5 mb-5">
             <div class="col-md-12 df dfc jcc">
-                <h1 class="display-5 l">
+                <h1 class="display-5 l mb-3">
                     IUT Al-Fazari Interstellar Society
                 </h1>
-                <p class="lead text-light mt-3" style="text-align: justify">
-                    is an astronomy, astrophysics and natural sciences based society of Islamic University of Technology. 
-                    It is a platform for the students of IUT to learn and share their knowledge about the universe and its 
-                    mysteries. The society organizes various events, workshops, seminars, and competitions to enhance the 
-                    knowledge of the students in the field of astronomy and astrophysics.
+                <p class="lead text-light mt-3 mb-0" style="text-align: justify">
+                    IUT Al-Fazari Interstellar Society is the official astronomy, astrophysics, and natural sciences club of Islamic University of Technology. We foster curiosity and knowledge about the universe through events, workshops, seminars, and competitions. Our mission is to inspire and educate students about the wonders of the cosmos in a collaborative and inclusive environment.
                 </p>
             </div>
         </div>
     </div>
 </div>
 
-
-<div class="news-bg">
-    <div class="bg-cover df dfc jcc">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 df dfc jcc aic">
-                    <h1 class="display-1 text-light mt-5">
-                        <i class="uil uil-newspaper"></i> NEWS
-                    </h1>
-                    <p class="lead text-light text-center">
-                        The latest news from the universe. Click on them to learn more.
-                    </p>
-                    <a href="/news" class="btn btn-lg btn-outline-light mb-5">Show All News</a>
-                </div>
-                <div class="col-md-7 offset-md-1">
-                    <div class="container">
-                        @if($newss != null)
-                        @foreach($newss as $news)
-                        <a href="News/{{$news->id}}" style="text-decoration: none;">
-                            <div class="post-card mt-3">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <h1 class="fs-4 text-light">
-                                            {{$news->title}}
-                                        </h1>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <p class="text-light">
-                                            {{ Str::limit($news->content, 120) }}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                        @endforeach
-                        @endif
-                        <div class="vh-5"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="ws-bg vh-50">
+<!-- FORMAL NEWS SECTION -->
+<section class="py-5" style="background: #181d2f;">
     <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h1 class="display-3 text-light text-center mt-5">
-                     NEXT WORKSHOP
-                </h1>
-                <p class="text-light lead text-center">
-                    The next workshop of IUT FIS. Click on it to learn more. <br>
-                    <a href="/workshops" class="btn btn btn-outline-light mt-3">Click Here To view All Workshops</a> 
-                </p>
-                @if($workshop != null)
+        <div class="row mb-4">
+            <div class="col text-center">
+                <h2 class="display-6 fw-semibold text-warning mb-2"><i class="fa fa-newspaper"></i> Latest News</h2>
+                <p class="text-secondary">Stay updated with the latest happenings in our society.</p>
+            </div>
+        </div>
+        <div class="row g-4">
+            @if(isset($newss) && count($newss))
+                @foreach($newss as $news)
+                    <div class="col-md-4">
+                        <div class="card bg-dark text-light h-100 border-0 shadow-sm p-3" style="padding:1rem !important;">
+                            <div class="card-body p-4">
+                                <h5 class="card-title text-warning">
+                                    <a href="{{ url('News/' . ($news->id ?? '')) }}" class="text-warning text-decoration-none">{{ $news->title ?? 'Untitled' }}</a>
+                                </h5>
+                                <p class="card-text mt-3">{{ Str::limit($news->content ?? '', 120) }}</p>
+                            </div>
+                            <div class="card-footer bg-transparent border-0">
+                                <a href="{{ url('News/' . ($news->id ?? '')) }}" class="btn btn-outline-warning btn-sm">Read More</a>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            @else
+                <div class="col-12 text-center">
+                    <div class="alert alert-info bg-transparent border-info text-light">No news available at the moment.</div>
+                </div>
+            @endif
+        </div>
+        <div class="row mt-4">
+            <div class="col text-center">
+                <a href="/news" class="btn btn-outline-warning btn-lg">Show All News</a>
+            </div>
+        </div>
+    </div>
+</section>
 
-                @php
-                    $event = $workshop;
-                @endphp
-                <div class="row mt-5 mb-5">
-                    <div class="col-md-12">
-                        <div class="event-box">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <a href="/workshop/{{$event->id}}" style="text-decoration: none"><h1 class="display-5 text-light">{{$event->title}}</h1></a>
-                                    </div>
+<!-- FORMAL WORKSHOP SECTION -->
+<section class="py-5" style="background: #232946;">
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col text-center">
+                <h2 class="display-6 fw-semibold mb-2" style="color:rgb(176, 240, 160)"><i class="fa fa-chalkboard-teacher"></i> Next Workshop</h2>
+                <p class="text-secondary">Join our upcoming workshop and expand your horizons.</p>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            @if(isset($workshop) && $workshop)
+                @php $event = $workshop; @endphp
+                <div class="col-lg-8">
+                    <div class="card border-0 shadow-lg mb-4 p-0 bg-success bg-gradient position-relative" style="overflow: hidden;">
+                        <div class="card-body p-5 position-relative">
+                            <div class="d-flex align-items-center mb-4 flex-wrap gap-3">
+                                <h2 class="card-title mb-0 flex-grow-1 text-white display-5">{{ $event->title ?? 'Untitled Workshop' }}</h2>
+                            </div>
+                            <div class="row g-3 align-items-center mb-4">
+                                <div class="col-12 col-md-auto d-flex align-items-center gap-2">
+                                    <span class="d-inline-flex align-items-center justify-content-center bg-white bg-opacity-25 rounded-circle" style="width:44px;height:44px;">
+                                        <i class="fa fa-calendar-alt text-success fs-4"></i>
+                                    </span>
+                                    <span class="text-white fw-semibold">{{ isset($event->start_date) ? date('j F Y', strtotime($event->start_date)) : 'TBA' }}</span>
                                 </div>
-                                <div class="row mt-3">
-                                    <div class="col-md-auto">
-                                        <h1 class="fs-5 text-light"><i class="uil uil-schedule"></i> &nbsp; {{date('j F Y', strtotime($event->start_date))}}</h1>
-                                    </div>
-                                    <div class="col-md-auto">
-                                        <h1 class="fs-5 text-light"><i class="uil uil-clock-seven"></i> &nbsp; {{date('g:i A', strtotime($event->start_date))}}</h1>
-                                    </div>
-                                    <div class="col-md-auto">
-                                        <h1 class="fs-5 text-light" data-start="{{ $event->start_date }}" data-end="{{ $event->end_date }}"><i class="uil uil-hourglass"></i> &nbsp; <span class="duration"></span></h1>
-                                    </div>
-                                    <div class="col-md-auto">
-                                        <h1 class="fs-5 text-light"><i class="uil uil-map-marker"></i> &nbsp; {{$event->location}}</h1>
-                                    </div>
+                                <div class="col-12 col-md-auto d-flex align-items-center gap-2">
+                                    <span class="d-inline-flex align-items-center justify-content-center bg-white bg-opacity-25 rounded-circle" style="width:44px;height:44px;">
+                                        <i class="fa fa-clock text-success fs-4"></i>
+                                    </span>
+                                    <span class="text-white fw-semibold">{{ isset($event->start_date) ? date('g:i A', strtotime($event->start_date)) : 'TBA' }}</span>
                                 </div>
-                                <div class="row mt-3">
-                                    <div class="col-12">
-                                        <p class="text-light lead">{{ Str::limit($event->description, 200) }}</p>
-                                    </div>
+                                <div class="col-12 col-md-auto d-flex align-items-center gap-2">
+                                    <span class="d-inline-flex align-items-center justify-content-center bg-white bg-opacity-25 rounded-circle" style="width:44px;height:44px;">
+                                        <i class="fa fa-map-marker-alt text-success fs-4"></i>
+                                    </span>
+                                    <span class="text-white fw-semibold">{{ $event->location ?? 'TBA' }}</span>
                                 </div>
-                                <div class="row">
-                                    <div class="col-auto">
-                                        <a href="/workshop/{{$event->id}}" class="btn btn-lg btn-light mt-3 df jcc aic"><i class="fa-solid fa-shuttle-space"></i> &nbsp;&nbsp;DETAILS</a>
-                                    </div>
-                                    @if($event->link != 'none')
-                                    <div class="col-auto">
-                                        <a class="btn btn-lg btn-outline-light disabled mt-3"><i class="uil uil-globe"></i> Online</a>
-                                    </div>
-                                    @endif
-                                </div>
+                            </div>
+                            <p class="card-text lead text-white mb-4" style="font-size:1.1rem;">{{ Str::limit($event->description ?? '', 200) }}</p>
+                            <div class="d-flex align-items-center gap-3 flex-wrap">
+                                <a href="{{ url('workshop/' . ($event->id ?? '')) }}" class="btn btn-outline-light btn-lg px-4 rounded-pill shadow-sm">Details</a>
+                                @if(isset($event->link) && $event->link !== 'none')
+                                    <a class="btn btn-outline-light disabled rounded-pill px-4"><i class="fa fa-globe"></i> Online</a>
+                                @endif
+                            </div>
+                            <div class="position-absolute end-0 bottom-0 opacity-10" style="pointer-events:none;">
+                                <i class="fa fa-rocket fa-7x text-white"></i>
                             </div>
                         </div>
                     </div>
                 </div>
+            @else
+                <div class="col-lg-8">
+                    <div class="alert alert-info bg-transparent border-info text-light text-center">No Upcoming Workshop</div>
+                </div>
+            @endif
+        </div>
+        <div class="row mt-3">
+            <div class="col text-center">
+                <a href="/workshops" class="btn btn-success btn-lg">View All Workshops</a>
+            </div>
+        </div>
+    </div>
+</section>
 
-                @else
-
-                <div class="row mt-5 mb-5">
-                    <div class="col-md-12">
-                        <div class="event-box">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <h1 class="display-5 text-light text-center">No Upcoming Workshop</h1>
-                                    </div>
-                                </div>
+<!-- FORMAL ARTICLES SECTION -->
+<section class="py-5" style="background: #181d2f;">
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col text-center">
+                <h2 class="display-6 fw-semibold article-title-color mb-2"><i class="fa fa-file-alt"></i> Articles</h2>
+                <p class="text-secondary">Explore articles written by our members.</p>
+            </div>
+        </div>
+        <div class="row g-4">
+            @if(isset($articles) && count($articles))
+                @foreach($articles as $news)
+                    <div class="col-md-4">
+                        <div class="card bg-dark text-light h-100 border-0 shadow-sm p-3" style="padding:1rem !important;">
+                            <div class="card-body p-4">
+                                <h5 class="card-title article-title-color">
+                                    <a href="{{ url('News/' . ($news->article->id ?? '')) }}" class="article-title-color text-decoration-none">{{ $news->article->title ?? 'Untitled' }}</a>
+                                </h5>
+                                <p class="card-text">
+                                    <span class="text-secondary small">@if(isset($news->article->created_at)) At {{ $news->article->created_at->format('j F Y') }} @endif
+                                    @if(isset($news->member->name)) By {{ $news->member->name }} @endif</span>
+                                </p>
+                                <p class="card-text">{{ Str::limit($news->article->content ?? '', 120) }}</p>
+                            </div>
+                            <div class="card-footer bg-transparent border-0">
+                                <a href="{{ url('News/' . ($news->article->id ?? '')) }}" class="btn show-articles-btn btn-sm">Read More</a>
                             </div>
                         </div>
                     </div>
-
-                @endif
+                @endforeach
+            @else
+                <div class="col-12 text-center">
+                    <div class="alert alert-info bg-transparent border-info text-light">No articles available at the moment.</div>
+                </div>
+            @endif
+        </div>
+        <div class="row mt-4">
+            <div class="col text-center">
+                <a href="/articles" class="btn btn-lg show-articles-btn" style="">Show All Articles</a>
+                <style>
+                    .show-articles-btn{
+                        border: 2px solid #e48787; 
+                        color: #e48787; 
+                        background: transparent;
+                    }
+                    .show-articles-btn:hover,
+                    .show-articles-btn:focus {
+                        background: #e48787 !important;
+                        color: #fff !important;
+                        border-color: #e48787 !important;
+                    }
+                </style>
             </div>
         </div>
     </div>
-</div>
+</section>
 
+<style>
+    .article-title-color{
+        color: #e48787;
+    }
+</style>
 
-
-<div class="article-bg">
-    <div class="bg-cover df jcc aic">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4 df dfc jcc aic">
-                    <h1 class="display-1 text-light mt-5">
-                        <i class="uil uil-layers"></i> Articles
-                    </h1>
-                    <p class="lead text-light text-center">
-                        Articles from FIS members. Click on them to learn more.
-                    </p>
-                    <a href="/articles" class="btn btn-lg btn-outline-light mb-5">Show All Articles</a>
-                </div>
-                <div class="col-md-7 offset-md-1">
-                    <div class="container">
-                        @if($articles != null)
-                        @foreach($articles as $news)
-                        <a href="News/{{$news->article->id}}" style="text-decoration: none;">
-                            <div class="post-card mt-3">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <h1 class="fs-4 text-light">
-                                            {{$news->article->title}}
-                                        </h1>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <p class="lead text-secondary">
-                                            At {{$news->article->created_at->format('j F Y')}}
-                                            By {{$news->member->name}}
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <p class="text-light">
-                                            {{ $news->article->content }}...
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </a>
-                        @endforeach
-                        @endif
-                        <div class="vh-5"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
     
     
 
