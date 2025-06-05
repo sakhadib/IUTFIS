@@ -82,6 +82,7 @@
 
 <style>
   /* ==================== Dark‐Mode Footer ==================== */
+  
   .footer-dark {
     position: relative;
     background: #0d0d2b url('/images/space-bg-footer.jpg') center/cover no-repeat;
